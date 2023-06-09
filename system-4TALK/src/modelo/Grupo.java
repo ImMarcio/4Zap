@@ -22,4 +22,14 @@ public class Grupo {
 	public void remover(Individual individuo) {
 		individuos.remove(individuo);
 	}
+	
+	public Individual localizar(String nome){
+		for(Individual individuo : individuos){
+			if(individuo.getNome().equals(nome))
+				return individuo;
+		}
+		return null;
+	}
+	
+	
 }
