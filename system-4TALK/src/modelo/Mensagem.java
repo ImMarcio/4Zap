@@ -1,11 +1,13 @@
 package modelo;
 
+import java.time.LocalDateTime;
+
 public class Mensagem {
     private int id;
     private String texto;
     private Individual emitente;
     private Participante destinatario;
-    private  LocalDateTime datahora;
+    private LocalDateTime datahora;
 
     public Mensagem(int id, String texto, Individual emitente, Participante destinatario, LocalDateTime datahora){
         this.id = id;
@@ -58,7 +60,7 @@ public class Mensagem {
 
     @Override
     public String toString(){
-        String texto = "ID" + this.id + "\n" + " Texto da mensagem:" + texto + "\n" + "Emitente:" + emitente + "\n" + "Destinatário: " + destinatario + "\n" +  "Hora da Mensagem: " + datahora;
+        String texto = "ID" + this.id + "\n" + " Texto da mensagem:" + this.texto + "\n" + "Emitente:" + emitente + "\n" + "Destinatário: " + destinatario + "\n" +  "Hora da Mensagem: " + datahora;
         
         return texto;
     }

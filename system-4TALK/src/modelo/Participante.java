@@ -1,5 +1,7 @@
 package modelo;
 
+import java.util.ArrayList;
+
 public class Participante {
         private String nome;
         private ArrayList<Mensagem> recebidas = new ArrayList<>();
@@ -15,12 +17,11 @@ public class Participante {
             this.nome = nome;
         }
 
-        public ArrayList<Mensagem> getRecebidas{
+        public ArrayList<Mensagem> getRecebidas(){
             return recebidas;
         }
 
-        @Override
-        public String ToString(){
+        public String toString(){
             String texto = "Nome: " + nome + "\n"+ "Recebidas: ";
             for(Mensagem mensagem : recebidas){
                 texto += mensagem.getTexto();
