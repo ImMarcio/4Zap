@@ -14,13 +14,20 @@ public class Grupo {
    	}
 
 	
-	
-	public void adicionar(Individual individuo) {
-		individuos.add(individuo);
+	public void adicionar(Individual individuo) throws Exception{
+		if(individuo!= null) {
+			individuos.add(individuo);
+		}
+		else {
+			throw new Exception("Indivíduo não existe!");
+		}
 	}
 	
-	public void remover(Individual individuo) {
-		individuos.remove(individuo);
+	public void remover(Individual individuo) throws Exception {
+		if(individuos.remove(individuo) == false) {
+			throw new Exception("Esse indivíduo não está no grupo!");
+		}
+		
 	}
 	
 	public Individual localizar(String nome){
@@ -30,6 +37,28 @@ public class Grupo {
 		}
 		return null;
 	}
+	
+	public ArrayList<Individual> getIndividuos(){
+		return individuos;
+	}
+	
+	public int getTotalIndividuos() {
+		return individuos.size();	
+	}
+	
+	@Override
+	public String toString() {
+		String texto = "" ;
+	
+		if (individuos.isEmpty())
+			texto += " vazia";
+		else 	
+			for(Individual individuo: individuos) 
+				texto += " " + individuo.getNome() ;
+
+		return texto ;
+	}
+	
 	
 	
 }
