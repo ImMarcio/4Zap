@@ -51,7 +51,7 @@ public class Grupo {
 		String texto = "" ;
 	
 		if (individuos.isEmpty())
-			texto += " vazia";
+			texto += " vazio";
 		else 	
 			for(Individual individuo: individuos) 
 				texto += " " + individuo.getNome() ;
