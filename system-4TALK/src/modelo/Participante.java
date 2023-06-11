@@ -1,7 +1,7 @@
 /*
  * @authors Allan Amancio and Marcio Jose
  * 
- * Particante class
+ * Participante class
  */
 package modelo;
 
@@ -15,11 +15,9 @@ public class Participante {
             this.nome = nome;
         }
         
-        // Gets and sets
+        // Getters e Setters
         public String getNome(){ return this.nome; }
-        public void setNome(String nome){
-            this.nome = nome;
-        }
+        public void setNome(String nome){this.nome = nome;}
         public ArrayList<Mensagem> getRecebidas(){ return recebidas; }
         
         @Override

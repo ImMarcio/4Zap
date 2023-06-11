@@ -1,40 +1,37 @@
+/*
+ * @authors Allan Amancio and Marcio Jose
+ * 
+ * Participante class
+ */
 package modelo;
 
 import java.util.ArrayList;
 
 public class Individual extends Participante {
-   
 	private String senha;
-    private boolean admistrador; 
+    private boolean administrador; 
     private ArrayList<Mensagem> enviadas = new ArrayList<>();
+	private ArrayList<Grupo> grupos = new ArrayList<>();
     
-    public Individual(String nome, String senha, boolean admistrador) {
+    public Individual(String nome, String senha, boolean administrador) {
     	super(nome);
 		this.senha = senha;
-		this.admistrador = admistrador;
+		this.administrador = administrador;
 	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
-	public boolean isAdmistrador() {
-		return admistrador;
-	}
-
-	public void setAdmistrador(boolean admistrador) {
-		this.admistrador = admistrador;
-	}
-
-	public ArrayList<Mensagem> getEnviadas() {
-		return enviadas;
-	}
-
-	public void setEnviadas(ArrayList<Mensagem> enviadas) {
-		this.enviadas = enviadas;
-	}
+    
+    // Getters e Setters
+	public String getSenha() {return senha;}
+	public void setSenha(String senha) {this.senha = senha;}
+	public boolean isAdministrador() {return administrador;}
+	public void setAdministrador(boolean administrador) {this.administrador = administrador;}
+	public ArrayList<Mensagem> getEnviadas() {return enviadas;}
+	public ArrayList<Mensagem> getRecebidas() {return new ArrayList<>();}
+    public ArrayList<Grupo> getGrupos() {return grupos;}
+    public Grupo getGrupo(String nome_grupo) {
+    	for (Grupo g : grupos) {
+    		if (g.getNome() == nome_grupo)
+    			return g;
+    	}
+    	return null;
+    }
 }

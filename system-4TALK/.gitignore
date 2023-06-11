@@ -1,1 +1,4 @@
 /bin/
+../.metadata
+.git
+/.settings
