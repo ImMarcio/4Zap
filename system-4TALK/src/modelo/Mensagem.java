@@ -36,7 +36,7 @@ public class Mensagem {
     public void setEmitente(Individual emitente){ this.emitente = emitente; }
     public Participante getDestinatario(){ return this.destinatario; }
     public void setDestinatario(Participante destinatario){ this.destinatario = destinatario; }
-<<<<<<< HEAD
+
     public LocalDateTime getDataHora(){ return this.datahora; }
   
     public void setDataHora(LocalDateTime datahora){this.datahora = datahora;}
@@ -44,13 +44,13 @@ public class Mensagem {
 	LocalDateTime now = LocalDateTime.now();
 	this.datahora = now;}
 
-=======
+
 	public LocalDateTime getDatahora() {return datahora;}
 	
->>>>>>> 54a80113819de8faa35bd7b6abcf0ee383b8fbf8
+
     @Override
     public String toString(){
-        String texto = "ID" + this.id + "\n" + " Texto da mensagem:" + this.texto + "\n" + "Emitente:" + emitente + "\n" + "Destinatário: " + destinatario + "\n";
+        String texto = "ID" + this.id + "\n" + " Texto da mensagem:" + this.texto + "\n" + "Emitente:" + emitente.getNome() + "\n" + "Destinatário: " + destinatario.getNome() + "\n";
         return texto;
     }
 }

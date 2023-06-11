@@ -112,6 +112,23 @@ public class Repositorio {
 		
 	}	
 	
+	
+
+	// Localizar um grupo no TreeMap participantes
+	public Grupo localizarGrupo(String nome_grupo) {
+		return (Grupo) participantes.get(nome_grupo);
+	}
+	// Gerador de ID para uma mensagem
+	public int gerarId() {
+		if (mensagens.isEmpty())
+			return 1;
+		else {
+			Mensagem ultima_mensagem = mensagens.get(mensagens.size()-1);
+			return ultima_mensagem.getId() + 1;
+		}
+	}
+	
+	
 //	linha = arquivo.nextLine().trim();		
 //	partes = linha.split(";");
 //	nomegrupo = partes[0];
@@ -131,19 +148,6 @@ public class Repositorio {
 	
 	
 }
-=======
-	// Localizar um grupo no TreeMap participantes
-	public Grupo localizarGrupo(String nome_grupo) {
-		return (Grupo) participantes.get(nome_grupo);
-	}
-	// Gerador de ID para uma mensagem
-	public int gerarId() {
-		if (mensagens.isEmpty())
-			return 1;
-		else {
-			Mensagem ultima_mensagem = mensagens.get(mensagens.size()-1);
-			return ultima_mensagem.getId() + 1;
-		}
-	}
-}
->>>>>>> 54a80113819de8faa35bd7b6abcf0ee383b8fbf8
+
+
+
