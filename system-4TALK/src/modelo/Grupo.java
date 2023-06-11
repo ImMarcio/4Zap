@@ -2,16 +2,13 @@ package modelo;
 
 import java.util.ArrayList;
 
-public class Grupo {
+public class Grupo extends Participante{
 	private ArrayList<Individual> individuos = new ArrayList<>();
 	
-    public Grupo(ArrayList<Individual> individuos) {
-		super();
-		this.individuos = individuos;
+    public Grupo(String nome) {
+		super(nome);
 	}
-    public Grupo() {
-		
-   	}
+
 
 	
 	public void adicionar(Individual individuo) throws Exception{

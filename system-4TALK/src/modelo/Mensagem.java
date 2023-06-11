@@ -1,6 +1,7 @@
 package modelo;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Mensagem {
     private int id;
@@ -54,7 +55,9 @@ public class Mensagem {
         return this.datahora;
     }
     public void setDataHora(LocalDateTime datahora){
-        this.datahora = datahora;
+    	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+    	LocalDateTime now = LocalDateTime.now(); 
+        this.datahora = now;
     }
 
 
