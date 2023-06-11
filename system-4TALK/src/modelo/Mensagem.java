@@ -37,7 +37,11 @@ public class Mensagem {
     public Participante getDestinatario(){ return this.destinatario; }
     public void setDestinatario(Participante destinatario){ this.destinatario = destinatario; }
     public LocalDateTime getDataHora(){ return this.datahora; }
-    public void setDataHora(LocalDateTime datahora) {this.datahora = datahora; }
+  
+    public void setDataHora(LocalDateTime datahora){this.datahora = datahora;}
+    public void dataHoraAtual() {DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+	LocalDateTime now = LocalDateTime.now();
+	this.datahora = now;}
 
     @Override
     public String toString(){
