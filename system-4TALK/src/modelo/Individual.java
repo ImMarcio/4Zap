@@ -12,7 +12,6 @@ public class Individual extends Participante {
     	super(nome);
 		this.senha = senha;
 		this.admistrador = admistrador;
-
 	}
 
 	public String getSenha() {
