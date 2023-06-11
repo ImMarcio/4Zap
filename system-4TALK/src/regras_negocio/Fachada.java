@@ -1,7 +1,10 @@
 package regras_negocio;
 
+import java.util.ArrayList;
+
 import modelo.Grupo;
 import modelo.Individual;
+import modelo.Mensagem;
 import modelo.Participante;
 import repositorio.Repositorio;
 
@@ -61,20 +64,10 @@ public class Fachada {
 		if (destinatario == null) {
 			throw new Exception("Mensagem nao enviada - destinatario desconhecido: " + nome_destinatario);
 		}
-		// Prosseguir daqui
-		//repositorio.adicionarMensagem(g);
+		int id = repositorio.gerarId();
+		Mensagem msg = new Mensagem(id,texto,remetente,destinatario);
+		repositorio.adicionarMensagem(msg);
 		//repositorio.salvarObjetos();
-	}
-	
-	public static boolean validarIndividuo(String nome_individuo, String senha) throws Exception {
-		if (nome_individuo.isEmpty() || senha.isEmpty()) {
-			throw new IllegalArgumentException("Nome ou senha nao podem estar vazios.");
-		}
-		Individual i = repositorio.localizarIndividuo(nome_individuo);
-		if (i == null) {
-			return false;
-		}
-		return true;
 	}
 	// Insere um individuo a um grupo - relaciona individuo a um grupo
 	public static void inserirGrupo(String nome_individuo, String nome_grupo) throws  Exception {	
@@ -98,5 +91,32 @@ public class Fachada {
 			throw new Exception("Individuo nao esta no grupo.");
 		gru.remover(in); // Individuo removido do grupo
 		//repositorio.salvarObjetos();
+	}
+	
+	public static boolean validarIndividuo(String nome_individuo, String senha) throws Exception {
+		if (nome_individuo.isEmpty() || senha.isEmpty()) {
+			throw new IllegalArgumentException("Nome ou senha nao podem estar vazios.");
+		}
+		Individual i = repositorio.localizarIndividuo(nome_individuo);
+		if (i == null) {
+			return false;
+		}
+		return true;
+	}
+	
+	public static ArrayList<Mensagem> obterConversa(String nome_remetente, String nome_destinatario) throws Exception {
+		if (nome_remetente.isEmpty() || nome_destinatario.isEmpty()) {
+			throw new IllegalArgumentException("Nomes nao podem ser vazios. Verifique se deixou algum campo vazio.");
+		}
+		Individual remetente = repositorio.localizarIndividuo(nome_remetente);
+		if (remetente == null) {
+			throw new Exception("Remetente desconhecido: "+nome_remetente);
+		}
+		Participante destinatario = repositorio.localizarIndividuo(nome_destinatario);
+		if (destinatario == null) {
+			throw new Exception("Destinatario desconhecido: " + nome_destinatario);
+		}
+		ArrayList<Mensagem> mensagens = repositorio.obterConversaSalva(remetente,destinatario);
+		return mensagens;
 	}
 }

@@ -3,6 +3,8 @@ package repositorio;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 import java.util.TreeMap;
 
@@ -15,33 +17,54 @@ public class Repositorio {
     private TreeMap<String,Participante> participantes = new TreeMap<>();
     private TreeMap<Integer,Mensagem> mensagens = new TreeMap<>();
 
-    public Repositorio(){
+    public Repositorio() {
         carregarObjetos(); //ler dados dos arquivos
     }
-    
 
     // Getters e Setters
     public TreeMap<String, Participante> getParticipantes() {return participantes;}
 	public TreeMap<Integer, Mensagem> getMensagens() {return mensagens;}
 
-	// Adicionar um índividuo novo no TreeMap participantes
 	public void adicionarIndividuo(Individual i){
 		this.participantes.put(i.getNome(), i);
 	}
 	
-	// Adicionar um grupo novo no TreeMap participantes
 	public void adicionarGrupo(Grupo g) {
 		this.participantes.put(g.getNome(), g);
 	}
-	// Localizar um individual no TreeMap participantes
+	
+	public void adicionarMensagem(Mensagem msg) {
+		this.mensagens.put(msg.getId(), msg);
+	}	
+
 	public Individual localizarIndividuo(String nome){
 		return (Individual) participantes.get(nome);
 	}
 
+	public Grupo localizarGrupo(String nome_grupo) {
+		return (Grupo) participantes.get(nome_grupo);
+	}
 	
+	public ArrayList<Mensagem> obterConversaSalva(Individual remetente, Participante destinatario) {
+		ArrayList<Mensagem> conversa = new ArrayList<>();
+	    for (Mensagem mensagem : mensagens.values()) {
+	        if (mensagem.getEmitente().equals(remetente) && mensagem.getDestinatario().equals(destinatario)) {
+	            conversa.add(mensagem);}
+	    }
+	    Collections.sort(conversa, Comparator.comparing(Mensagem::getDataHora));
+	    return conversa;
+	}
 	
+	public int gerarId() {
+		if (mensagens.isEmpty())
+			return 1;
+		else {
+			Mensagem ultima_mensagem = mensagens.get(mensagens.size()-1);
+			return ultima_mensagem.getId() + 1;
+		}
+	}
 	
-	public void carregarObjetos() {
+	public void carregarObjetos(){
 		try {
 			File arquivoDeIndividuo = new File( new File(".\\individual.csv").getCanonicalPath() ) ; 
 			File arquivoDoGrupo = new File( new File(".\\grupo.csv").getCanonicalPath() ) ; 
@@ -60,7 +83,7 @@ public class Repositorio {
 		String linha;
 		String[] partes;
 		String nomeindividuo,senha,nomegrupo;
-		ArrayList<String> nomeDosParticipantes = null;
+		//ArrayList<String> nomeDosParticipantes = null;
 		boolean admistrador;
 		Individual individuo;
 		Grupo grupo;
@@ -86,7 +109,6 @@ public class Repositorio {
 		catch(Exception ex) {
 			throw new RuntimeException("leitura arquivo de individuos:"+ex.getMessage());
 		}
-		
 		try {
 			File f = new File( new File(".\\grupo.csv").getCanonicalPath() );
 			arquivo = new Scanner(f); // pasta do objeto
@@ -98,19 +120,13 @@ public class Repositorio {
 				for(int i = 1; i < partes.length; i++) {
 					grupo.adicionar(this.localizarIndividuo(partes[i]));
 				}
-			
 				this.adicionarGrupo(grupo);
-				
-				
 			}
+		}
+		catch(Exception e) {
 			
 		}
-		catch(Exception ex) {
-			
-		}
-		
-		
-	}	
+	}
 	
 //	linha = arquivo.nextLine().trim();		
 //	partes = linha.split(";");
@@ -120,30 +136,5 @@ public class Repositorio {
 //		nomeDosParticipantes =  partes[i] + '\n';
 //	}
 //	
-//	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+//		
 }
-=======
-	// Localizar um grupo no TreeMap participantes
-	public Grupo localizarGrupo(String nome_grupo) {
-		return (Grupo) participantes.get(nome_grupo);
-	}
-	// Gerador de ID para uma mensagem
-	public int gerarId() {
-		if (mensagens.isEmpty())
-			return 1;
-		else {
-			Mensagem ultima_mensagem = mensagens.get(mensagens.size()-1);
-			return ultima_mensagem.getId() + 1;
-		}
-	}
-}
->>>>>>> 54a80113819de8faa35bd7b6abcf0ee383b8fbf8
