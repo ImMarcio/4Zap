@@ -25,7 +25,6 @@ public class Individual extends Participante {
 	public boolean isAdministrador() {return administrador;}
 	public void setAdministrador(boolean administrador) {this.administrador = administrador;}
 	public ArrayList<Mensagem> getEnviadas() {return enviadas;}
-	public ArrayList<Mensagem> getRecebidas() {return new ArrayList<>();}
     public ArrayList<Grupo> getGrupos() {return grupos;}
     public Grupo getGrupo(String nome_grupo) {
     	for (Grupo g : grupos) {
@@ -33,5 +32,13 @@ public class Individual extends Participante {
     			return g;
     	}
     	return null;
+    }
+    
+    public void adicionarMensagemEnviada(Mensagem mensagem) {
+        enviadas.add(mensagem);
+    }
+    
+    public void removerMensagemEnviada(Mensagem mensagem) {
+    	enviadas.remove(mensagem);
     }
 }

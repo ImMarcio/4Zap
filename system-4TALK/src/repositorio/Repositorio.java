@@ -2,7 +2,10 @@ package repositorio;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 import java.util.TreeMap;
 
@@ -15,33 +18,84 @@ public class Repositorio {
     private TreeMap<String,Participante> participantes = new TreeMap<>();
     private TreeMap<Integer,Mensagem> mensagens = new TreeMap<>();
 
-    public Repositorio(){
+    public Repositorio() {
         carregarObjetos(); //ler dados dos arquivos
     }
-    
 
     // Getters e Setters
     public TreeMap<String, Participante> getParticipantes() {return participantes;}
 	public TreeMap<Integer, Mensagem> getMensagens() {return mensagens;}
 
-	// Adicionar um índividuo novo no TreeMap participantes
 	public void adicionarIndividuo(Individual i){
 		this.participantes.put(i.getNome(), i);
 	}
 	
-	// Adicionar um grupo novo no TreeMap participantes
 	public void adicionarGrupo(Grupo g) {
 		this.participantes.put(g.getNome(), g);
 	}
-	// Localizar um individual no TreeMap participantes
-	public Individual localizarIndividuo(String nome){
-		return (Individual) participantes.get(nome);
+	
+	public void adicionarMensagem(Mensagem msg) {
+		this.mensagens.put(msg.getId(), msg);
+		
+		msg.getEmitente().adicionarMensagemEnviada(msg);
+	    msg.getDestinatario().adicionarMensagemRecebida(msg);
+	}
+	// Versão para grupos
+	public void adicionarMensagemRecebida(Participante destinatario, Mensagem mensagem) {
+	    destinatario.adicionarMensagemRecebida(mensagem);
+	}
+	// Versão para grupos
+	public void adicionarMensagemEnviada(Individual remetente, Mensagem mensagem) {
+	    remetente.adicionarMensagemEnviada(mensagem);
 	}
 
+	public Participante localizarParticipante(String nome){
+		return (Participante) participantes.get(nome);
+		
+	}
 	
 	
+	public Mensagem localizarMensagem(int id){
+		for(Mensagem msg : mensagens.values()){
+			if(msg.getId()==id)
+				return msg;
+		}
+		return null;
+	}
 	
-	public void carregarObjetos() {
+	public ArrayList<Mensagem> obterConversaSalva(Individual remetente, Participante destinatario) {
+		ArrayList<Mensagem> conversa = new ArrayList<>();
+	    for (Mensagem mensagem : mensagens.values()) {
+	        if (mensagem.getEmitente().equals(remetente) && mensagem.getDestinatario().equals(destinatario)) {
+	            conversa.add(mensagem);}
+	    }
+	    Collections.sort(conversa, Comparator.comparing(Mensagem::getDataHora));
+	    return conversa;
+	}
+	
+	public int gerarId() {
+		if (mensagens.isEmpty())
+			return 1;
+		else {
+			Mensagem ultima_mensagem = mensagens.get(mensagens.size()-1);
+			return ultima_mensagem.getId() + 1;
+		}
+	}
+	
+	public void removerMensagemEnviada(Individual remetente, Mensagem mensagem) {
+	    remetente.removerMensagemEnviada(mensagem);
+	}
+
+	public void removerMensagemRecebida(Participante destinatario, Mensagem mensagem) {
+	    destinatario.removerMensagemRecebida(mensagem);
+	}
+
+	public void removerMensagem(Mensagem mensagem) {
+		Integer id = mensagem.getId();
+        mensagens.remove(id);
+    }
+	
+	public void carregarObjetos(){
 		try {
 			File arquivoDeIndividuo = new File( new File(".\\individual.csv").getCanonicalPath() ) ; 
 			File arquivoDoGrupo = new File( new File(".\\grupo.csv").getCanonicalPath() ) ; 
@@ -57,13 +111,24 @@ public class Repositorio {
 		catch(Exception ex)		{
 			throw new RuntimeException("criacao dos arquivos vazios:"+ex.getMessage());
 		}
+//		variáveis de auxílio para administrar o arquivo.
 		String linha;
 		String[] partes;
+
+//		variáveis para guardar os atributos do individuo e do grupo
 		String nomeindividuo,senha,nomegrupo;
-		ArrayList<String> nomeDosParticipantes = null;
 		boolean admistrador;
+//		variáveis para guardar os atributos das mensagens.
+		int id;
+		String texto;
+		Individual emitente;
+		Participante destinatario;
+		LocalDateTime datahora;
+		 
+//		variáveis para auxiliar no carregamento de dados
 		Individual individuo;
 		Grupo grupo;
+		Mensagem mensagem;
 		Scanner arquivo = null;
 		
 		try {
@@ -86,7 +151,6 @@ public class Repositorio {
 		catch(Exception ex) {
 			throw new RuntimeException("leitura arquivo de individuos:"+ex.getMessage());
 		}
-		
 		try {
 			File f = new File( new File(".\\grupo.csv").getCanonicalPath() );
 			arquivo = new Scanner(f); // pasta do objeto
@@ -96,54 +160,44 @@ public class Repositorio {
 				nomegrupo = partes[0];
 				grupo = new Grupo(nomegrupo);
 				for(int i = 1; i < partes.length; i++) {
-					grupo.adicionar(this.localizarIndividuo(partes[i]));
+					Participante participanteAtual = this.localizarParticipante(partes[i]);
+					if( participanteAtual instanceof Individual indi) {
+						grupo.adicionar(indi);
+					}
+					
 				}
+
 				this.adicionarGrupo(grupo);	
 			}	
-		}
+			arquivo.close();
+				
+			}
 		catch(Exception ex) {
 			throw new RuntimeException("leitura arquivo de grupo:"+ex.getMessage());
 		}
-		
-		
-	}	
-	
-	
-
-	// Localizar um grupo no TreeMap participantes
-	public Grupo localizarGrupo(String nome_grupo) {
-		return (Grupo) participantes.get(nome_grupo);
-	}
-	// Gerador de ID para uma mensagem
-	public int gerarId() {
-		if (mensagens.isEmpty())
-			return 1;
-		else {
-			Mensagem ultima_mensagem = mensagens.get(mensagens.size()-1);
-			return ultima_mensagem.getId() + 1;
+		try {
+			File f = new File( new File(".\\mensagem.csv").getCanonicalPath() );
+			arquivo = new Scanner(f); // pasta do objeto
+			while(arquivo.hasNextLine()) {
+				linha = arquivo.nextLine();
+				partes = linha.split(";");
+				id = Integer.parseInt(partes[0]);
+				texto = partes[1];
+				emitente = (Individual) this.localizarParticipante(partes[2]);
+				destinatario = this.localizarParticipante(partes[3]);
+				mensagem = new Mensagem(id,texto, emitente, destinatario);
+				this.adicionarMensagem(mensagem);
+			}
+			arquivo.close();
+		}
+		catch(Exception ex) {
+			throw new RuntimeException("leitura arquivo de mensagens:"+ex.getMessage());
 		}
 	}
 	
-	
-//	linha = arquivo.nextLine().trim();		
-//	partes = linha.split(";");
-//	nomegrupo = partes[0];
-//	nomeDosParticipantes =  "Participantes: " + '\n';
-//	for(int i = 1; i < partes.length; i++) {
-//		nomeDosParticipantes =  partes[i] + '\n';
-//	}
-//	
-//	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }
-
-
+//a chave fechando a classe "Repositório" 
+	
+	
+	
 

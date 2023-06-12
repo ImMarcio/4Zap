@@ -28,5 +28,13 @@ public class Participante {
             }
             return texto;
         }
+        
+        public void adicionarMensagemRecebida(Mensagem mensagem) {
+        	recebidas.add(mensagem);
+        }
+        
+        public void removerMensagemRecebida(Mensagem mensagem) {
+            recebidas.remove(mensagem);
+        }
 
 }
