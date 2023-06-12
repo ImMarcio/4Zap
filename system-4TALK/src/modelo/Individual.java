@@ -10,7 +10,6 @@ import java.util.ArrayList;
 public class Individual extends Participante {
 	private String senha;
     private boolean administrador; 
-    private ArrayList<Mensagem> enviadas = new ArrayList<>();
 	private ArrayList<Grupo> grupos = new ArrayList<>();
     
     public Individual(String nome, String senha, boolean administrador) {
@@ -24,7 +23,7 @@ public class Individual extends Participante {
 	public void setSenha(String senha) {this.senha = senha;}
 	public boolean isAdministrador() {return administrador;}
 	public void setAdministrador(boolean administrador) {this.administrador = administrador;}
-	public ArrayList<Mensagem> getEnviadas() {return enviadas;}
+	
     public ArrayList<Grupo> getGrupos() {return grupos;}
     public Grupo getGrupo(String nome_grupo) {
     	for (Grupo g : grupos) {
@@ -34,11 +33,5 @@ public class Individual extends Participante {
     	return null;
     }
     
-    public void adicionarMensagemEnviada(Mensagem mensagem) {
-        enviadas.add(mensagem);
-    }
     
-    public void removerMensagemEnviada(Mensagem mensagem) {
-    	enviadas.remove(mensagem);
-    }
 }

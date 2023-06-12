@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 
@@ -13,6 +14,7 @@ import modelo.Grupo;
 import modelo.Individual;
 import modelo.Mensagem;
 import modelo.Participante;
+
 
 public class Repositorio {
     private TreeMap<String,Participante> participantes = new TreeMap<>();
@@ -194,6 +196,58 @@ public class Repositorio {
 			throw new RuntimeException("leitura arquivo de mensagens:"+ex.getMessage());
 		}
 	}
+
+	public void salvarObjeto(){
+		FileWriter arquivo = null;
+		try{
+			File f = new File( new File(".\\individual.csv").getCanonicalPath())  ;
+			arquivo = new FileWriter(f);
+			for(Participante participante: participantes.values() ){
+				arquivo.write( participante.getNome()+";" + ((Individual) participante).getSenha() + ";" + ((Individual) participante).isAdministrador() + "\n");					
+			}	
+			arquivo.close();		
+		}
+		catch(Exception ex) {
+			throw new RuntimeException("problema na cria��o do arquivo  individual "+ex.getMessage());
+		}
+		try{
+			File f = new File( new File(".\\grupo.csv").getCanonicalPath())  ;
+			arquivo = new FileWriter(f);
+				
+		
+			for(Participante participante: participantes.values() ){	
+				String individuos = null;
+				ArrayList<Individual> listaDeIndividuos = ((Grupo) participante).getIndividuos();
+				for(int i = 0; i < listaDeIndividuos.size(); i++) {
+					individuos += listaDeIndividuos.get(i).getNome() + ";";
+				};	
+				
+				arquivo.write( participante.getNome() + ";" + individuos +  "\n");		
+				}	
+				arquivo.close();	
+		}
+		catch(Exception ex) {
+			throw new RuntimeException("problema na cria��o do arquivo  grupo "+ex.getMessage());
+		
+		}
+		try{
+			File f = new File( new File(".\\mensagem.csv").getCanonicalPath())  ;
+			arquivo = new FileWriter(f);
+			for(Mensagem mensagem : mensagens.values()){
+				arquivo.write( mensagem.getId() + ";"+ mensagem.getEmitente().getNome() + ";" + mensagem.getDestinatario().getNome() + ";" + mensagem.getDataHora() +  "\n");		
+				}	
+			
+				arquivo.close();	
+		}
+		catch(Exception ex) {
+			throw new RuntimeException("problema na cria��o do arquivo  mensagem "+ex.getMessage());
+		}
+		
+		
+		
+		
+	}
+	
 	
 }
 //a chave fechando a classe "Repositório" 

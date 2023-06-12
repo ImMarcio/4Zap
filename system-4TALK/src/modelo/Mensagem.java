@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 public class Mensagem {
     private int id;
     private String texto;
-    private Individual emitente;
+    private Participante emitente;
     private Participante destinatario;
     private LocalDateTime datahora;
     
@@ -28,7 +28,7 @@ public class Mensagem {
     public void setId(int id){ this.id = id; }
     public String getTexto(){ return this.texto; }
     public void setTexto(String texto){ this.texto = texto; }
-    public Individual getEmitente(){ return this.emitente; }
+    public Individual getEmitente(){ return (Individual) this.emitente; }
     public void setEmitente(Individual emitente){ this.emitente = emitente; }
     public Participante getDestinatario(){ return this.destinatario; }
     public void setDestinatario(Participante destinatario){ this.destinatario = destinatario; }
