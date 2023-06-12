@@ -17,19 +17,17 @@ public class Grupo extends Participante {
     
     // Getters e Setters
 	public ArrayList<Individual> getIndividuos(){return individuos;}
-	public ArrayList<Mensagem> getRecebidas() {return new ArrayList<>();}
-
 
 	public void adicionar(Individual individuo) throws Exception{
 		if(individuo!= null) {
 			individuos.add(individuo);
 		}
-		else {throw new Exception("Indivíduo não existe!");}
+		else {throw new Exception("Individuo nao existe!");}
 	}
-	// Talvez vá pro fachada
+	// Talvez vá pro repositorio
 	public void remover(Individual individuo) throws Exception {
 		if(individuos.remove(individuo) == false) {
-			throw new Exception("Esse indivíduo não está no grupo!");
+			throw new Exception("Esse individuo nao esta no grupo!");
 		}
 	}
 	// Talvez repositório
@@ -49,9 +47,10 @@ public class Grupo extends Participante {
 		String texto = "" ;
 		if (individuos.isEmpty())
 			texto += "vazio";
-		else 	
+		else
+			texto = "Membros:";
 			for(Individual individuo: individuos) 
-				texto += " " + individuo.getNome() ;
+				texto += " " + individuo.getNome();
 		return texto ;
 	}	
 }

@@ -23,11 +23,7 @@ public class Mensagem {
         this.datahora = LocalDateTime.now();
     }
 
-    public Mensagem(){}
-
-
-    // Gets and sets
-
+    // Getters e setters
     public int getId(){ return this.id; }
     public void setId(int id){ this.id = id; }
     public String getTexto(){ return this.texto; }
@@ -37,7 +33,6 @@ public class Mensagem {
     public Participante getDestinatario(){ return this.destinatario; }
     public void setDestinatario(Participante destinatario){ this.destinatario = destinatario; }
 
-    public LocalDateTime getDataHora(){ return this.datahora; }
   
     public void setDataHora(LocalDateTime datahora){this.datahora = datahora;}
     public void dataHoraAtual() {DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
@@ -45,12 +40,17 @@ public class Mensagem {
 	this.datahora = now;}
 
 
-	public LocalDateTime getDatahora() {return datahora;}
-	
+
+
+    public LocalDateTime getDataHora(){ return this.datahora; }  
 
     @Override
-    public String toString(){
-        String texto = "ID" + this.id + "\n" + " Texto da mensagem:" + this.texto + "\n" + "Emitente:" + emitente.getNome() + "\n" + "Destinatário: " + destinatario.getNome() + "\n";
-        return texto;
-    }
+	public String toString() {
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        String datahora_formatada = datahora.format(formatter);
+        
+		return "Mensagem [id=" + id + ", texto=" + texto + ", emitente=" + emitente + ", destinatario=" + destinatario
+				+ ", datahora=" + datahora_formatada + "]";
+	}
+
 }
