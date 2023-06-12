@@ -19,7 +19,7 @@ public class Fachada {
 		if (nome_individuo.isEmpty() || senha.isEmpty()) {
 			throw new IllegalArgumentException("Nome ou senha nao podem estar vazios. Verifique se digitou algum campo vazio.");
 		}
-		Individual i = repositorio.localizarIndividuo(nome_individuo);
+		Individual i = (Individual) repositorio.localizarParticipante(nome_individuo);
 		nome_individuo = nome_individuo.trim();
 		senha = senha.trim();
 		if (i != null) {
@@ -36,7 +36,7 @@ public class Fachada {
 		if (nome_administrador.isEmpty() || senha.isEmpty()) {
 			throw new IllegalArgumentException("Nome ou senha nao podem estar vazios. Verifique se digitou algum campo vazio.");
 		}
-		Individual i = repositorio.localizarIndividuo(nome_administrador);
+		Individual i = (Individual) repositorio.localizarParticipante(nome_administrador);
 		if (i != null && i.getNome().equals(nome_administrador)) {
 			i.setAdministrador(true);
 		}
@@ -52,7 +52,7 @@ public class Fachada {
 		if (nome_grupo.isEmpty()) {
 			throw new IllegalArgumentException("Nome do grupo nao pode estar vazio. Verifique se deixou nome vazio.");
 		}
-		Grupo g = repositorio.localizarGrupo(nome_grupo);
+		Grupo g = (Grupo) repositorio.localizarParticipante(nome_grupo);
 		if (g != null) {
 			throw new Exception("Nao criou participante - grupo ja cadastrado: " + nome_grupo);
 		}
@@ -67,11 +67,11 @@ public class Fachada {
 		if (nome_remetente.isEmpty() || nome_destinatario.isEmpty() || texto.isEmpty() || texto.isBlank()) {
 			throw new IllegalArgumentException("Nomes ou texto nao podem ser vazios. Verifique se deixou algum campo vazio.");
 		}
-		Individual remetente = repositorio.localizarIndividuo(nome_remetente);
+		Individual remetente = (Individual) repositorio.localizarParticipante(nome_remetente);
 		if (remetente == null) {
 			throw new Exception("Mensagem nao enviada - remetente desconhecido: "+nome_remetente);
 		}
-		Participante destinatario = repositorio.localizarIndividuo(nome_destinatario);
+		Participante destinatario = repositorio.localizarParticipante(nome_destinatario);
 		if (destinatario == null) {
 			throw new Exception("Mensagem nao enviada - destinatario desconhecido: " + nome_destinatario);
 		}
@@ -95,10 +95,10 @@ public class Fachada {
 	public static void inserirGrupo(String nome_individuo, String nome_grupo) throws  Exception {
 		nome_individuo = nome_individuo.trim();
 		nome_grupo = nome_grupo.trim();
-		Grupo gru = repositorio.localizarGrupo(nome_grupo);
+		Grupo gru = (Grupo) repositorio.localizarParticipante(nome_grupo);
 		if(gru == null) 
 			throw new Exception("Nao inseriu individuo - grupo inexistente: " + nome_grupo);
-		Individual in = repositorio.localizarIndividuo(nome_individuo);
+		Individual in = (Individual) repositorio.localizarParticipante(nome_individuo);
 		if(in == null)
 			throw new Exception("Nao inseriu individuo - individuo inexistente: " + nome_individuo);
 		gru.adicionar(in); // Individuo adicionado ao grupo
@@ -106,7 +106,7 @@ public class Fachada {
 	}
 	// Remove um individuo especifico do grupo
 	public static void removerGrupo(String nome_individuo, String nome_grupo) throws Exception {
-		Individual in = repositorio.localizarIndividuo(nome_individuo);
+		Individual in = (Individual) repositorio.localizarParticipante(nome_individuo);
 		if (in==null)
 			throw new Exception("Nao removeu o individuo - individuo inexistente: "+nome_individuo);
 		Grupo gru = in.getGrupo(nome_grupo);
@@ -121,7 +121,7 @@ public class Fachada {
 		if (nome_individuo.isEmpty() || senha.isEmpty()) {
 			throw new IllegalArgumentException("Nome ou senha nao podem estar vazios.");
 		}
-		Individual i = repositorio.localizarIndividuo(nome_individuo);
+		Individual i = (Individual) repositorio.localizarParticipante(nome_individuo);
 		if (i == null) {
 			return false;
 		}
@@ -136,11 +136,11 @@ public class Fachada {
 		if (nome_remetente.isEmpty() || nome_destinatario.isEmpty()) {
 			throw new IllegalArgumentException("Nomes nao podem ser vazios. Verifique se deixou algum campo vazio.");
 		}
-		Individual remetente = repositorio.localizarIndividuo(nome_remetente);
+		Individual remetente = (Individual) repositorio.localizarParticipante(nome_remetente);
 		if (remetente == null) {
 			throw new Exception("Remetente desconhecido: "+nome_remetente);
 		}
-		Participante destinatario = repositorio.localizarIndividuo(nome_destinatario);
+		Participante destinatario = repositorio.localizarParticipante(nome_destinatario);
 		if (destinatario == null) {
 			throw new Exception("Destinatario desconhecido: " + nome_destinatario);
 		}
@@ -156,7 +156,7 @@ public class Fachada {
 		if (id <= 0) {
 			throw new Exception("ID nao pode ser menor ou igual a 0.");
 		}
-		Individual in = repositorio.localizarIndividuo(nome_individuo);
+		Individual in = (Individual) repositorio.localizarParticipante(nome_individuo);
 		if (in == null) {
 			throw new Exception("Individuo desconhecido.");
 		}
