@@ -43,7 +43,7 @@ public class Repositorio {
 	public void adicionarMensagemRecebida(Participante destinatario, Mensagem mensagem) {
 	    destinatario.adicionarMensagemRecebida(mensagem);
 	}
-
+	// Versão para grupos
 	public void adicionarMensagemEnviada(Individual remetente, Mensagem mensagem) {
 	    remetente.adicionarMensagemEnviada(mensagem);
 	}
@@ -98,9 +98,9 @@ public class Repositorio {
 	
 	public void carregarObjetos(){
 		try {
-			File arquivoDeIndividuo = new File( new File(".\\individual.csv").getCanonicalPath() ) ; 
-			File arquivoDoGrupo = new File( new File(".\\grupo.csv").getCanonicalPath() ) ; 
-			File arquivoDeMensagem = new File( new File(".\\mensagem.csv").getCanonicalPath() ) ;
+			File arquivoDeIndividuo = new File( new File(".\\backup/individual.csv").getCanonicalPath() ) ; 
+			File arquivoDoGrupo = new File( new File(".\\backup/grupo.csv").getCanonicalPath() ) ; 
+			File arquivoDeMensagem = new File( new File(".\\backup/mensagem.csv").getCanonicalPath() ) ;
 			if (!arquivoDeIndividuo.exists() || !arquivoDoGrupo.exists() || arquivoDeMensagem.exists()  ) {
 				//System.out.println("criando arquivo .csv vazio");
 				FileWriter arquivo1 = new FileWriter(arquivoDeIndividuo); arquivo1.close();
@@ -122,7 +122,7 @@ public class Repositorio {
 		Scanner arquivo = null;
 		
 		try {
-			File f = new File( new File(".\\individual.csv").getCanonicalPath() );
+			File f = new File( new File(".\\backup/individual.csv").getCanonicalPath() );
 			arquivo = new Scanner(f); // pasta do objeto
 			while(arquivo.hasNextLine()) {
 				linha = arquivo.nextLine().trim();		
@@ -142,7 +142,7 @@ public class Repositorio {
 			throw new RuntimeException("leitura arquivo de individuos:"+ex.getMessage());
 		}
 		try {
-			File f = new File( new File(".\\grupo.csv").getCanonicalPath() );
+			File f = new File( new File(".\\backup/grupo.csv").getCanonicalPath() );
 			arquivo = new Scanner(f); // pasta do objeto
 			while(arquivo.hasNextLine()) {
 				linha = arquivo.nextLine().trim();		
