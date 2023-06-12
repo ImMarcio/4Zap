@@ -14,10 +14,14 @@ public class Fachada {
 	
 	// ainda em andamento
 	public static void criarIndividuo(String nome_individuo, String senha) throws Exception {
+		nome_individuo = nome_individuo.trim();
+		senha = senha.trim();
 		if (nome_individuo.isEmpty() || senha.isEmpty()) {
 			throw new IllegalArgumentException("Nome ou senha nao podem estar vazios. Verifique se digitou algum campo vazio.");
 		}
 		Individual i = repositorio.localizarIndividuo(nome_individuo);
+		nome_individuo = nome_individuo.trim();
+		senha = senha.trim();
 		if (i != null) {
 			throw new Exception("Nao criou participante - individuo ja cadastrado: " + nome_individuo);
 		}
@@ -27,19 +31,24 @@ public class Fachada {
 	}
 	// ainda em andamento
 	public static void criarAdministrador(String nome_administrador, String senha) throws Exception {
+		nome_administrador = nome_administrador.trim();
+		senha = senha.trim();
 		if (nome_administrador.isEmpty() || senha.isEmpty()) {
 			throw new IllegalArgumentException("Nome ou senha nao podem estar vazios. Verifique se digitou algum campo vazio.");
 		}
 		Individual i = repositorio.localizarIndividuo(nome_administrador);
-		if (i != null) {
-			throw new Exception("Nao criou participante - administrador ja cadastrado: " + nome_administrador);
+		if (i != null && i.getNome().equals(nome_administrador)) {
+			i.setAdministrador(true);
 		}
-		i = new Individual(nome_administrador, senha, true);
+		else {
+			i = new Individual(nome_administrador, senha, true);
+		}
 		repositorio.adicionarIndividuo(i);
 		//repositorio.salvarObjetos();
 	}
 	// em andamento
 	public static void criarGrupo(String nome_grupo) throws Exception {
+		nome_grupo = nome_grupo.trim();
 		if (nome_grupo.isEmpty()) {
 			throw new IllegalArgumentException("Nome do grupo nao pode estar vazio. Verifique se deixou nome vazio.");
 		}
@@ -53,7 +62,9 @@ public class Fachada {
 	}
 	// em andamento
 	public static void criarMensagem(String nome_remetente, String nome_destinatario, String texto) throws Exception {
-		if (nome_remetente.isEmpty() || nome_destinatario.isEmpty() || texto.isEmpty()) {
+		nome_remetente = nome_remetente.trim();
+		nome_destinatario = nome_destinatario.trim();
+		if (nome_remetente.isEmpty() || nome_destinatario.isEmpty() || texto.isEmpty() || texto.isBlank()) {
 			throw new IllegalArgumentException("Nomes ou texto nao podem ser vazios. Verifique se deixou algum campo vazio.");
 		}
 		Individual remetente = repositorio.localizarIndividuo(nome_remetente);
@@ -67,10 +78,23 @@ public class Fachada {
 		int id = repositorio.gerarId();
 		Mensagem msg = new Mensagem(id,texto,remetente,destinatario);
 		repositorio.adicionarMensagem(msg);
+		
+		if (destinatario instanceof Grupo) {
+            Grupo grupo = (Grupo) destinatario;
+            for (Participante membro : grupo.getIndividuos()) {
+                repositorio.adicionarMensagemRecebida(membro, msg);
+            }
+        } else {
+            repositorio.adicionarMensagemRecebida(destinatario, msg);
+        }
+        
+        repositorio.adicionarMensagemEnviada(remetente, msg);
 		//repositorio.salvarObjetos();
 	}
 	// Insere um individuo a um grupo - relaciona individuo a um grupo
-	public static void inserirGrupo(String nome_individuo, String nome_grupo) throws  Exception {	
+	public static void inserirGrupo(String nome_individuo, String nome_grupo) throws  Exception {
+		nome_individuo = nome_individuo.trim();
+		nome_grupo = nome_grupo.trim();
 		Grupo gru = repositorio.localizarGrupo(nome_grupo);
 		if(gru == null) 
 			throw new Exception("Nao inseriu individuo - grupo inexistente: " + nome_grupo);
@@ -82,7 +106,6 @@ public class Fachada {
 	}
 	// Remove um individuo especifico do grupo
 	public static void removerGrupo(String nome_individuo, String nome_grupo) throws Exception {
-		nome_individuo = nome_individuo.trim();
 		Individual in = repositorio.localizarIndividuo(nome_individuo);
 		if (in==null)
 			throw new Exception("Nao removeu o individuo - individuo inexistente: "+nome_individuo);
@@ -94,6 +117,7 @@ public class Fachada {
 	}
 	
 	public static boolean validarIndividuo(String nome_individuo, String senha) throws Exception {
+		nome_individuo = nome_individuo.trim();
 		if (nome_individuo.isEmpty() || senha.isEmpty()) {
 			throw new IllegalArgumentException("Nome ou senha nao podem estar vazios.");
 		}
@@ -101,7 +125,11 @@ public class Fachada {
 		if (i == null) {
 			return false;
 		}
-		return true;
+		if(i.getNome().equals(nome_individuo) && i.getSenha().equals(senha)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	public static ArrayList<Mensagem> obterConversa(String nome_remetente, String nome_destinatario) throws Exception {
@@ -118,5 +146,43 @@ public class Fachada {
 		}
 		ArrayList<Mensagem> mensagens = repositorio.obterConversaSalva(remetente,destinatario);
 		return mensagens;
+	}
+	
+	public static void apagarMensagem(String nome_individuo, int id) throws Exception {
+		nome_individuo = nome_individuo.trim();
+		if(nome_individuo.isEmpty()) {
+			throw new IllegalArgumentException("Nome nao pode estar vazio.");
+		}
+		if (id <= 0) {
+			throw new Exception("ID nao pode ser menor ou igual a 0.");
+		}
+		Individual in = repositorio.localizarIndividuo(nome_individuo);
+		if (in == null) {
+			throw new Exception("Individuo desconhecido.");
+		}
+		Mensagem msg = repositorio.localizarMensagem(id);
+		if (msg == null) {
+	        throw new Exception("Mensagem não encontrada.");
+	    }
+	    
+	    // Verificar se a mensagem foi emitida pelo indivíduo
+	    if (msg.getEmitente().equals(in)) {
+	    	Participante destinatario = msg.getDestinatario();
+	        repositorio.removerMensagemEnviada(in, msg);
+
+	        if (destinatario instanceof Grupo) {
+	            // Remover mensagem recebida por cada membro do grupo
+	            Grupo grupo = (Grupo) destinatario;
+	            for (Participante membro : grupo.getIndividuos()) {
+	                repositorio.removerMensagemRecebida(membro, msg);
+	            }
+	        } else {
+	            repositorio.removerMensagemRecebida(destinatario, msg);
+	        }
+
+	        repositorio.removerMensagem(msg);
+	    } else {
+	        throw new Exception("A mensagem não foi emitida por esse indivíduo.");
+	    }
 	}
 }

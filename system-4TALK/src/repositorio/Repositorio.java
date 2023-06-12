@@ -35,7 +35,18 @@ public class Repositorio {
 	
 	public void adicionarMensagem(Mensagem msg) {
 		this.mensagens.put(msg.getId(), msg);
-	}	
+		
+		msg.getEmitente().adicionarMensagemEnviada(msg);
+	    msg.getDestinatario().adicionarMensagemRecebida(msg);
+	}
+	// Versão para grupos
+	public void adicionarMensagemRecebida(Participante destinatario, Mensagem mensagem) {
+	    destinatario.adicionarMensagemRecebida(mensagem);
+	}
+
+	public void adicionarMensagemEnviada(Individual remetente, Mensagem mensagem) {
+	    remetente.adicionarMensagemEnviada(mensagem);
+	}
 
 	public Individual localizarIndividuo(String nome){
 		return (Individual) participantes.get(nome);
@@ -43,6 +54,14 @@ public class Repositorio {
 
 	public Grupo localizarGrupo(String nome_grupo) {
 		return (Grupo) participantes.get(nome_grupo);
+	}
+	
+	public Mensagem localizarMensagem(int id){
+		for(Mensagem msg : mensagens.values()){
+			if(msg.getId()==id)
+				return msg;
+		}
+		return null;
 	}
 	
 	public ArrayList<Mensagem> obterConversaSalva(Individual remetente, Participante destinatario) {
@@ -63,6 +82,19 @@ public class Repositorio {
 			return ultima_mensagem.getId() + 1;
 		}
 	}
+	
+	public void removerMensagemEnviada(Individual remetente, Mensagem mensagem) {
+	    remetente.removerMensagemEnviada(mensagem);
+	}
+
+	public void removerMensagemRecebida(Participante destinatario, Mensagem mensagem) {
+	    destinatario.removerMensagemRecebida(mensagem);
+	}
+
+	public void removerMensagem(Mensagem mensagem) {
+		Integer id = mensagem.getId();
+        mensagens.remove(id);
+    }
 	
 	public void carregarObjetos(){
 		try {

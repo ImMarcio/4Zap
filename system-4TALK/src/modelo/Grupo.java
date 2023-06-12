@@ -17,7 +17,6 @@ public class Grupo extends Participante {
     
     // Getters e Setters
 	public ArrayList<Individual> getIndividuos(){return individuos;}
-	public ArrayList<Mensagem> getRecebidas() {return new ArrayList<>();}
 
 	public void adicionar(Individual individuo) throws Exception{
 		if(individuo!= null) {
@@ -48,9 +47,10 @@ public class Grupo extends Participante {
 		String texto = "" ;
 		if (individuos.isEmpty())
 			texto += "vazio";
-		else 	
+		else
+			texto = "Membros:";
 			for(Individual individuo: individuos) 
-				texto += " " + individuo.getNome() ;
+				texto += " " + individuo.getNome();
 		return texto ;
 	}	
 }
