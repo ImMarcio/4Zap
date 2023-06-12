@@ -98,15 +98,11 @@ public class Repositorio {
 				for(int i = 1; i < partes.length; i++) {
 					grupo.adicionar(this.localizarIndividuo(partes[i]));
 				}
-			
-				this.adicionarGrupo(grupo);
-				
-				
-			}
-			
+				this.adicionarGrupo(grupo);	
+			}	
 		}
 		catch(Exception ex) {
-			
+			throw new RuntimeException("leitura arquivo de grupo:"+ex.getMessage());
 		}
 		
 		
