@@ -210,14 +210,15 @@ public class Repositorio {
 				
 		
 			for(Participante participante: participantes.values() ){	
-				String individuos = null;
+				String individuos = "";
 				if (participante instanceof Grupo) {
 					ArrayList<Individual> listaDeIndividuos = ((Grupo) participante).getIndividuos();
 					for(int i = 0; i < listaDeIndividuos.size(); i++) {
 						individuos += listaDeIndividuos.get(i).getNome() + ";";
 					};	
+					arquivo.write( ((Grupo)participante).getNome() + ";" + individuos +  "\n");	
 				}
-				arquivo.write( participante.getNome() + ";" + individuos +  "\n");		
+					
 			}	
 			arquivo.close();	
 		}

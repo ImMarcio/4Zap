@@ -82,6 +82,8 @@ public class Teste1 {
 			Fachada.inserirGrupo("joao", "grupo1");
 			Fachada.inserirGrupo("maria", "grupo1");
 			Fachada.inserirGrupo("jose", "grupo1");
+			Fachada.inserirGrupo("maria", "grupo2");
+			Fachada.inserirGrupo("jose", "grupo2");
 			System.out.println("inseriu nos grupos");
 		} catch (Exception e) 	{
 			System.out.println(e.getMessage());
