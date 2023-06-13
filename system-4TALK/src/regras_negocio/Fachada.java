@@ -237,18 +237,40 @@ public class Fachada {
 			
 		}
 		return grupos;
+	}
+	public static ArrayList<Mensagem> espionarMensagens(String nomeAdmin, String termo){
+		Individual admin = (Individual) repositorio.localizarParticipante(nomeAdmin);	
+		ArrayList<Mensagem> mensagens = new ArrayList<>();
+		for(Mensagem mensagem : repositorio.getMensagens().values()) {
+			if(mensagem.getTexto().contains(termo)) {
+				mensagens.add(mensagem);
+			}	
+		}
 		
+		return mensagens;
 	}
 	
+	public static ArrayList <String> ausentes(String nomeAdmin){
+		ArrayList <String> participantesAusentes = new ArrayList<>();
+		Individual admin = (Individual) repositorio.localizarParticipante(nomeAdmin);	
+		for(Participante participante : repositorio.getParticipantes().values()) {
+			if(participante.getEnviadas().isEmpty()) {
+				participantesAusentes.add(participante.getNome() );
+			}
+		}
+		return participantesAusentes;	
+	}
+	
+	public static ArrayList<Mensagem>listarMensagens(){
+		ArrayList<Mensagem> mensagens = new ArrayList<>();
+		for(Mensagem mensagem : repositorio.getMensagens().values()) {
+			mensagens.add(mensagem);
+		}
+		return mensagens;
+	}
 	
 	
 	
 }
 
 
-//if(participante.getEnviadas().isEmpty()) {
-//individuos.add(participante.getNome() + "Não ativo");
-//}
-//else {
-//individuos.add(participante.getNome() + "ativo");
-//}

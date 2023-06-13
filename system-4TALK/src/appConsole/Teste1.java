@@ -46,8 +46,8 @@ public class Teste1 {
 		}
 
 		System.out.println("\nlistar mensagens do sistema");
-		//for(Mensagem m : Fachada.listarMensagens())
-			//System.out.println(m);
+		for(Mensagem m : Fachada.listarMensagens())
+			System.out.println(m);
 
 		System.out.println("\nlistar individuos ");
 
@@ -148,12 +148,12 @@ public class Teste1 {
 		System.out.println("*******************************************************");
 
 		System.out.println("listar mensagens finais");
-		//for(Mensagem m : Fachada.listarMensagens())
-			//System.out.println(m);
+		for(Mensagem m : Fachada.listarMensagens())
+			System.out.println(m);
 
 		System.out.println("\nlistar individuos finais");
-		//for(Participante p : Fachada.listarIndividuos())
-			//System.out.println(p);
+		for(String p : Fachada.listarIndividuos())
+			System.out.println(p);
 
 		System.out.println("\nlistar grupos finais");
 		for(String p : Fachada.listarGrupos())
@@ -163,12 +163,12 @@ public class Teste1 {
 		try {
 			System.out.println("ESPIONAR");
 			Fachada.criarAdministrador("admin", "admin");
-			//for(Mensagem m : Fachada.espionarMensagens("admin", "projeto"))
-				//System.out.println(m);
+			for(Mensagem m : Fachada.espionarMensagens("admin", "projeto"))
+				System.out.println(m);
 			
 			System.out.println("\nAUSENTES");
-			//for(String nome : Fachada.ausentes("admin"))
-				//System.out.println(nome);
+			for(String nome : Fachada.ausentes("admin"))
+				System.out.println(nome);
 			
 		} catch (Exception e) 	{
 			System.out.println(e.getMessage());
