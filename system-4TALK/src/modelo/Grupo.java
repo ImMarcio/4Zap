@@ -22,7 +22,7 @@ public class Grupo extends Participante {
 		if(individuo!= null) {
 			individuos.add(individuo);
 		}
-		else {throw new Exception("Individuo nao existe!");}
+		else {throw new Exception("Individuo nulo!");}
 	}
 	// Talvez vá pro repositorio
 	public void remover(Individual individuo) throws Exception {

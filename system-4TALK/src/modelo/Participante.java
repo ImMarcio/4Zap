@@ -11,6 +11,7 @@ public class Participante {
         private String nome;
         private ArrayList<Mensagem> recebidas = new ArrayList<>();
         private ArrayList<Mensagem> enviadas = new ArrayList<>();
+        
         public Participante(String nome){
             this.nome = nome;
         }
@@ -20,10 +21,12 @@ public class Participante {
         public void setNome(String nome){this.nome = nome;}
         public ArrayList<Mensagem> getRecebidas(){ return recebidas; }
         public ArrayList<Mensagem> getEnviadas() {return enviadas;}
-        public void adicionarMensagemEnviada(Mensagem mensagem) {enviadas.add(mensagem);
-        }       
-        public void removerMensagemEnviada(Mensagem mensagem) {enviadas.remove(mensagem);
-        }
+        
+        // Adição e Remoção nas propriedades
+        public void adicionarMensagemEnviada(Mensagem mensagem) {enviadas.add(mensagem);}       
+        public void removerMensagemEnviada(Mensagem mensagem) {enviadas.remove(mensagem);}
+        public void adicionarMensagemRecebida(Mensagem mensagem) {recebidas.add(mensagem);}
+        public void removerMensagemRecebida(Mensagem mensagem) {recebidas.remove(mensagem);}
         
         @Override
         public String toString(){
@@ -33,13 +36,4 @@ public class Participante {
             }
             return texto;
         }
-        
-        public void adicionarMensagemRecebida(Mensagem mensagem) {
-        	recebidas.add(mensagem);
-        }
-        
-        public void removerMensagemRecebida(Mensagem mensagem) {
-            recebidas.remove(mensagem);
-        }
-
 }

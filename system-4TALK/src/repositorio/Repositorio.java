@@ -2,11 +2,9 @@ package repositorio;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 
@@ -27,6 +25,18 @@ public class Repositorio {
     // Getters e Setters
     public TreeMap<String, Participante> getParticipantes() {return participantes;}
 	public TreeMap<Integer, Mensagem> getMensagens() {return mensagens;}
+	
+	public Participante localizarParticipante(String nome){
+		return (Participante) participantes.get(nome);
+	}
+	
+	public Mensagem localizarMensagem(int id){
+		for(Mensagem msg : mensagens.values()){
+			if(msg.getId()==id)
+				return msg;
+		}
+		return null;
+	}
 
 	public void adicionarIndividuo(Individual i){
 		this.participantes.put(i.getNome(), i);
@@ -38,7 +48,6 @@ public class Repositorio {
 	
 	public void adicionarMensagem(Mensagem msg) {
 		this.mensagens.put(msg.getId(), msg);
-		
 		msg.getEmitente().adicionarMensagemEnviada(msg);
 	    msg.getDestinatario().adicionarMensagemRecebida(msg);
 	}
@@ -49,20 +58,6 @@ public class Repositorio {
 	// Versão para grupos
 	public void adicionarMensagemEnviada(Individual remetente, Mensagem mensagem) {
 	    remetente.adicionarMensagemEnviada(mensagem);
-	}
-
-	public Participante localizarParticipante(String nome){
-		return (Participante) participantes.get(nome);
-		
-	}
-	
-	
-	public Mensagem localizarMensagem(int id){
-		for(Mensagem msg : mensagens.values()){
-			if(msg.getId()==id)
-				return msg;
-		}
-		return null;
 	}
 	
 	public ArrayList<Mensagem> obterConversaSalva(Individual remetente, Participante destinatario) {
@@ -113,31 +108,19 @@ public class Repositorio {
 		catch(Exception ex)		{
 			throw new RuntimeException("criacao dos arquivos vazios:"+ex.getMessage());
 		}
-//		variáveis de auxílio para administrar o arquivo.
+
 		String linha;
 		String[] partes;
-
-//		variáveis para guardar os atributos do individuo e do grupo
-		String nomeindividuo,senha,nomegrupo;
-		boolean admistrador;
-//		variáveis para guardar os atributos das mensagens.
-		int id;
-		String texto;
-		Individual emitente;
-		Participante destinatario;
-		LocalDateTime datahora;
-		 
-//		variáveis para auxiliar no carregamento de dados
-		Individual individuo;
-		Grupo grupo;
-		Mensagem mensagem;
-		Scanner arquivo = null;
+		Scanner scan = null;
 		
 		try {
+			String nomeindividuo,senha;
+			boolean admistrador;
+			Individual individuo;
 			File f = new File( new File(".\\individual.csv").getCanonicalPath() );
-			arquivo = new Scanner(f); // pasta do objeto
-			while(arquivo.hasNextLine()) {
-				linha = arquivo.nextLine().trim();		
+			scan = new Scanner(f); // pasta do objeto
+			while(scan.hasNextLine()) {
+				linha = scan.nextLine().trim();		
 				partes = linha.split(";");	
 				nomeindividuo = partes[0];
 				senha = partes[1];
@@ -147,41 +130,49 @@ public class Repositorio {
 				this.adicionarIndividuo(individuo);
 				
 			}
-			arquivo.close();
+			scan.close();
 			
 		}
 		catch(Exception ex) {
 			throw new RuntimeException("leitura arquivo de individuos:"+ex.getMessage());
 		}
 		try {
+			String nomegrupo;
+			Grupo grupo;
 			File f = new File( new File(".\\grupo.csv").getCanonicalPath() );
-			arquivo = new Scanner(f); // pasta do objeto
-			while(arquivo.hasNextLine()) {
-				linha = arquivo.nextLine().trim();		
+			scan = new Scanner(f); // pasta do objeto
+			while(scan.hasNextLine()) {
+				linha = scan.nextLine().trim();		
 				partes = linha.split(";");
 				nomegrupo = partes[0];
 				grupo = new Grupo(nomegrupo);
-				for(int i = 1; i < partes.length; i++) {
-					Participante participanteAtual = this.localizarParticipante(partes[i]);
-					if( participanteAtual instanceof Individual indi) {
-						grupo.adicionar(indi);
+				if(partes.length>1) {
+					for(int i = 1; i < partes.length; i++) {
+						Participante participanteAtual = this.localizarParticipante(partes[i]);
+						if( participanteAtual instanceof Individual indi) {
+							grupo.adicionar(indi);
+						}
 					}
-					
 				}
 
 				this.adicionarGrupo(grupo);	
 			}	
-			arquivo.close();
+			scan.close();
 				
 			}
 		catch(Exception ex) {
 			throw new RuntimeException("leitura arquivo de grupo:"+ex.getMessage());
 		}
 		try {
+			int id;
+			String texto;
+			Individual emitente;
+			Participante destinatario;
+			Mensagem mensagem;
 			File f = new File( new File(".\\mensagem.csv").getCanonicalPath() );
-			arquivo = new Scanner(f); // pasta do objeto
-			while(arquivo.hasNextLine()) {
-				linha = arquivo.nextLine();
+			scan = new Scanner(f); // pasta do objeto
+			while(scan.hasNextLine()) {
+				linha = scan.nextLine();
 				partes = linha.split(";");
 				id = Integer.parseInt(partes[0]);
 				texto = partes[1];
@@ -190,14 +181,14 @@ public class Repositorio {
 				mensagem = new Mensagem(id,texto, emitente, destinatario);
 				this.adicionarMensagem(mensagem);
 			}
-			arquivo.close();
+			scan.close();
 		}
 		catch(Exception ex) {
 			throw new RuntimeException("leitura arquivo de mensagens:"+ex.getMessage());
 		}
 	}
 
-	public void salvarObjeto(){
+	public void salvarObjetos(){
 		FileWriter arquivo = null;
 		try{
 			File f = new File( new File(".\\individual.csv").getCanonicalPath())  ;
@@ -236,22 +227,10 @@ public class Repositorio {
 			for(Mensagem mensagem : mensagens.values()){
 				arquivo.write( mensagem.getId() + ";"+ mensagem.getEmitente().getNome() + ";" + mensagem.getDestinatario().getNome() + ";" + mensagem.getDataHora() +  "\n");		
 				}	
-			
-				arquivo.close();	
+			arquivo.close();	
 		}
 		catch(Exception ex) {
-			throw new RuntimeException("problema na cria��o do arquivo  mensagem "+ex.getMessage());
-		}
-		
-		
-		
-		
+			throw new RuntimeException("problema na criacao do arquivo  mensagem "+ex.getMessage());
+		}	
 	}
-	
-	
 }
-//a chave fechando a classe "Repositório" 
-	
-	
-	
-

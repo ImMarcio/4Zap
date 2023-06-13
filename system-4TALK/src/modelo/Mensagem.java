@@ -32,16 +32,6 @@ public class Mensagem {
     public void setEmitente(Individual emitente){ this.emitente = emitente; }
     public Participante getDestinatario(){ return this.destinatario; }
     public void setDestinatario(Participante destinatario){ this.destinatario = destinatario; }
-
-  
-    public void setDataHora(LocalDateTime datahora){this.datahora = datahora;}
-    public void dataHoraAtual() {DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-	LocalDateTime now = LocalDateTime.now();
-	this.datahora = now;}
-
-
-
-
     public LocalDateTime getDataHora(){ return this.datahora; }  
 
     @Override

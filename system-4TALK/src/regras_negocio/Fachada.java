@@ -27,7 +27,7 @@ public class Fachada {
 		}
 		i = new Individual(nome_individuo, senha, false);
 		repositorio.adicionarIndividuo(i);
-		//repositorio.salvarObjetos();
+		repositorio.salvarObjetos();
 	}
 	// ainda em andamento
 	public static void criarAdministrador(String nome_administrador, String senha) throws Exception {
@@ -44,7 +44,7 @@ public class Fachada {
 			i = new Individual(nome_administrador, senha, true);
 		}
 		repositorio.adicionarIndividuo(i);
-		//repositorio.salvarObjetos();
+		repositorio.salvarObjetos();
 	}
 	// em andamento
 	public static void criarGrupo(String nome_grupo) throws Exception {
@@ -58,7 +58,7 @@ public class Fachada {
 		}
 		g = new Grupo(nome_grupo);
 		repositorio.adicionarGrupo(g);
-		//repositorio.salvarObjetos();
+		repositorio.salvarObjetos();
 	}
 	// em andamento
 	public static void criarMensagem(String nome_remetente, String nome_destinatario, String texto) throws Exception {
@@ -89,7 +89,7 @@ public class Fachada {
         }
         
         repositorio.adicionarMensagemEnviada(remetente, msg);
-		//repositorio.salvarObjetos();
+		repositorio.salvarObjetos();
 	}
 	// Insere um individuo a um grupo - relaciona individuo a um grupo
 	public static void inserirGrupo(String nome_individuo, String nome_grupo) throws  Exception {
@@ -102,7 +102,7 @@ public class Fachada {
 		if(in == null)
 			throw new Exception("Nao inseriu individuo - individuo inexistente: " + nome_individuo);
 		gru.adicionar(in); // Individuo adicionado ao grupo
-		//repositorio.salvarObjetos();
+		repositorio.salvarObjetos();
 	}
 	// Remove um individuo especifico do grupo
 	public static void removerGrupo(String nome_individuo, String nome_grupo) throws Exception {
@@ -113,7 +113,7 @@ public class Fachada {
 		if(gru==null) 
 			throw new Exception("Individuo nao esta no grupo.");
 		gru.remover(in); // Individuo removido do grupo
-		//repositorio.salvarObjetos();
+		repositorio.salvarObjetos();
 	}
 	
 	public static boolean validarIndividuo(String nome_individuo, String senha) throws Exception {
@@ -179,10 +179,10 @@ public class Fachada {
 	        } else {
 	            repositorio.removerMensagemRecebida(destinatario, msg);
 	        }
-
 	        repositorio.removerMensagem(msg);
 	    } else {
 	        throw new Exception("A mensagem não foi emitida por esse indivíduo.");
 	    }
+	    repositorio.salvarObjetos();
 	}
 }
