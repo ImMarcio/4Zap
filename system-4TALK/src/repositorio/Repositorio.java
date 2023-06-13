@@ -20,7 +20,7 @@ public class Repositorio {
 
     public Repositorio() {
         carregarObjetos(); //ler dados dos arquivos
-    }
+    } 
 
     // Getters e Setters
     public TreeMap<String, Participante> getParticipantes() {return participantes;}

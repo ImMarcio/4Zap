@@ -185,4 +185,70 @@ public class Fachada {
 	    }
 	    repositorio.salvarObjetos();
 	}
+	public static ArrayList<Mensagem> listarMensagensEnviadas(String nome_do_participante) throws Exception{
+		if(repositorio.localizarParticipante(nome_do_participante) != null) {
+			Participante participante = repositorio.localizarParticipante(nome_do_participante);
+			return participante.getEnviadas();
+		}
+		throw new Exception("Esse usuário não existe " + nome_do_participante);	
+	}
+	public static ArrayList<Mensagem> listarMensagensRecebidas(String nome_do_participante) throws Exception{
+		if(repositorio.localizarParticipante(nome_do_participante) != null) {
+			Participante participante = repositorio.localizarParticipante(nome_do_participante);
+			return participante.getRecebidas();
+		}
+		throw new Exception("Esse usuário não existe " + nome_do_participante);	
+	}
+	
+
+	public static ArrayList<String> listarIndividuos(){
+		ArrayList<String> individuos = new ArrayList<>();;
+		for(Participante participante : repositorio.getParticipantes().values()) {
+			if(participante.getEnviadas().isEmpty()) {
+				individuos.add(participante.getNome() + " Não ativo");
+				}
+			else {
+				individuos.add(participante.getNome() + " ativo");
+				}
+			
+		}
+		return individuos;
+		
+	}
+	public static ArrayList<String> listarGrupos(){
+		ArrayList<String> grupos = new ArrayList<>();;
+		for(Participante participante : repositorio.getParticipantes().values()) {
+			if(participante instanceof Grupo ) {
+				if(participante.getEnviadas().isEmpty()) {
+					grupos.add(participante.getNome() + " Não ativo" );
+				}
+				else {
+					grupos.add(participante.getNome() + "Ativo" );
+				}	
+				for(Participante participantesDoGrupo : ((Grupo) participante).getIndividuos()){
+					if(participantesDoGrupo.getEnviadas().isEmpty()) {
+						grupos.add(participantesDoGrupo.getNome() + " Não ativo");
+					}
+					else {
+						grupos.add(participantesDoGrupo.getNome() + " Ativo");
+					}
+				}
+			}
+			
+		}
+		return grupos;
+		
+	}
+	
+	
+	
+	
 }
+
+
+//if(participante.getEnviadas().isEmpty()) {
+//individuos.add(participante.getNome() + "Não ativo");
+//}
+//else {
+//individuos.add(participante.getNome() + "ativo");
+//}

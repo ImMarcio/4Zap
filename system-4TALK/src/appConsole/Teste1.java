@@ -50,8 +50,9 @@ public class Teste1 {
 			//System.out.println(m);
 
 		System.out.println("\nlistar individuos ");
-		//for(Participante p : Fachada.listarIndividuos())
-			//System.out.println(p);
+
+		for(String p : Fachada.listarIndividuos())
+			System.out.println(p);
 
 		try {
 			System.out.println("\nconversa entre joao e maria");
@@ -122,14 +123,14 @@ public class Teste1 {
 
 		try {
 			System.out.println("\nlistar mensagens enviadas por maria");
-			//ArrayList<Mensagem> lista = Fachada.listarMensagensEnviadas("maria");
-			//for(Mensagem m : lista)
-				//System.out.println(m);
-
+			ArrayList<Mensagem> lista = Fachada.listarMensagensEnviadas("maria");
+			for(Mensagem m : lista)
+				System.out.println(m);
+		
 			System.out.println("\napagar a ultima mensagem enviada de maria");
-			//Mensagem ultima = lista.get(lista.size()-1);
-			//Fachada.apagarMensagem("maria", ultima.getId());
-			//System.out.println("apagou a mensagem "+ultima.getId());
+			Mensagem ultima = lista.get(lista.size()-1);
+			Fachada.apagarMensagem("maria", ultima.getId());
+			System.out.println("apagou a mensagem "+ultima.getId());
 
 		} catch (Exception e) 	{
 			System.out.println(e.getMessage());
@@ -155,8 +156,8 @@ public class Teste1 {
 			//System.out.println(p);
 
 		System.out.println("\nlistar grupos finais");
-		//for(Participante p : Fachada.listarGrupos())
-			//System.out.println(p);
+		for(String p : Fachada.listarGrupos())
+			System.out.println(p);
 
 		System.out.println("\n*******************************************************");
 		try {
