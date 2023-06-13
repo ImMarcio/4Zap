@@ -74,7 +74,8 @@ public class Repositorio {
 		if (mensagens.isEmpty())
 			return 1;
 		else {
-			Mensagem ultima_mensagem = mensagens.get(mensagens.size()-1);
+			Integer ultimaChave = mensagens.lastKey();
+			Mensagem ultima_mensagem = mensagens.get(ultimaChave);
 			return ultima_mensagem.getId() + 1;
 		}
 	}
@@ -124,8 +125,7 @@ public class Repositorio {
 				partes = linha.split(";");	
 				nomeindividuo = partes[0];
 				senha = partes[1];
-				admistrador = Boolean.getBoolean(partes[3]);
-			
+				admistrador = Boolean.parseBoolean(partes[3]);
 				individuo = new Individual(nomeindividuo, senha, admistrador);
 				this.adicionarIndividuo(individuo);
 				
@@ -194,12 +194,15 @@ public class Repositorio {
 			File f = new File( new File(".\\individual.csv").getCanonicalPath())  ;
 			arquivo = new FileWriter(f);
 			for(Participante participante: participantes.values() ){
-				arquivo.write( participante.getNome()+";" + ((Individual) participante).getSenha() + ";" + ((Individual) participante).isAdministrador() + "\n");					
+				if (participante instanceof Individual) {
+					Individual individual = (Individual) participante;
+					arquivo.write( individual.getNome()+";" + individual.getSenha() + ";" + individual.isAdministrador() + "\n");
+				}
 			}	
 			arquivo.close();		
 		}
 		catch(Exception ex) {
-			throw new RuntimeException("problema na cria��o do arquivo  individual "+ex.getMessage());
+			throw new RuntimeException("problema na criacao do arquivo  individual "+ex.getMessage());
 		}
 		try{
 			File f = new File( new File(".\\grupo.csv").getCanonicalPath())  ;
@@ -208,18 +211,18 @@ public class Repositorio {
 		
 			for(Participante participante: participantes.values() ){	
 				String individuos = null;
-				ArrayList<Individual> listaDeIndividuos = ((Grupo) participante).getIndividuos();
-				for(int i = 0; i < listaDeIndividuos.size(); i++) {
-					individuos += listaDeIndividuos.get(i).getNome() + ";";
-				};	
-				
+				if (participante instanceof Grupo) {
+					ArrayList<Individual> listaDeIndividuos = ((Grupo) participante).getIndividuos();
+					for(int i = 0; i < listaDeIndividuos.size(); i++) {
+						individuos += listaDeIndividuos.get(i).getNome() + ";";
+					};	
+				}
 				arquivo.write( participante.getNome() + ";" + individuos +  "\n");		
-				}	
-				arquivo.close();	
+			}	
+			arquivo.close();	
 		}
 		catch(Exception ex) {
-			throw new RuntimeException("problema na cria��o do arquivo  grupo "+ex.getMessage());
-		
+			throw new RuntimeException("problema na criacao do arquivo  grupo "+ex.getMessage());
 		}
 		try{
 			File f = new File( new File(".\\mensagem.csv").getCanonicalPath())  ;
