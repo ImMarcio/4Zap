@@ -216,7 +216,7 @@ public class Repositorio {
 					for(int i = 0; i < listaDeIndividuos.size(); i++) {
 						individuos += listaDeIndividuos.get(i).getNome() + ";";
 					};	
-					arquivo.write( ((Grupo)participante).getNome() + ";" + individuos +  "\n");	
+					arquivo.write( participante.getNome() + ";" + individuos +  "\n");	
 				}
 					
 			}	
