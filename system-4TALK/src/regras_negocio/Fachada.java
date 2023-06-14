@@ -223,11 +223,12 @@ public class Fachada {
 		return individuos;
 	}
 	
+	
 	public static ArrayList<String> listarGrupos(){
 		ArrayList<String> grupos = new ArrayList<>();;
 		for(Participante participante : repositorio.getParticipantes().values()) {
 			if(participante instanceof Grupo ) {
-				if(participante.getEnviadas().isEmpty()) {
+				if(participante.getRecebidas().isEmpty()) {
 					grupos.add(participante.getNome() + " - Nao ativo" );
 				}
 				else {
