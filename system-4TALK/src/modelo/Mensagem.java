@@ -38,8 +38,8 @@ public class Mensagem {
 	public String toString() {
     	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         String datahora_formatada = datahora.format(formatter);
-        
-		return "Mensagem [id=" + id + ", texto=" + texto + ", emitente=" + emitente + ", destinatario=" + destinatario
+           
+		return "Mensagem [id=" + id + ", texto=" + texto + ", emitente=" + emitente.getNome() + ", destinatario=" + destinatario.getNome()
 				+ ", datahora=" + datahora_formatada + "]";
 	}
 
