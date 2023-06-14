@@ -23,7 +23,9 @@ public class Individual extends Participante {
 	public void setSenha(String senha) {this.senha = senha;}
 	public boolean isAdministrador() {return administrador;}
 	public void setAdministrador(boolean administrador) {this.administrador = administrador;}
-
+	public void adicionarGrupo(Grupo grupo) {
+		grupos.add(grupo);
+	}
 	public ArrayList<Grupo> getGrupos() {return grupos;}
     public Grupo getGrupo(String nome_grupo) {
     	for (Grupo g : grupos) {
@@ -36,6 +38,7 @@ public class Individual extends Participante {
     @Override
     public String toString(){
        String texto = "Individual [nome: " + super.getNome() + "\n"+ "Recebidas: ";
+       String textoDoGrupo = "";
        for(Mensagem mensagem : super.getRecebidas()){
            texto += mensagem.getTexto();
        }
@@ -43,7 +46,11 @@ public class Individual extends Participante {
        for(Mensagem mensagem : getEnviadas()){
            texto += mensagem.getTexto();
        }
-       texto+= "senha= "+senha + ", administrador=" + administrador + ", grupos=" + grupos + "]";
+       for(Grupo grupo : grupos) {
+    	   textoDoGrupo += grupo.getNome();
+       }
+       
+       texto+= "senha= "+senha + ", administrador=" + administrador + ", Grupos=" + textoDoGrupo  ;
        return texto;
     }
 }
