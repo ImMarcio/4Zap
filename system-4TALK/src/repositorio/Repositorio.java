@@ -25,6 +25,8 @@ public class Repositorio {
     // Getters e Setters
     public TreeMap<String, Participante> getParticipantes() {return participantes;}
 	public TreeMap<Integer, Mensagem> getMensagens() {return mensagens;}
+	public int getTotalParticipantes(){ return participantes.size();}
+	public int getTotalMenagens(){return mensagens.size();}
 	
 	public Participante localizarParticipante(String nome){
 		return (Participante) participantes.get(nome);
@@ -51,14 +53,27 @@ public class Repositorio {
 		msg.getEmitente().adicionarMensagemEnviada(msg);
 	    msg.getDestinatario().adicionarMensagemRecebida(msg);
 	}
-	// Versão para grupos
+	
 	public void adicionarMensagemRecebida(Participante destinatario, Mensagem mensagem) {
 	    destinatario.adicionarMensagemRecebida(mensagem);
 	}
-	// Versão para grupos
+	
 	public void adicionarMensagemEnviada(Individual remetente, Mensagem mensagem) {
 	    remetente.adicionarMensagemEnviada(mensagem);
 	}
+	
+	public void removerMensagemEnviada(Individual remetente, Mensagem mensagem) {
+	    remetente.removerMensagemEnviada(mensagem);
+	}
+
+	public void removerMensagemRecebida(Participante destinatario, Mensagem mensagem) {
+	    destinatario.removerMensagemRecebida(mensagem);
+	}
+
+	public void removerMensagem(Mensagem mensagem) {
+		Integer id = mensagem.getId();
+        mensagens.remove(id);
+    }
 	
 	public ArrayList<Mensagem> obterConversaSalva(Individual remetente, Participante destinatario) {
 		ArrayList<Mensagem> conversa = new ArrayList<>();
@@ -80,26 +95,12 @@ public class Repositorio {
 		}
 	}
 	
-	public void removerMensagemEnviada(Individual remetente, Mensagem mensagem) {
-	    remetente.removerMensagemEnviada(mensagem);
-	}
-
-	public void removerMensagemRecebida(Participante destinatario, Mensagem mensagem) {
-	    destinatario.removerMensagemRecebida(mensagem);
-	}
-
-	public void removerMensagem(Mensagem mensagem) {
-		Integer id = mensagem.getId();
-        mensagens.remove(id);
-    }
-	
 	public void carregarObjetos(){
 		try {
 			File arquivoDeIndividuo = new File( new File(".\\individual.csv").getCanonicalPath() ) ; 
 			File arquivoDoGrupo = new File( new File(".\\grupo.csv").getCanonicalPath() ) ; 
 			File arquivoDeMensagem = new File( new File(".\\mensagem.csv").getCanonicalPath() ) ;
 			if (!arquivoDeIndividuo.exists() || !arquivoDoGrupo.exists() || arquivoDeMensagem.exists()  ) {
-				//System.out.println("criando arquivo .csv vazio");
 				FileWriter arquivo1 = new FileWriter(arquivoDeIndividuo); arquivo1.close();
 				FileWriter arquivo2 = new FileWriter(arquivoDoGrupo); arquivo2.close();
 				FileWriter arquivo3 = new FileWriter(arquivoDeMensagem); arquivo3.close();

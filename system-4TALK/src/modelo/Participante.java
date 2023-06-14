@@ -34,6 +34,10 @@ public class Participante {
             for(Mensagem mensagem : recebidas){
                 texto += mensagem.getTexto();
             }
+            texto += "\nEnviadas: ";
+            for(Mensagem mensagem : enviadas){
+                texto += mensagem.getTexto();
+            }
             return texto;
         }
 }

@@ -10,7 +10,6 @@ package appConsole;
 import java.util.ArrayList;
 
 import modelo.Mensagem;
-import modelo.Participante;
 import regras_negocio.Fachada;
 
 public class Teste1 {
@@ -59,7 +58,7 @@ public class Teste1 {
 			for(Mensagem m : Fachada.obterConversa("joao", "maria"))
 				System.out.println(m);
 
-		} catch (Exception e) 	{
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 
