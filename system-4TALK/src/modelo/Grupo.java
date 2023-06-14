@@ -21,6 +21,7 @@ public class Grupo extends Participante {
 	public void adicionar(Individual individuo) throws Exception{
 		if(individuo!= null) {
 			individuos.add(individuo);
+			individuo.adicionarGrupo(this);
 		}
 		else {throw new Exception("Individuo nulo!");}
 	}
