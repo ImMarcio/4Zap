@@ -50,7 +50,7 @@ public class Individual extends Participante {
     	   textoDoGrupo += grupo.getNome();
        }
        
-       texto+= "senha= "+senha + ", administrador=" + administrador + ", Grupos=" + textoDoGrupo  ;
+       texto+= "\n" + "senha= "+senha + ", administrador=" + administrador + ", Grupos=" + textoDoGrupo  ;
        return texto;
     }
 }
