@@ -217,7 +217,7 @@ public class Fachada {
 				individuos.add(participante.getNome() + " - Nao ativo");
 			}
 			else {
-				individuos.add(participante.getNome() + " - ativo");
+				individuos.add(participante.getNome() + " - Ativo");
 			}
 		}
 		return individuos;

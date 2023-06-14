@@ -44,13 +44,23 @@ public class Grupo extends Participante {
 	
 	@Override
 	public String toString() {
-		String texto = "" ;
-		if (individuos.isEmpty())
-			texto += "vazio";
-		else
-			texto = "Membros:";
-			for(Individual individuo: individuos) 
-				texto += " " + individuo.getNome();
-		return texto ;
+		String texto = "Nome: " + super.getNome() + "\n";
+	    if (individuos.isEmpty()) {
+	        texto += "vazio";
+	    } else {
+	        texto += "Membros:";
+	        for (Individual individuo : individuos) {
+	            texto += " " + individuo.getNome();
+	        }
+	    }
+	    texto += "\nRecebidas: ";
+	    for(Mensagem mensagem : super.getRecebidas()){
+            texto += mensagem.getTexto();
+        }
+        texto += "\nEnviadas: ";
+        for(Mensagem mensagem : super.getEnviadas()){
+            texto += mensagem.getTexto();
+        }
+	    return texto;
 	}	
 }
