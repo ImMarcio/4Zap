@@ -52,7 +52,8 @@ public class Teste1 {
 
 		for(String p : Fachada.listarIndividuos())
 			System.out.println(p);
-
+	
+		
 		try {
 			System.out.println("\nconversa entre joao e maria");
 			for(Mensagem m : Fachada.obterConversa("joao", "maria"))

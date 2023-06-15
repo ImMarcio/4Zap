@@ -210,42 +210,100 @@ public class Fachada {
 	}
 	
 
+
+	
 	public static ArrayList<String> listarIndividuos() {
 		ArrayList<String> individuos = new ArrayList<>();
+
 		for(Participante participante : repositorio.getParticipantes().values()) {
-			if(participante.getEnviadas().isEmpty()) {
-				individuos.add(participante.getNome() + " - Nao ativo");
+			String enviadas = "";
+			String recebidas = "";
+			String grupos = "";
+			
+				if(participante instanceof Individual indv) {
+					
+					if(!(participante.getEnviadas().isEmpty())) {
+						 for (Mensagem mensagem : participante.getEnviadas()) {
+			                    enviadas = "Emitente: " + mensagem.getEmitente().getNome() + ", Destinatario: " + mensagem.getDestinatario().getNome() + ", Texto: " + mensagem.getTexto() + ", DataHora: "+mensagem.getDataHora() + "\n";
+			                }
+					}
+					else {
+						enviadas = "Sem mensagens enviadas" + "\n";
+					}
+					if(!(participante.getRecebidas().isEmpty())) {
+						for (Mensagem mensagem : participante.getRecebidas()) {
+							recebidas = "Emitente: " + mensagem.getEmitente().getNome() + ", Destinatario: " + mensagem.getDestinatario().getNome() + ", Texto: " + mensagem.getTexto() + ", DataHora: "+mensagem.getDataHora() + "\n";
+		                }
+					}	
+					else {
+						recebidas = "Sem mensagens recebias" + "\n";
+					}
+					if(!(indv.getGrupos().isEmpty())) {
+						for(Grupo grupoNomes : indv.getGrupos()){
+							grupos += grupoNomes.getNome() + ", ";
+						}				
+					}	
+					else {
+						grupos += "Sem grupo";
+					}
+
+				individuos.add("Nome:" + indv.getNome() + "\n" + "Mensagens Enviadas: " + enviadas 
+						+ "\n" + "Mensagens Recebidas: "+ recebidas + "Grupos:" + grupos + "\n");
 			}
-			else {
-				individuos.add(participante.getNome() + " - Ativo");
-			}
-		}
+		}	
+			
+			
 		return individuos;
 	}
 	
 	
-	public static ArrayList<String> listarGrupos(){
-		ArrayList<String> grupos = new ArrayList<>();;
+	
+
+	public static ArrayList<String> listarGrupos() {
+		ArrayList<String> individuos = new ArrayList<>();
+
 		for(Participante participante : repositorio.getParticipantes().values()) {
-			if(participante instanceof Grupo ) {
-				if(participante.getRecebidas().isEmpty()) {
-					grupos.add(participante.getNome() + " - Nao ativo" );
-				}
-				else {
-					grupos.add(participante.getNome() + " - Ativo" );
-				}	
-				for(Participante participantesDoGrupo : ((Grupo) participante).getIndividuos()){
-					if(participantesDoGrupo.getEnviadas().isEmpty()) {
-						grupos.add(participantesDoGrupo.getNome() + " - Nao ativo");
+			String enviadas = "";
+			String recebidas = "";
+			String individuosDoGrupo = "";
+			
+				if(participante instanceof Grupo grup) {
+					
+					if(!(grup.getEnviadas().isEmpty())) {
+						 for (Mensagem mensagem : grup.getEnviadas()) {
+			                    enviadas = "Emitente: " + mensagem.getEmitente().getNome() + ", Destinatario: " + mensagem.getDestinatario().getNome() + ", Texto: " + mensagem.getTexto() + ", DataHora: "+mensagem.getDataHora() + "\n";
+			                }
 					}
 					else {
-						grupos.add(participantesDoGrupo.getNome() + " - Ativo");
+						enviadas = "Sem mensagens enviadas" + "\n";
 					}
-				}
+					if(!(grup.getRecebidas().isEmpty())) {
+						for (Mensagem mensagem : grup.getRecebidas()) {
+							recebidas = "Emitente: " + mensagem.getEmitente().getNome() + ", Destinatario: " + mensagem.getDestinatario().getNome() + ", Texto: " + mensagem.getTexto() + ", DataHora: "+mensagem.getDataHora() + "\n";
+		                }
+					}	
+					else {
+						recebidas = "Sem mensagens recebias" + "\n";
+					}
+					if(!(grup.getIndividuos().isEmpty())) {
+						for(Individual individuos2 : grup.getIndividuos()){
+							individuosDoGrupo += individuos2.getNome() + ", ";
+						}				
+					}	
+					else {
+						individuosDoGrupo += "vazio";
+					}
+
+				individuos.add("Nome:" + grup.getNome() + "\n" + "Mensagens Enviadas: " + enviadas 
+						+ "\n" + "Mensagens Recebidas: "+ recebidas + "Individuos do grupo:" + individuosDoGrupo + "\n");
 			}
-		}
-		return grupos;
+		}	
+			
+			
+		return individuos;
 	}
+	
+	
 	
 	public static ArrayList<Mensagem> espionarMensagens(String nomeAdmin, String termo) throws Exception {
 	    Participante participante = repositorio.localizarParticipante(nomeAdmin);
