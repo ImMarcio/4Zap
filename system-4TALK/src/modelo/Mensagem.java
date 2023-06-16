@@ -14,7 +14,7 @@ public class Mensagem {
     private Participante destinatario;
     private LocalDateTime datahora;
     
-	public Mensagem(int id,String texto, Individual emitente, Participante destinatario){
+	public Mensagem(int id,String texto, Participante emitente, Participante destinatario){
 		this.id = id;
         this.texto = texto;
         this.emitente = emitente;
@@ -27,8 +27,8 @@ public class Mensagem {
     public void setId(int id){ this.id = id; }
     public String getTexto(){ return this.texto; }
     public void setTexto(String texto){ this.texto = texto; }
-    public Individual getEmitente(){ return (Individual) this.emitente; }
-    public void setEmitente(Individual emitente){ this.emitente = emitente; }
+    public Participante getEmitente(){ return this.emitente; }
+    public void setEmitente(Participante emitente){ this.emitente = emitente; }
     public Participante getDestinatario(){ return this.destinatario; }
     public void setDestinatario(Participante destinatario){ this.destinatario = destinatario; }
     public LocalDateTime getDataHora(){ return this.datahora; }  

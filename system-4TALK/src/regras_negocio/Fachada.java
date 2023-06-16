@@ -316,8 +316,7 @@ public class Fachada {
 	    TreeMap<String, Participante> todosOsParticipantes = repositorio.getParticipantes();
 	    
 	    for (Participante participante2 : todosOsParticipantes.values()) {
-	    	// instanceof para apenas individuos serem considerados "Ausentes" já que não faz sentido grupo mandar mensagem
-	        if (participante2.getEnviadas().isEmpty() && participante2 instanceof Individual) {
+	        if (participante2.getEnviadas().isEmpty()) {
 	            participantesAusentes.add(participante2.getNome());
 	        }
 	    }
