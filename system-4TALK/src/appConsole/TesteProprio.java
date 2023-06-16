@@ -18,6 +18,8 @@ public class TesteProprio {
 			System.out.println(joao.toString());
 			System.out.println(maria.toString());
 			System.out.println(grupo1.toString());
+			
+			System.out.println(grupo1.getIndividuos());
 		} catch (Exception e){System.out.println(e.getMessage());}
 		
 	}
