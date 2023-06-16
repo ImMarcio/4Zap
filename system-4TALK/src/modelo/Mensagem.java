@@ -6,7 +6,6 @@
 package modelo;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class Mensagem {
     private int id;
@@ -36,11 +35,6 @@ public class Mensagem {
 
     @Override
 	public String toString() {
-    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        String datahora_formatada = datahora.format(formatter);
-	
-		return "Emitente=" + emitente.getNome() + ", Destinatario=" + destinatario.getNome() + ", Datahora" + datahora + ", Texto=" + texto  ;
-		
+		return getId()+ ": " + "Emitente=" + emitente.getNome() + ", Destinatario=" + destinatario.getNome() + ", Datahora" + datahora + ", Texto=" + texto  ;	
 	}
-
 }

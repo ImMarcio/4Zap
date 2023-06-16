@@ -2,6 +2,7 @@ package repositorio;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -50,35 +51,35 @@ public class Repositorio {
 	
 	public void adicionarMensagem(Mensagem msg) {
 		this.mensagens.put(msg.getId(), msg);
-		msg.getEmitente().adicionarMensagemEnviada(msg);
-	    msg.getDestinatario().adicionarMensagemRecebida(msg);
+	}
+	
+	public void adicionarMensagemEnviada(Participante remetente, Mensagem mensagem) {
+	    remetente.adicionarMensagemEnviada(mensagem);
 	}
 	
 	public void adicionarMensagemRecebida(Participante destinatario, Mensagem mensagem) {
 	    destinatario.adicionarMensagemRecebida(mensagem);
 	}
 	
-	public void adicionarMensagemEnviada(Individual remetente, Mensagem mensagem) {
-	    remetente.adicionarMensagemEnviada(mensagem);
-	}
+	public void removerMensagem(Mensagem mensagem) {
+		Integer id = mensagem.getId();
+        mensagens.remove(id);
+    }
 	
-	public void removerMensagemEnviada(Individual remetente, Mensagem mensagem) {
+	public void removerMensagemEnviada(Participante remetente, Mensagem mensagem) {
 	    remetente.removerMensagemEnviada(mensagem);
 	}
 
 	public void removerMensagemRecebida(Participante destinatario, Mensagem mensagem) {
 	    destinatario.removerMensagemRecebida(mensagem);
 	}
-
-	public void removerMensagem(Mensagem mensagem) {
-		Integer id = mensagem.getId();
-        mensagens.remove(id);
-    }
 	
-	public ArrayList<Mensagem> obterConversaSalva(Individual remetente, Participante destinatario) {
+	public ArrayList<Mensagem> obterConversaSalva(Participante participante1, Participante participante2) {
 		ArrayList<Mensagem> conversa = new ArrayList<>();
 	    for (Mensagem mensagem : mensagens.values()) {
-	        if (mensagem.getEmitente().equals(remetente) && mensagem.getDestinatario().equals(destinatario)) {
+	        if (mensagem.getEmitente().equals(participante1) && mensagem.getDestinatario().equals(participante2)) {
+	            conversa.add(mensagem);}
+	        if (mensagem.getEmitente().equals(participante2) && mensagem.getDestinatario().equals(participante1)) {
 	            conversa.add(mensagem);}
 	    }
 	    Collections.sort(conversa, Comparator.comparing(Mensagem::getDataHora));
@@ -230,7 +231,9 @@ public class Repositorio {
 			File f = new File( new File(".\\mensagem.csv").getCanonicalPath())  ;
 			arquivo = new FileWriter(f);
 			for(Mensagem mensagem : mensagens.values()){
-				arquivo.write( mensagem.getId() + ";"+ mensagem.getEmitente().getNome() + ";" + mensagem.getDestinatario().getNome() + ";" + mensagem.getDataHora() +  "\n");		
+		    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		        String datahora_formatada = mensagem.getDataHora().format(formatter);
+				arquivo.write( mensagem.getId() + ";"+ mensagem.getEmitente().getNome() + ";" + mensagem.getDestinatario().getNome() + ";" + datahora_formatada +  "\n");		
 				}	
 			arquivo.close();	
 		}

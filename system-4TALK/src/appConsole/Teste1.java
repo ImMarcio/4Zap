@@ -49,17 +49,15 @@ public class Teste1 {
 			System.out.println(m);
 
 		System.out.println("\nlistar individuos ");
+		for(String ind : Fachada.listarIndividuos())
+			System.out.println(ind);
 
-		for(String p : Fachada.listarIndividuos())
-			System.out.println(p);
-	
-		
 		try {
 			System.out.println("\nconversa entre joao e maria");
 			for(Mensagem m : Fachada.obterConversa("joao", "maria"))
 				System.out.println(m);
 
-		} catch (Exception e) {
+		} catch (Exception e) 	{
 			System.out.println(e.getMessage());
 		}
 
@@ -83,8 +81,6 @@ public class Teste1 {
 			Fachada.inserirGrupo("joao", "grupo1");
 			Fachada.inserirGrupo("maria", "grupo1");
 			Fachada.inserirGrupo("jose", "grupo1");
-			Fachada.inserirGrupo("maria", "grupo2");
-			Fachada.inserirGrupo("jose", "grupo2");
 			System.out.println("inseriu nos grupos");
 		} catch (Exception e) 	{
 			System.out.println(e.getMessage());
@@ -126,7 +122,7 @@ public class Teste1 {
 			ArrayList<Mensagem> lista = Fachada.listarMensagensEnviadas("maria");
 			for(Mensagem m : lista)
 				System.out.println(m);
-		
+
 			System.out.println("\napagar a ultima mensagem enviada de maria");
 			Mensagem ultima = lista.get(lista.size()-1);
 			Fachada.apagarMensagem("maria", ultima.getId());
@@ -152,17 +148,26 @@ public class Teste1 {
 			System.out.println(m);
 
 		System.out.println("\nlistar individuos finais");
-		for(String p : Fachada.listarIndividuos())
-			System.out.println(p);
+		for(String ind : Fachada.listarIndividuos())
+			System.out.println(ind);
 
 		System.out.println("\nlistar grupos finais");
-		for(String p : Fachada.listarGrupos())
-			System.out.println(p);
+		for(String g : Fachada.listarGrupos())
+			System.out.println(g);
 
+		/**
+		 * ADMINISTRADOR
+		 */
+		
 		System.out.println("\n*******************************************************");
 		try {
-			System.out.println("ESPIONAR");
 			Fachada.criarAdministrador("admin", "admin");
+		} catch (Exception e) 	{
+			System.out.println(e.getMessage());
+		}
+		
+		try {
+			System.out.println("ESPIONAR");
 			for(Mensagem m : Fachada.espionarMensagens("admin", "projeto"))
 				System.out.println(m);
 			
@@ -173,11 +178,15 @@ public class Teste1 {
 		} catch (Exception e) 	{
 			System.out.println(e.getMessage());
 		}
+
+
 		System.out.println("fim do programa");
 	}
+
+
+
 	//=================================================
 	public static void main(String[] args) {
 		new Teste1();
 	}
 }
-

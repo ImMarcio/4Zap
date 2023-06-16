@@ -82,7 +82,10 @@ public class Fachada {
 		if (destinatario instanceof Grupo) {
             Grupo grupo = (Grupo) destinatario;
             for (Participante membro : grupo.getIndividuos()) {
-                repositorio.adicionarMensagemRecebida(membro, msg);
+            	if (!(membro == remetente)) {
+            		repositorio.adicionarMensagemRecebida(membro, msg);
+            	}
+            	repositorio.adicionarMensagemRecebida(grupo, msg);
             }
         } else {
             repositorio.adicionarMensagemRecebida(destinatario, msg);
@@ -167,19 +170,19 @@ public class Fachada {
 		}
 	}
 	
-	public static ArrayList<Mensagem> obterConversa(String nome_remetente, String nome_destinatario) throws Exception {
-		if (nome_remetente.isEmpty() || nome_destinatario.isEmpty()) {
+	public static ArrayList<Mensagem> obterConversa(String nome_participante1, String nome_participante2) throws Exception {
+		if (nome_participante1.isEmpty() || nome_participante2.isEmpty()) {
 			throw new IllegalArgumentException("Nomes nao podem ser vazios. Verifique se deixou algum campo vazio.");
 		}
-		Individual remetente = (Individual) repositorio.localizarParticipante(nome_remetente);
-		if (remetente == null) {
-			throw new Exception("Remetente desconhecido: "+nome_remetente);
+		Individual participante1 = (Individual) repositorio.localizarParticipante(nome_participante1);
+		if (participante1 == null) {
+			throw new Exception("Remetente desconhecido: "+nome_participante1);
 		}
-		Participante destinatario = repositorio.localizarParticipante(nome_destinatario);
-		if (destinatario == null) {
-			throw new Exception("Destinatario desconhecido: " + nome_destinatario);
+		Participante participante2 = repositorio.localizarParticipante(nome_participante2);
+		if (participante2 == null) {
+			throw new Exception("Destinatario desconhecido: " + nome_participante2);
 		}
-		ArrayList<Mensagem> mensagens = repositorio.obterConversaSalva(remetente,destinatario);
+		ArrayList<Mensagem> mensagens = repositorio.obterConversaSalva(participante1,participante2);
 		return mensagens;
 	}
 	
@@ -208,67 +211,53 @@ public class Fachada {
 		}
 		throw new Exception("Esse usuario nao existe " + nome_participante);	
 	}
-	
-
-
-	
+		
 	public static ArrayList<String> listarIndividuos() {
-		ArrayList<String> individuos = new ArrayList<>();
-
-		for(Participante participante : repositorio.getParticipantes().values()) {
-			String enviadas = "";
-			String recebidas = "";
-			String grupos = "";
-			
-				if(participante instanceof Individual indv) {
-					
-					if(!(participante.getEnviadas().isEmpty())) {
-						 for (Mensagem mensagem : participante.getEnviadas()) {
-			                    enviadas = "Emitente: " + mensagem.getEmitente().getNome() + ", Destinatario: " + mensagem.getDestinatario().getNome() + ", Texto: " + mensagem.getTexto() + ", DataHora: "+mensagem.getDataHora() + "\n";
-			                }
-					}
-					else {
-						enviadas = "Sem mensagens enviadas" + "\n";
-					}
-					if(!(participante.getRecebidas().isEmpty())) {
-						for (Mensagem mensagem : participante.getRecebidas()) {
-							recebidas = "Emitente: " + mensagem.getEmitente().getNome() + ", Destinatario: " + mensagem.getDestinatario().getNome() + ", Texto: " + mensagem.getTexto() + ", DataHora: "+mensagem.getDataHora() + "\n";
+	    ArrayList<String> individuos = new ArrayList<>();
+	    for (Participante participante : repositorio.getParticipantes().values()) {
+	    	if (participante instanceof Individual) {
+		        StringBuilder individuoInfo = new StringBuilder();
+		        individuoInfo.append("Nome: ").append(participante.getNome()).append("\n");
+		        if (!participante.getEnviadas().isEmpty()) {
+		            individuoInfo.append("Mensagens Enviadas:\n");
+		            for (Mensagem mensagem : participante.getEnviadas()) {
+		                individuoInfo.append(" --> ").append(mensagem.toString()).append("\n");
+		            }
+		        } else {
+		            individuoInfo.append("Sem mensagens enviadas").append("\n");
+		        }
+		        if (!participante.getRecebidas().isEmpty()) {
+		            individuoInfo.append("Mensagens Recebidas:\n");
+		            for (Mensagem mensagem : participante.getRecebidas()) {
+		                individuoInfo.append(" --> ").append(mensagem.toString()).append("\n");
+		            }
+		        } else {
+		            individuoInfo.append("Sem mensagens recebidas").append("\n");
+		        }
+		        if (participante instanceof Individual) {
+		            Individual individuo = (Individual) participante;
+		            if (!individuo.getGrupos().isEmpty()) {
+		                individuoInfo.append("Grupos=\n");
+		                for (Grupo grupo : individuo.getGrupos()) {
+		                    individuoInfo.append(" --> ").append(grupo.getNome()).append("\n");
 		                }
-					}	
-					else {
-						recebidas = "Sem mensagens recebias" + "\n";
-					}
-					if(!(indv.getGrupos().isEmpty())) {
-						for(Grupo grupoNomes : indv.getGrupos()){
-							grupos += grupoNomes.getNome() + ", ";
-						}				
-					}	
-					else {
-						grupos += "Sem grupo";
-					}
-
-				individuos.add("Nome:" + indv.getNome() + "\n" + "Mensagens Enviadas: " + enviadas 
-						+ "\n" + "Mensagens Recebidas: "+ recebidas + "Grupos:" + grupos + "\n");
-			}
-		}	
-			
-			
-		return individuos;
+		            } else {
+		                individuoInfo.append("Grupos: sem grupo").append("\n");
+		            }
+		        }
+		        individuos.add(individuoInfo.toString());
+	    	}
+	    }
+	    return individuos;
 	}
 	
-	
-	
-
 	public static ArrayList<String> listarGrupos() {
 		ArrayList<String> individuos = new ArrayList<>();
-
 		for(Participante participante : repositorio.getParticipantes().values()) {
 			String enviadas = "";
 			String recebidas = "";
 			String individuosDoGrupo = "";
-			
 				if(participante instanceof Grupo grup) {
-					
 					if(!(grup.getEnviadas().isEmpty())) {
 						 for (Mensagem mensagem : grup.getEnviadas()) {
 			                    enviadas = "Emitente: " + mensagem.getEmitente().getNome() + ", Destinatario: " + mensagem.getDestinatario().getNome() + ", Texto: " + mensagem.getTexto() + ", DataHora: "+mensagem.getDataHora() + "\n";
@@ -298,12 +287,8 @@ public class Fachada {
 						+ "\n" + "Mensagens Recebidas: "+ recebidas + "Individuos do grupo:" + individuosDoGrupo + "\n");
 			}
 		}	
-			
-			
 		return individuos;
 	}
-	
-	
 	
 	public static ArrayList<Mensagem> espionarMensagens(String nomeAdmin, String termo) throws Exception {
 	    Participante participante = repositorio.localizarParticipante(nomeAdmin);
