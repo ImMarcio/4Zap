@@ -37,20 +37,15 @@ public class Individual extends Participante {
     
     @Override
     public String toString(){
-       String texto = "Individual [nome: " + super.getNome() + "\n"+ "Recebidas: ";
-       String textoDoGrupo = "";
-       for(Mensagem mensagem : super.getRecebidas()){
-           texto += mensagem.getTexto();
-       }
-       texto += "\nEnviadas: ";
-       for(Mensagem mensagem : getEnviadas()){
-           texto += mensagem.getTexto();
+       String textoDoGrupo = "Grupos: ";
+       if(grupos.isEmpty()) {
+    	   textoDoGrupo += "Sem grupos";
+    	    return  super.toString() + "\n" + textoDoGrupo;
        }
        for(Grupo grupo : grupos) {
-    	   textoDoGrupo += grupo.getNome();
-       }
-       
-       texto+= "\n" + "senha= "+senha + ", administrador=" + administrador + ", Grupos=" + textoDoGrupo  ;
-       return texto;
+    	   textoDoGrupo += "--> "+ grupo.getNome();
+      }
+ 
+       return  super.toString() + "\n" + textoDoGrupo + "\n";
     }
 }
