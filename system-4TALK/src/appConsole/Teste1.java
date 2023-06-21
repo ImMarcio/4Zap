@@ -148,11 +148,11 @@ public class Teste1 {
 			System.out.println(m);
 
 		System.out.println("\nlistar individuos finais");
-		for(String ind : Fachada.listarIndividuos())
+		for(Individual ind : Fachada.listarIndividuos())
 			System.out.println(ind);
 
 		System.out.println("\nlistar grupos finais");
-		for(String g : Fachada.listarGrupos())
+		for(Grupo g : Fachada.listarGrupos())
 			System.out.println(g);
 
 		/**
