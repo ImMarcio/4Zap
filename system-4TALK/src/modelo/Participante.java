@@ -28,15 +28,15 @@ public class Participante {
         public void adicionarMensagemRecebida(Mensagem mensagem) {recebidas.add(mensagem);}
         public void removerMensagemRecebida(Mensagem mensagem) {recebidas.remove(mensagem);}
         
-        @Override
+       @Override
         public String toString(){
-            String texto = "Nome: " + nome + "\n"+ "Recebidas: ";
+            String texto = "Nome: " + nome + "\n"+ "Mensagens Recebidas: \n";
             for(Mensagem mensagem : recebidas){
-                texto += mensagem.getTexto();
+                texto += "-->  " + mensagem.toString() + "\n";
             }
-            texto += "\nEnviadas: ";
+            texto += "\nMensagens Enviadas: \n";
             for(Mensagem mensagem : enviadas){
-                texto += mensagem.getTexto();
+                texto += "--> " + mensagem.toString()+ "\n";
             }
             return texto;
         }
