@@ -32,6 +32,18 @@ public class Mensagem {
     public Participante getDestinatario(){ return this.destinatario; }
     public void setDestinatario(Participante destinatario){ this.destinatario = destinatario; }
     public LocalDateTime getDataHora(){ return this.datahora; }  
+	public int compareTo(Mensagem outra) { 	
+    	if(this.id > outra.getId()) {
+    		return 1;
+    	}
+    	else {
+    		if(this.id < outra.id) {
+    			return -1;
+    		}
+    		else {
+    			return 0;
+    		}
+    	} }
 
     @Override
 	public String toString() {
