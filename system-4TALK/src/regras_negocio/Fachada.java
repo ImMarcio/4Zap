@@ -289,6 +289,29 @@ public class Fachada {
 	    }
 	    return grupos;
 	}
+
+	public static ArrayList<Participante> listarIndividuos2() {
+	    ArrayList<Participante> individuos = new ArrayList<>();
+	    for (Participante participante : repositorio.getParticipantes().values()) {
+	    		if(participante instanceof Individual ind)
+	    		individuos.add(ind);	    			    	
+	    	}
+	    return individuos;
+	    
+	}
+	   
+	    
+	public static ArrayList<Participante> listarGrupos2() {
+		
+		ArrayList<Participante> grupos = new ArrayList<>();
+	    for (Participante participante : repositorio.getParticipantes().values()) {
+	    if(participante instanceof Grupo) {
+	    	grupos.add(participante);
+	    } 
+	    }
+	    return grupos;
+}
+	
 	
 	public static ArrayList<Mensagem> espionarMensagens(String nomeAdmin, String termo) throws Exception {
 	    Participante participante = repositorio.localizarParticipante(nomeAdmin);
