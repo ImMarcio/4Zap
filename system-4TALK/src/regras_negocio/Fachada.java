@@ -135,7 +135,8 @@ public class Fachada {
 		if (msg == null) {
 	        throw new Exception("Mensagem não encontrada.");
 	    }
-	    
+		repositorio.removerMensagem(msg);
+		
 	    if (msg.getEmitente().equals(in)) {
 	    	Participante destinatario = msg.getDestinatario();
 	        repositorio.removerMensagemEnviada(in, msg);
@@ -145,10 +146,10 @@ public class Fachada {
 	            for (Participante membro : grupo.getIndividuos()) {
 	                repositorio.removerMensagemRecebida(membro, msg);
 	            }
+	            repositorio.removerMensagemRecebida(grupo, msg);
+		        repositorio.removerMensagemEnviada(grupo, msg);
 	        }
-	        repositorio.removerMensagemRecebida(destinatario, msg);
-	        repositorio.removerMensagemEnviada(destinatario, msg);
-	        repositorio.removerMensagem(msg);
+	    repositorio.removerMensagemRecebida(destinatario, msg);
 	    } else {
 	        throw new Exception("A mensagem não foi emitida por esse indivíduo.");
 	    }

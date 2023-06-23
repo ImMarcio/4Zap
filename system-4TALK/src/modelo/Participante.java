@@ -45,6 +45,7 @@ public class Participante {
     	   if (enviadas.isEmpty()) {
     		   texto.append("nenhuma mensagem\n");
     	   }else {
+    		   texto.append("\n");
     		   for (Mensagem mensagem : enviadas) {
     			   texto.append("--> ").append(mensagem.toString()).append("\n");
     	       }
