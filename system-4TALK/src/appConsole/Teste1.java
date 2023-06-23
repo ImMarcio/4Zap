@@ -9,6 +9,8 @@ package appConsole;
 
 import java.util.ArrayList;
 
+import modelo.Grupo;
+import modelo.Individual;
 import modelo.Mensagem;
 import regras_negocio.Fachada;
 
@@ -49,7 +51,7 @@ public class Teste1 {
 			System.out.println(m);
 
 		System.out.println("\nlistar individuos ");
-		for(String ind : Fachada.listarIndividuos())
+		for(Individual ind : Fachada.listarIndividuos())
 			System.out.println(ind);
 
 		try {

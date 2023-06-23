@@ -39,13 +39,13 @@ public class Individual extends Participante {
     public String toString(){
        String textoDoGrupo = "Grupos: ";
        if(grupos.isEmpty()) {
-    	   textoDoGrupo += "Sem grupos";
-    	    return  super.toString() + "\n" + textoDoGrupo;
+    	   textoDoGrupo += "sem grupos";
+    	   return  super.toString() + textoDoGrupo + "\n";
        }
        for(Grupo grupo : grupos) {
-    	   textoDoGrupo += "--> "+ grupo.getNome();
-      }
+    	   textoDoGrupo += ""+ grupo.getNome();
+       }
  
-       return  super.toString() + "\n" + textoDoGrupo + "\n";
+       return  super.toString() + "\n" + textoDoGrupo;
     }
 }

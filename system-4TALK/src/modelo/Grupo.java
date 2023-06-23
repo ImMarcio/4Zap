@@ -45,23 +45,33 @@ public class Grupo extends Participante {
 	
 	@Override
 	public String toString() {
-		String texto = "Nome: " + super.getNome() + "\n";
+	    StringBuilder texto = new StringBuilder();
+	    texto.append("Nome: ").append(super.getNome()).append("\n");
 	    if (individuos.isEmpty()) {
-	        texto += "vazio";
+	        texto.append("Membros: nenhum membro");
 	    } else {
-	        texto += "Membros:";
+	        texto.append("Membros:");
 	        for (Individual individuo : individuos) {
-	            texto += " " + individuo.getNome();
+	            texto.append(" ").append(individuo.getNome());
 	        }
 	    }
-	    texto += "\nRecebidas: ";
-	    for(Mensagem mensagem : super.getRecebidas()){
-            texto += mensagem.getTexto();
-        }
-        texto += "\nEnviadas: ";
-        for(Mensagem mensagem : super.getEnviadas()){
-            texto += mensagem.getTexto();
-        }
-	    return texto;
+	    
+	    texto.append("\nMensagens recebidas: ");
+	    int cont = 0;
+	    for (Mensagem mensagem : super.getRecebidas()) {
+	        texto.append("\n"+mensagem.toString());
+	        cont++;
+	    }
+	    if (cont==0) {texto.append("nenhuma mensagem");}
+	    
+	    texto.append("\nMensagens enviadas: ");
+	    cont = 0;
+	    for (Mensagem mensagem : super.getEnviadas()) {
+	        texto.append("\n"+mensagem.toString());
+	    }
+	    if (cont==0) {texto.append("nenhuma mensagem");}
+	    texto.append("\n");
+	    
+	    return texto.toString();
 	}	
 }

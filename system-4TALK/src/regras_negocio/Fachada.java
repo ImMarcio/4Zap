@@ -213,105 +213,25 @@ public class Fachada {
 		throw new Exception("Esse usuario nao existe " + nome_participante);	
 	}
 		
-	public static ArrayList<String> listarIndividuos() {
-	    ArrayList<String> individuos = new ArrayList<>();
+	public static ArrayList<Individual> listarIndividuos() {
+		ArrayList<Individual> individuos = new ArrayList<>();
 	    for (Participante participante : repositorio.getParticipantes().values()) {
-	    	if (participante instanceof Individual) {
-		        StringBuilder individuoInfo = new StringBuilder();
-		        individuoInfo.append("Nome=").append(participante.getNome()).append("\n");
-		        if (!participante.getEnviadas().isEmpty()) {
-		            individuoInfo.append("Mensagens Enviadas:\n");
-		            for (Mensagem mensagem : participante.getEnviadas()) {
-		                individuoInfo.append(" --> ").append(mensagem.toString()).append("\n");
-		            }
-		        } else {
-		            individuoInfo.append("Sem mensagens enviadas").append("\n");
-		        }
-		        if (!participante.getRecebidas().isEmpty()) {
-		            individuoInfo.append("Mensagens Recebidas:\n");
-		            for (Mensagem mensagem : participante.getRecebidas()) {
-		                individuoInfo.append(" --> ").append(mensagem.toString()).append("\n");
-		            }
-		        } else {
-		            individuoInfo.append("Sem mensagens recebidas").append("\n");
-		        }
-		        if (participante instanceof Individual) {
-		            Individual individuo = (Individual) participante;
-		            if (!individuo.getGrupos().isEmpty()) {
-		                individuoInfo.append("Grupos=\n");
-		                for (Grupo grupo : individuo.getGrupos()) {
-		                    individuoInfo.append(" --> ").append(grupo.getNome()).append("\n");
-		                }
-		            } else {
-		                individuoInfo.append("Grupos: sem grupo").append("\n");
-		            }
-		        }
-		        individuos.add(individuoInfo.toString());
+	    	if(participante instanceof Individual ind) {
+	    		individuos.add(ind);	    			    	
 	    	}
 	    }
 	    return individuos;
 	}
 	
-	public static ArrayList<String> listarGrupos() {
-		ArrayList<String> grupos = new ArrayList<>();
-
+	public static ArrayList<Grupo> listarGrupos() {
+	    ArrayList<Grupo> grupos = new ArrayList<>();
 	    for (Participante participante : repositorio.getParticipantes().values()) {
 	        if (participante instanceof Grupo grupo) {
-	            StringBuilder grupoInfo = new StringBuilder();
-	            grupoInfo.append("Nome=").append(grupo.getNome()).append("\n");
-
-	            if (!grupo.getEnviadas().isEmpty()) {
-	                grupoInfo.append("Mensagens Enviadas:\n");
-	                for (Mensagem mensagem : grupo.getEnviadas()) {
-	                    grupoInfo.append(" --> ").append(mensagem.toString()).append("\n");
-	                }
-	            } else {
-	                grupoInfo.append("Sem mensagens enviadas").append("\n");
-	            }
-	            if (!grupo.getRecebidas().isEmpty()) {
-	                grupoInfo.append("Mensagens Recebidas:\n");
-	                for (Mensagem mensagem : grupo.getRecebidas()) {
-	                    grupoInfo.append(" --> ").append(mensagem.toString()).append("\n");
-	                }
-	            } else {
-	                grupoInfo.append("Sem mensagens recebidas").append("\n");
-	            }
-	            if (!grupo.getIndividuos().isEmpty()) {
-	                grupoInfo.append("Indivíduos do Grupo:\n");
-	                for (Participante membro : grupo.getIndividuos()) {
-	                    grupoInfo.append(" --> ").append(membro.getNome()).append("\n");
-	                }
-	            } else {
-	                grupoInfo.append("Indivíduos do Grupo: vazio\n");
-	            }
-	            grupos.add(grupoInfo.toString());
+	        	grupos.add(grupo);
 	        }
 	    }
 	    return grupos;
 	}
-
-	public static ArrayList<Participante> listarIndividuos2() {
-	    ArrayList<Participante> individuos = new ArrayList<>();
-	    for (Participante participante : repositorio.getParticipantes().values()) {
-	    		if(participante instanceof Individual ind)
-	    		individuos.add(ind);	    			    	
-	    	}
-	    return individuos;
-	    
-	}
-	   
-	    
-	public static ArrayList<Participante> listarGrupos2() {
-		
-		ArrayList<Participante> grupos = new ArrayList<>();
-	    for (Participante participante : repositorio.getParticipantes().values()) {
-	    if(participante instanceof Grupo) {
-	    	grupos.add(participante);
-	    } 
-	    }
-	    return grupos;
-}
-	
 	
 	public static ArrayList<Mensagem> espionarMensagens(String nomeAdmin, String termo) throws Exception {
 	    Participante participante = repositorio.localizarParticipante(nomeAdmin);
