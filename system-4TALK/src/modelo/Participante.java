@@ -35,7 +35,7 @@ public class Participante {
     	   texto.append("Mensagens Recebidas: ");
     	   if (recebidas.isEmpty()) {
     		   texto.append("nenhuma mensagem\n");
-    	   } else {
+    	   }else {
     		   texto.append("\n");
     	       for (Mensagem mensagem : recebidas) {
     	    	   texto.append("--> ").append(mensagem.toString()).append("\n");
@@ -44,7 +44,7 @@ public class Participante {
     	   texto.append("Mensagens Enviadas: ");
     	   if (enviadas.isEmpty()) {
     		   texto.append("nenhuma mensagem\n");
-    	   } else {
+    	   }else {
     		   for (Mensagem mensagem : enviadas) {
     			   texto.append("--> ").append(mensagem.toString()).append("\n");
     	       }

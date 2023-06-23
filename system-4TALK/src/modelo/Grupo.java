@@ -69,7 +69,7 @@ public class Grupo extends Participante {
 	    for (Mensagem mensagem : super.getEnviadas()) {
 	        texto.append("\n"+mensagem.toString());
 	    }
-	    if (cont==0) {texto.append("nenhuma mensagem");}
+	    if(cont==0) {texto.append("nenhuma mensagem");}
 	    texto.append("\n");
 	    
 	    return texto.toString();

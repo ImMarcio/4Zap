@@ -45,7 +45,6 @@ public class Individual extends Participante {
        for(Grupo grupo : grupos) {
     	   textoDoGrupo += ""+ grupo.getNome();
        }
- 
        return  super.toString() + "\n" + textoDoGrupo;
     }
 }
