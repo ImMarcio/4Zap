@@ -84,6 +84,7 @@ public class Fachada {
 		
 		if (destinatario instanceof Grupo) {
             Grupo grupo = (Grupo) destinatario;
+    		texto = nome_remetente + "/" + texto;
             for (Individual membro : grupo.getIndividuos()) {
             	if (!(membro.equals(remetente))) {
             		Mensagem copia = new Mensagem(id, texto, grupo, membro);
@@ -119,24 +120,24 @@ public class Fachada {
 		repositorio.salvarObjetos();
 	}
 	
-	public static void apagarMensagem(String nome_individuo, int id) throws Exception {
-		nome_individuo = nome_individuo.trim();
-		if(nome_individuo.isEmpty()) {
+	public static void apagarMensagem(String nome_participante, int id) throws Exception {
+		nome_participante = nome_participante.trim();
+		if(nome_participante.isEmpty()) {
 			throw new IllegalArgumentException("Nome nao pode estar vazio.");
 		}
 		if (id <= 0) {
 			throw new Exception("ID nao pode ser menor ou igual a 0.");
 		}
-		Individual in = (Individual) repositorio.localizarParticipante(nome_individuo);
-		if (in == null) {
-			throw new Exception("Individuo desconhecido.");
+		Participante partic = repositorio.localizarParticipante(nome_participante);
+		if (partic == null) {
+			throw new Exception("Participante desconhecido: "+ nome_participante);
 		}
-		Mensagem msg = repositorio.localizarMensagem(id);
+		Mensagem msg = partic.localizarMensagemEnviada(id);
 		if (msg == null) {
-	        throw new Exception("Mensagem não encontrada.");
+	        throw new Exception("Mensagem não encontrada. ID: "+id);
 	    }
 		
-		in.removerMensagemEnviada(msg);
+		partic.removerMensagemEnviada(msg);
 		Participante destinatario = msg.getDestinatario();
 		destinatario.removerMensagemRecebida(msg);
 		repositorio.removerMensagem(msg);
@@ -145,9 +146,10 @@ public class Fachada {
 	    	ArrayList<Mensagem> lista = destinatario.getEnviadas();
 	    	lista.removeIf(new Predicate<Mensagem>() {
 				@Override
-				public boolean test(Mensagem t) {
-					if(t.getId() == msg.getId()) {
-						t.getDestinatario().removerMensagemRecebida(msg);	
+				public boolean test(Mensagem msgTester) {
+					if(msgTester.getId() == msg.getId()) {
+						Participante p = msgTester.getDestinatario();
+						p.removerMensagemRecebida(msg);
 						return true;
 					} else 
 						return false;

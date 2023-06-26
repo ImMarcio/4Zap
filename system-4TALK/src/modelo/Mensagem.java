@@ -34,15 +34,9 @@ public class Mensagem {
     public LocalDateTime getDataHora(){ return this.datahora; }
     
 	public int compareTo(Mensagem outra) { 	
-    	if(this.id > outra.getId()) {
-    		return 1;
-    	}
-    	if(this.id < outra.id) {
-    		return -1;
-    	}
-    	else {
-    		return 0;
-    	}
+    	if(this.id > outra.getId()) { return 1; }
+    	if(this.id < outra.id) { return -1; }
+    	else { return 0; }
     }
 
     @Override

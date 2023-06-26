@@ -28,12 +28,29 @@ public class Participante {
         public void adicionarMensagemRecebida(Mensagem mensagem) {recebidas.add(mensagem);}
         public void removerMensagemRecebida(Mensagem mensagem) {recebidas.remove(mensagem);}
         
+        
+        public Mensagem localizarMensagemEnviada(int id) {
+    		for (Mensagem m : enviadas) {
+    			if(m.getId() == id)
+    				return m;
+    		}
+    		return null;
+    	}
+        
+        public Mensagem localizarMensagemRecebida(int id) {
+    		for (Mensagem m : enviadas) {
+    			if(m.getId() == id)
+    				return m;
+    		}
+    		return null;
+    	}
+        
        @Override
         public String toString(){
     	   StringBuilder texto = new StringBuilder();
     	   texto.append("Nome: ").append(nome).append("\n");
     	   
-    	   texto.append("Mensagens Enviadas: ");
+    	   texto.append("Mensagens enviadas: ");
     	   if (enviadas.isEmpty()) {
     		   texto.append("nenhuma mensagem\n");
     	   }else {
@@ -43,7 +60,7 @@ public class Participante {
     	       }
     	   }
     	   
-    	   texto.append("Mensagens Recebidas: ");
+    	   texto.append("Mensagens recebidas: ");
     	   if (recebidas.isEmpty()) {
     		   texto.append("nenhuma mensagem\n");
     	   }else {
