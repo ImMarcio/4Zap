@@ -38,6 +38,18 @@ public class Mensagem {
     	if(this.id < outra.id) { return -1; }
     	else { return 0; }
     }
+	
+	@Override
+	public boolean equals(Object obj) {
+	    if (this == obj) {
+	        return true;
+	    }
+	    if (obj == null || getClass() != obj.getClass()) {
+	        return false;
+	    }
+	    Mensagem outraMensagem = (Mensagem) obj;
+	    return id == outraMensagem.id;
+	}
 
     @Override
 	public String toString() {

@@ -68,7 +68,7 @@ public class Fachada {
 		if (nome_remetente.isEmpty() || nome_destinatario.isEmpty() || texto.isEmpty() || texto.isBlank()) {
 			throw new IllegalArgumentException("Nomes ou texto nao podem ser vazios. Verifique se deixou algum campo vazio.");
 		}
-		Individual remetente = (Individual) repositorio.localizarParticipante(nome_remetente);
+		Participante remetente = repositorio.localizarParticipante(nome_remetente);
 		if (remetente == null) {
 			throw new Exception("Mensagem nao enviada - remetente desconhecido: "+nome_remetente);
 		}
@@ -99,13 +99,13 @@ public class Fachada {
 	public static void inserirGrupo(String nome_individuo, String nome_grupo) throws  Exception {
 		nome_individuo = nome_individuo.trim();
 		nome_grupo = nome_grupo.trim();
-		Grupo gru = (Grupo) repositorio.localizarParticipante(nome_grupo);
-		if(gru == null) 
+		Grupo grupo = (Grupo) repositorio.localizarParticipante(nome_grupo);
+		if(grupo == null) 
 			throw new Exception("Nao inseriu individuo - grupo inexistente: " + nome_grupo);
 		Individual in = (Individual) repositorio.localizarParticipante(nome_individuo);
 		if(in == null)
 			throw new Exception("Nao inseriu individuo - individuo inexistente: " + nome_individuo);
-		gru.adicionar(in); // Individuo adicionado ao grupo
+		grupo.adicionar(in);
 		repositorio.salvarObjetos();
 	}
 
@@ -136,25 +136,23 @@ public class Fachada {
 		if (msg == null) {
 	        throw new Exception("Mensagem não encontrada. ID: "+id);
 	    }
-		
 		partic.removerMensagemEnviada(msg);
 		Participante destinatario = msg.getDestinatario();
 		destinatario.removerMensagemRecebida(msg);
 		repositorio.removerMensagem(msg);
 		
-	    if (destinatario instanceof Grupo g) {
-	    	ArrayList<Mensagem> lista = destinatario.getEnviadas();
+	    if (destinatario instanceof Grupo) {
+	    	Grupo grupo = (Grupo) destinatario;
+	    	ArrayList<Mensagem> lista = grupo.getEnviadas();
 	    	lista.removeIf(new Predicate<Mensagem>() {
 				@Override
 				public boolean test(Mensagem msgTester) {
 					if(msgTester.getId() == msg.getId()) {
-						Participante p = msgTester.getDestinatario();
-						p.removerMensagemRecebida(msg);
+						msgTester.getDestinatario().removerMensagemRecebida(msg);
 						return true;
 					} else 
 						return false;
 				}
-
 			});
 	     }
 	    repositorio.salvarObjetos();

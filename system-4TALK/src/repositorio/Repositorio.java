@@ -62,7 +62,8 @@ public class Repositorio {
 	}
 	
 	public void removerMensagem(Mensagem mensagem) {
-        mensagens.remove(mensagem.getId());
+		Integer id = mensagem.getId();
+        mensagens.remove(id);
     }
 	
 	public void removerMensagemEnviada(Participante remetente, Mensagem mensagem) {
@@ -81,7 +82,7 @@ public class Repositorio {
 	        if (mensagem.getEmitente().equals(participante2) && mensagem.getDestinatario().equals(participante1)) {
 	            conversa.add(mensagem);}
 	    }
-	    Collections.sort(conversa, Comparator.comparing(Mensagem::getId));
+	    Collections.sort(conversa, Comparator.comparing(Mensagem::getDataHora));
 	    return conversa;
 	}
 	
