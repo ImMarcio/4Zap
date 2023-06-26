@@ -32,15 +32,7 @@ public class Participante {
         public String toString(){
     	   StringBuilder texto = new StringBuilder();
     	   texto.append("Nome: ").append(nome).append("\n");
-    	   texto.append("Mensagens Recebidas: ");
-    	   if (recebidas.isEmpty()) {
-    		   texto.append("nenhuma mensagem\n");
-    	   }else {
-    		   texto.append("\n");
-    	       for (Mensagem mensagem : recebidas) {
-    	    	   texto.append("--> ").append(mensagem.toString()).append("\n");
-    	       }
-    	   }
+    	   
     	   texto.append("Mensagens Enviadas: ");
     	   if (enviadas.isEmpty()) {
     		   texto.append("nenhuma mensagem\n");
@@ -48,6 +40,16 @@ public class Participante {
     		   texto.append("\n");
     		   for (Mensagem mensagem : enviadas) {
     			   texto.append("--> ").append(mensagem.toString()).append("\n");
+    	       }
+    	   }
+    	   
+    	   texto.append("Mensagens Recebidas: ");
+    	   if (recebidas.isEmpty()) {
+    		   texto.append("nenhuma mensagem\n");
+    	   }else {
+    		   texto.append("\n");
+    	       for (Mensagem mensagem : recebidas) {
+    	    	   texto.append("--> ").append(mensagem.toString()).append("\n");
     	       }
     	   }
     	   return texto.toString();

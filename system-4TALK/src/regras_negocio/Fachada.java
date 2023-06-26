@@ -2,6 +2,7 @@ package regras_negocio;
 
 import java.util.ArrayList;
 import java.util.TreeMap;
+import java.util.function.Predicate;
 
 import modelo.Grupo;
 import modelo.Individual;
@@ -77,21 +78,20 @@ public class Fachada {
 		}
 		int id = repositorio.gerarId();
 		Mensagem msg = new Mensagem(id,texto,remetente,destinatario);
+		remetente.adicionarMensagemEnviada(msg);
+		destinatario.adicionarMensagemRecebida(msg);
 		repositorio.adicionarMensagem(msg);
 		
 		if (destinatario instanceof Grupo) {
             Grupo grupo = (Grupo) destinatario;
-            for (Participante membro : grupo.getIndividuos()) {
+            for (Individual membro : grupo.getIndividuos()) {
             	if (!(membro.equals(remetente))) {
-            		repositorio.adicionarMensagemRecebida(membro, msg);
+            		Mensagem copia = new Mensagem(id, texto, grupo, membro);
+            		repositorio.adicionarMensagemEnviada(grupo, copia);
+            		repositorio.adicionarMensagemRecebida(membro, copia);
             	}
             }
-            repositorio.adicionarMensagemEnviada(grupo,msg);
-            repositorio.adicionarMensagemRecebida(grupo, msg);
-        } else {
-            repositorio.adicionarMensagemRecebida(destinatario, msg);
-        }
-        repositorio.adicionarMensagemEnviada(remetente, msg);
+		}
 		repositorio.salvarObjetos();
 	}
 	
@@ -135,24 +135,26 @@ public class Fachada {
 		if (msg == null) {
 	        throw new Exception("Mensagem não encontrada.");
 	    }
+		
+		in.removerMensagemEnviada(msg);
+		Participante destinatario = msg.getDestinatario();
+		destinatario.removerMensagemRecebida(msg);
 		repositorio.removerMensagem(msg);
 		
-	    if (msg.getEmitente().equals(in)) {
-	    	Participante destinatario = msg.getDestinatario();
-	        repositorio.removerMensagemEnviada(in, msg);
+	    if (destinatario instanceof Grupo g) {
+	    	ArrayList<Mensagem> lista = destinatario.getEnviadas();
+	    	lista.removeIf(new Predicate<Mensagem>() {
+				@Override
+				public boolean test(Mensagem t) {
+					if(t.getId() == msg.getId()) {
+						t.getDestinatario().removerMensagemRecebida(msg);	
+						return true;
+					} else 
+						return false;
+				}
 
-	        if (destinatario instanceof Grupo) {
-	            Grupo grupo = (Grupo) destinatario;
-	            for (Participante membro : grupo.getIndividuos()) {
-	                repositorio.removerMensagemRecebida(membro, msg);
-	            }
-	            repositorio.removerMensagemRecebida(grupo, msg);
-		        repositorio.removerMensagemEnviada(grupo, msg);
-	        }
-	    repositorio.removerMensagemRecebida(destinatario, msg);
-	    } else {
-	        throw new Exception("A mensagem não foi emitida por esse indivíduo.");
-	    }
+			});
+	     }
 	    repositorio.salvarObjetos();
 	}
 	

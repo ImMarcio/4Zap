@@ -31,7 +31,7 @@ public class Grupo extends Participante {
 			throw new Exception("Esse individuo nao esta no grupo!");
 		}
 	}
-	// Talvez repositório
+	
 	public Individual localizar(String nome){
 		for(Individual individuo : individuos){
 			if(individuo.getNome().equals(nome))
@@ -40,7 +40,6 @@ public class Grupo extends Participante {
 		return null;
 	}
 	
-	// talvez pro Repositorio
 	public int getTotalIndividuos() {return individuos.size();}
 	
 	@Override
@@ -56,22 +55,20 @@ public class Grupo extends Participante {
 	        }
 	    }
 	    
-	    texto.append("\nMensagens recebidas: ");
+	    texto.append("\nMensagens enviadas: ");
 	    int cont = 0;
+	    for (Mensagem mensagem : super.getEnviadas()) {
+	        texto.append("\n"+mensagem.toString());
+	    }
+	    if(cont==0) {texto.append("nenhuma mensagem");}	    
+	    texto.append("\nMensagens recebidas: ");
+	    cont = 0;
 	    for (Mensagem mensagem : super.getRecebidas()) {
 	        texto.append("\n"+mensagem.toString());
 	        cont++;
 	    }
 	    if (cont==0) {texto.append("nenhuma mensagem");}
-	    
-	    texto.append("\nMensagens enviadas: ");
-	    cont = 0;
-	    for (Mensagem mensagem : super.getEnviadas()) {
-	        texto.append("\n"+mensagem.toString());
-	    }
-	    if(cont==0) {texto.append("nenhuma mensagem");}
 	    texto.append("\n");
-	    
 	    return texto.toString();
 	}	
 }
