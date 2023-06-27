@@ -1,4 +1,4 @@
-package appConsole;
+package appsConsole;
 
 /**********************************
  * IFPB - TSI - POO 

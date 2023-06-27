@@ -120,23 +120,23 @@ public class Fachada {
 		repositorio.salvarObjetos();
 	}
 	
-	public static void apagarMensagem(String nome_participante, int id) throws Exception {
-		nome_participante = nome_participante.trim();
-		if(nome_participante.isEmpty()) {
+	public static void apagarMensagem(String nome_individuo, int id) throws Exception {
+		nome_individuo = nome_individuo.trim();
+		if(nome_individuo.isEmpty()) {
 			throw new IllegalArgumentException("Nome nao pode estar vazio.");
 		}
 		if (id <= 0) {
 			throw new Exception("ID nao pode ser menor ou igual a 0.");
 		}
-		Participante partic = repositorio.localizarParticipante(nome_participante);
-		if (partic == null) {
-			throw new Exception("Participante desconhecido: "+ nome_participante);
+		Individual indiv = (Individual) repositorio.localizarParticipante(nome_individuo);
+		if (indiv == null) {
+			throw new Exception("Participante desconhecido: "+ nome_individuo);
 		}
-		Mensagem msg = partic.localizarMensagemEnviada(id);
+		Mensagem msg = indiv.localizarMensagemEnviada(id);
 		if (msg == null) {
 	        throw new Exception("Mensagem não encontrada. ID: "+id);
 	    }
-		partic.removerMensagemEnviada(msg);
+		indiv.removerMensagemEnviada(msg);
 		Participante destinatario = msg.getDestinatario();
 		destinatario.removerMensagemRecebida(msg);
 		repositorio.removerMensagem(msg);

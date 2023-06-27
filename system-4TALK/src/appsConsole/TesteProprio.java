@@ -1,4 +1,4 @@
-package appConsole;
+package appsConsole;
 
 import modelo.Grupo;
 import modelo.Individual;
