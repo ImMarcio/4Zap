@@ -82,7 +82,7 @@ public class Repositorio {
 	        if (mensagem.getEmitente().equals(participante2) && mensagem.getDestinatario().equals(participante1)) {
 	            conversa.add(mensagem);}
 	    }
-	    Collections.sort(conversa, Comparator.comparing(Mensagem::getDataHora));
+	    Collections.sort(conversa, Comparator.comparing(Mensagem::getId));
 	    return conversa;
 	}
 	
