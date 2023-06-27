@@ -72,18 +72,18 @@ _Além de tudo isso, é possível encontrar vários arquivos .csv, que são aque
 
 1. Clone este repositório em sua máquina local:
 
-~~~git clone https://github.com/ImMarcio/System-4TALK.git~~~
+```git clone https://github.com/ImMarcio/System-4TALK.git```
 
 2. Navegue até o diretório do projeto:
 
-~~~cd System-4TALK~~~
+```cd System-4TALK```
 
 3. Compile e execute o projeto:
 
 <p>Verificar o caminho do arquivo, e executar:</p>
 
-~~~javac nome_pasta/nome_aquivo.java~~~
-~~~java nome_arquivo.java~~~
+```javac nome_pasta/nome_aquivo.java``` <br>
+```java nome_arquivo.java```
 
 ## Contribuidores
 
