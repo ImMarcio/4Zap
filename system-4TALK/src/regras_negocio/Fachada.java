@@ -158,20 +158,17 @@ public class Fachada {
 	    repositorio.salvarObjetos();
 	}
 	
-	public static boolean validarIndividuo(String nome_individuo, String senha) throws Exception {
+	public static Individual validarIndividuo(String nome_individuo, String senha) throws Exception {
 		nome_individuo = nome_individuo.trim();
 		if (nome_individuo.isEmpty() || senha.isEmpty()) {
 			throw new IllegalArgumentException("Nome ou senha nao podem estar vazios.");
 		}
-		Individual i = (Individual) repositorio.localizarParticipante(nome_individuo);
-		if (i == null) {
-			return false;
+		Individual ind = (Individual) repositorio.localizarParticipante(nome_individuo);
+		if (ind == null) {
+			return null;
 		}
-		if(i.getNome().equals(nome_individuo) && i.getSenha().equals(senha)) {
-			return true;
-		} else {
-			return false;
-		}
+		if(ind.getNome().equals(nome_individuo) && ind.getSenha().equals(senha)) { return ind; } 
+		else { throw new Exception("Usuario ou senha invalidos."; }
 	}
 	
 	public static ArrayList<Mensagem> obterConversa(String nome_participante1, String nome_participante2) throws Exception {
