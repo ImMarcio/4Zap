@@ -168,7 +168,7 @@ public class Fachada {
 			return null;
 		}
 		if(ind.getNome().equals(nome_individuo) && ind.getSenha().equals(senha)) { return ind; } 
-		else { throw new Exception("Usuario ou senha invalidos."; }
+		else { throw new Exception("Usuario ou senha invalidos."); }
 	}
 	
 	public static ArrayList<Mensagem> obterConversa(String nome_participante1, String nome_participante2) throws Exception {
