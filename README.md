@@ -14,9 +14,6 @@
 O projeto 4TALK possui a seguinte estrutura de diretórios e arquivos:
 
 -📦system-4TALK
-- ┣ 📂arquivos
-- ┃ ┣ 📜arquivo.txt
-- ┃ ┗ 📜image.png
 - ┣ 📂backup
 - ┃ ┣ 📜grupo.csv
 - ┃ ┣ 📜individual.csv
