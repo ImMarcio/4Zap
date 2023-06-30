@@ -17,17 +17,18 @@ import modelo.Participante;
 
 public class Repositorio {
     private TreeMap<String,Participante> participantes = new TreeMap<>();
-    private TreeMap<Integer,Mensagem> mensagens = new TreeMap<>();
+    private ArrayList<Mensagem> mensagens = new ArrayList<>();
 
     public Repositorio() {
         carregarObjetos(); //ler dados dos arquivos
+        Individual admin = (Individual) participantes.put("admin", new Individual("admin", "admin", true));
     } 
 
     // Getters e Setters
     public TreeMap<String, Participante> getParticipantes() {return participantes;}
-	public TreeMap<Integer, Mensagem> getMensagens() {return mensagens;}
+	public ArrayList<Mensagem> getMensagens() {return mensagens;}
 	public int getTotalParticipantes(){ return participantes.size();}
-	public int getTotalMenagens(){return mensagens.size();}
+	public int getTotalMensagens(){return mensagens.size();}
 	
 	public Participante localizarParticipante(String nome){
 		return (Participante) participantes.get(nome);
@@ -51,7 +52,7 @@ public class Repositorio {
 	}
 	
 	public Mensagem localizarMensagem(int id){
-		for(Mensagem msg : mensagens.values()){
+		for(Mensagem msg : getMensagens()){
 			if(msg.getId()==id)
 				return msg;
 		}
@@ -67,10 +68,13 @@ public class Repositorio {
 	}
 	
 	public void adicionarMensagem(Mensagem msg) {
-		this.mensagens.put(msg.getId(), msg);
+		this.mensagens.add(msg);
 	}
 	
 	public void adicionarMensagemEnviada(Participante remetente, Mensagem mensagem) {
+		if(mensagem.getEmitente() instanceof Grupo) {
+			this.adicionarMensagem(mensagem);
+		}
 	    remetente.adicionarMensagemEnviada(mensagem);
 	}
 	
@@ -79,8 +83,10 @@ public class Repositorio {
 	}
 	
 	public void removerMensagem(Mensagem mensagem) {
-		Integer id = mensagem.getId();
-        mensagens.remove(id);
+		for(Mensagem msg : mensagens) {	
+				mensagens.removeIf(mensagemAtual -> (mensagemAtual.getId() == mensagem.getId()));
+		}
+        mensagens.remove(mensagem);
     }
 	
 	public void removerMensagemEnviada(Participante remetente, Mensagem mensagem) {
@@ -93,7 +99,7 @@ public class Repositorio {
 	
 	public ArrayList<Mensagem> obterConversaSalva(Participante participante1, Participante participante2) {
 		ArrayList<Mensagem> conversa = new ArrayList<>();
-	    for (Mensagem mensagem : mensagens.values()) {
+	    for (Mensagem mensagem : mensagens) {
 	        if (mensagem.getEmitente().equals(participante1) && mensagem.getDestinatario().equals(participante2)) {
 	            conversa.add(mensagem);}
 	        if (mensagem.getEmitente().equals(participante2) && mensagem.getDestinatario().equals(participante1)) {
@@ -107,8 +113,7 @@ public class Repositorio {
 		if (mensagens.isEmpty())
 			return 1;
 		else {
-			Integer ultimaChave = mensagens.lastKey();
-			Mensagem ultima_mensagem = mensagens.get(ultimaChave);
+			Mensagem ultima_mensagem = mensagens.get(mensagens.size()-1);
 			return ultima_mensagem.getId() + 1;
 		}
 	}
@@ -247,7 +252,7 @@ public class Repositorio {
 		try{
 			File f = new File( new File(".\\mensagem.csv").getCanonicalPath())  ;
 			arquivo = new FileWriter(f);
-			for(Mensagem mensagem : mensagens.values()){
+			for(Mensagem mensagem : mensagens){
 		    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 		        String datahora_formatada = mensagem.getDataHora().format(formatter);
 				arquivo.write( mensagem.getId() + ";"+ mensagem.getEmitente().getNome() + ";" + mensagem.getDestinatario().getNome() + ";" + datahora_formatada +  "\n");		

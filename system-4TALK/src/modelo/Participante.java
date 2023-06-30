@@ -28,6 +28,18 @@ public class Participante {
         public void adicionarMensagemRecebida(Mensagem mensagem) {recebidas.add(mensagem);}
         public void removerMensagemRecebida(Mensagem mensagem) {recebidas.remove(mensagem);}
         
+
+        public Mensagem localizarMensagem(int id) {
+    		for (Mensagem m : enviadas) {
+    			if(m.getId() == id)
+    				return m;
+    		}
+    		for (Mensagem m : recebidas) {
+    			if(m.getId() == id)
+    				return m;
+    		}
+    		return null;
+    	}
         
         public Mensagem localizarMensagemEnviada(int id) {
     		for (Mensagem m : enviadas) {
