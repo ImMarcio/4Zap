@@ -22,6 +22,12 @@ public class Individual extends Participante {
 	public String getSenha() {return senha;}
 	public void setSenha(String senha) {this.senha = senha;}
 	public boolean isAdministrador() {return administrador;}
+	public Boolean getAdministrador() {
+		if (administrador == true) {
+			return administrador;
+		};
+		return null;
+	}
 	public void setAdministrador(boolean administrador) {this.administrador = administrador;}
 	public void adicionarGrupo(Grupo grupo) {
 		grupos.add(grupo);
