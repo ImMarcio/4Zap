@@ -24,11 +24,16 @@ public class Fachada {
 			throw new IllegalArgumentException("Nome ou senha nao podem estar vazios. Verifique se digitou algum campo vazio.");
 		}
 		Individual i = (Individual) repositorio.localizarParticipante(nome_individuo);
+		Grupo g = (Grupo) repositorio.localizarParticipante(nome_individuo);
 		nome_individuo = nome_individuo.trim();
 		senha = senha.trim();
-		if (i != null) {
+		if (i != null ) {
 			throw new Exception("Nao criou participante - individuo ja cadastrado: " + nome_individuo);
 		}
+		if (g != null ) {
+			throw new Exception("Nao criou participante - individuo ja cadastrado: " + nome_individuo);
+		}
+		
 		i = new Individual(nome_individuo, senha, false);
 		repositorio.adicionarIndividuo(i);
 		repositorio.salvarObjetos();
@@ -51,10 +56,13 @@ public class Fachada {
 		repositorio.salvarObjetos();
 	}
 	
-	public static void criarGrupo(String nome_grupo) throws Exception {
 		nome_grupo = nome_grupo.trim();
 		if (nome_grupo.isEmpty()) {
 			throw new IllegalArgumentException("Nome do grupo nao pode estar vazio. Verifique se deixou nome vazio.");
+		}
+		Individual i = (Individual) repositorio.localizarParticipante(nome_grupo);
+		if (i != null ) {
+			throw new Exception("Nao criou participante - individuo ja cadastrado: " + nome_grupo);
 		}
 		Grupo g = (Grupo) repositorio.localizarParticipante(nome_grupo);
 		if (g != null) {
@@ -64,7 +72,6 @@ public class Fachada {
 		repositorio.adicionarGrupo(g);
 		repositorio.salvarObjetos();
 	}
-	
 	public static void criarMensagem(String nome_remetente, String nome_destinatario, String texto) throws Exception {
 		nome_remetente = nome_remetente.trim();
 		nome_destinatario = nome_destinatario.trim();
