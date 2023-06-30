@@ -26,7 +26,7 @@ public class Individual extends Participante {
 		if (administrador == true) {
 			return administrador;
 		};
-		return null;
+		return false;
 	}
 	public void setAdministrador(boolean administrador) {this.administrador = administrador;}
 	public void adicionarGrupo(Grupo grupo) {
