@@ -33,9 +33,9 @@ public class Repositorio {
 	public Participante localizarParticipante(String nome){
 		return (Participante) participantes.get(nome);
 	}
-	public Individual localizarIndividuo(String nome) {
+		public Individual localizarIndividuo(String nome) {
 		for(Participante participante : participantes.values()) {
-			if(participante instanceof Individual ind) {
+			if(participante instanceof Individual ind && ind.getNome().equals(nome)) {
 				return ind;
 			}
 		}
@@ -44,7 +44,7 @@ public class Repositorio {
 	
 	public Grupo localizarGrupo(String nome) {
 		for(Participante participante : participantes.values()) {
-			if(participante instanceof Grupo grup) {
+			if(participante instanceof Grupo grup && grup.getNome().equals(nome)) {
 				return grup;
 			}
 		}
