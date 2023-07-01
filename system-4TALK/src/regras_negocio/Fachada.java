@@ -56,6 +56,7 @@ public class Fachada {
 		repositorio.salvarObjetos();
 	}
 	
+	public static void criarGrupo(String nome_grupo) throws Exception {
 		nome_grupo = nome_grupo.trim();
 		if (nome_grupo.isEmpty()) {
 			throw new IllegalArgumentException("Nome do grupo nao pode estar vazio. Verifique se deixou nome vazio.");
@@ -72,6 +73,7 @@ public class Fachada {
 		repositorio.adicionarGrupo(g);
 		repositorio.salvarObjetos();
 	}
+
 	public static void criarMensagem(String nome_remetente, String nome_destinatario, String texto) throws Exception {
 		nome_remetente = nome_remetente.trim();
 		nome_destinatario = nome_destinatario.trim();
