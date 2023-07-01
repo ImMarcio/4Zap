@@ -200,8 +200,6 @@ public class Teste1 {
 		for (Mensagem m : Fachada.listarMensagens())
 			System.out.println(m);
 			System.out.println("\n");
-			
-
 		
 		System.out.println("fim do programa");
 	}

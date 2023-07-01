@@ -22,24 +22,10 @@ public class Participante {
         public ArrayList<Mensagem> getRecebidas(){ return recebidas; }
         public ArrayList<Mensagem> getEnviadas() {return enviadas;}
         
-        // Adição e Remoção nas propriedades
         public void adicionarMensagemEnviada(Mensagem mensagem) {enviadas.add(mensagem);}       
         public void removerMensagemEnviada(Mensagem mensagem) {enviadas.remove(mensagem);}
         public void adicionarMensagemRecebida(Mensagem mensagem) {recebidas.add(mensagem);}
         public void removerMensagemRecebida(Mensagem mensagem) {recebidas.remove(mensagem);}
-        
-
-        public Mensagem localizarMensagem(int id) {
-    		for (Mensagem m : enviadas) {
-    			if(m.getId() == id)
-    				return m;
-    		}
-    		for (Mensagem m : recebidas) {
-    			if(m.getId() == id)
-    				return m;
-    		}
-    		return null;
-    	}
         
         public Mensagem localizarMensagemEnviada(int id) {
     		for (Mensagem m : enviadas) {
@@ -50,7 +36,7 @@ public class Participante {
     	}
         
         public Mensagem localizarMensagemRecebida(int id) {
-    		for (Mensagem m : enviadas) {
+    		for (Mensagem m : recebidas) {
     			if(m.getId() == id)
     				return m;
     		}

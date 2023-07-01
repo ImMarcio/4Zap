@@ -2,7 +2,6 @@
 
 import java.util.ArrayList;
 import java.util.TreeMap;
-import java.util.function.Predicate;
 
 import modelo.Grupo;
 import modelo.Individual;
@@ -14,9 +13,6 @@ public class Fachada {
 	private static Repositorio repositorio = new Repositorio();
 	private Fachada() {}
 	
-	
-	
-	
 	public static void criarIndividuo(String nome_individuo, String senha) throws Exception {
 		nome_individuo = nome_individuo.trim();
 		senha = senha.trim();
@@ -24,16 +20,9 @@ public class Fachada {
 			throw new IllegalArgumentException("Nome ou senha nao podem estar vazios. Verifique se digitou algum campo vazio.");
 		}
 		Individual i = (Individual) repositorio.localizarParticipante(nome_individuo);
-		Grupo g = (Grupo) repositorio.localizarParticipante(nome_individuo);
-		nome_individuo = nome_individuo.trim();
-		senha = senha.trim();
 		if (i != null ) {
 			throw new Exception("Nao criou participante - individuo ja cadastrado: " + nome_individuo);
-		}
-		if (g != null ) {
-			throw new Exception("Nao criou participante - individuo ja cadastrado: " + nome_individuo);
-		}
-		
+		}	
 		i = new Individual(nome_individuo, senha, false);
 		repositorio.adicionarIndividuo(i);
 		repositorio.salvarObjetos();
@@ -103,11 +92,8 @@ public class Fachada {
             		repositorio.adicionarMensagemRecebida(membro, copia);
             	}
             }
-		}			
-		destinatario.adicionarMensagemRecebida(msg);
+		} else { destinatario.adicionarMensagemRecebida(msg); }
 		repositorio.adicionarMensagem(msg);
-		
-		
 		repositorio.salvarObjetos();
 	}
 	
@@ -174,26 +160,30 @@ public class Fachada {
 //	}
 	
 	public static void apagarMensagem(String nomeindividuo, int id) throws  Exception{
+		nomeindividuo = nomeindividuo.trim();
 		Individual emitente = repositorio.localizarIndividuo(nomeindividuo);	
 		if(emitente == null) 
 			throw new Exception("apagar mensagem - nome nao existe:" + nomeindividuo);
-
-		Mensagem m = repositorio.localizarMensagem(id);
+		
+		Mensagem m = emitente.localizarMensagemEnviada(id);
 		if(m == null)
 			throw new Exception("apagar mensagem - mensagem nao pertence a este individuo:" + id);
-
+		
 		emitente.removerMensagemEnviada(m);
 		Participante destinatario = m.getDestinatario();
-		if(destinatario instanceof Grupo g) {
-			ArrayList<Mensagem> lista = destinatario.getEnviadas();
-			lista.removeIf(mensagemAtual -> (mensagemAtual.getId() == m.getId()));			
-			
-		}		
 		destinatario.removerMensagemRecebida(m);
 		repositorio.removerMensagem(m);	
 
-		
-		repositorio.salvarObjetos();
+		if(destinatario instanceof Grupo) {
+			destinatario.removerMensagemRecebida(m);
+            Grupo grupo = (Grupo) destinatario;
+            for (Individual membro : grupo.getIndividuos()) {
+            	if (!(membro.equals(emitente))) {
+            		repositorio.removerMensagemEnviada(grupo,m);
+            		repositorio.removerMensagemRecebida(membro,m);
+            	}
+            }
+		}		
 	}
 	
 	public static Individual validarIndividuo(String nome_individuo, String senha) throws Exception {

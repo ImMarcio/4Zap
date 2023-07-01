@@ -21,7 +21,7 @@ public class Repositorio {
 
     public Repositorio() {
         carregarObjetos(); //ler dados dos arquivos
-        Individual admin = (Individual) participantes.put("admin", new Individual("admin", "admin", true));
+        participantes.put("admin", new Individual("admin", "admin", true));
     } 
 
     // Getters e Setters
@@ -31,9 +31,9 @@ public class Repositorio {
 	public int getTotalMensagens(){return mensagens.size();}
 	
 	public Participante localizarParticipante(String nome){
-		return (Participante) participantes.get(nome);
+		return participantes.get(nome);
 	}
-		public Individual localizarIndividuo(String nome) {
+	public Individual localizarIndividuo(String nome) {
 		for(Participante participante : participantes.values()) {
 			if(participante instanceof Individual ind && ind.getNome().equals(nome)) {
 				return ind;
@@ -83,9 +83,7 @@ public class Repositorio {
 	}
 	
 	public void removerMensagem(Mensagem mensagem) {
-		for(Mensagem msg : mensagens) {	
-				mensagens.removeIf(mensagemAtual -> (mensagemAtual.getId() == mensagem.getId()));
-		}
+		mensagens.removeIf(mensagemAtual -> (mensagemAtual.getId() == mensagem.getId()));
         mensagens.remove(mensagem);
     }
 	
