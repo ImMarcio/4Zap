@@ -25,11 +25,12 @@ public class Grupo extends Participante {
 		}
 		else {throw new Exception("Individuo nulo!");}
 	}
-	// Talvez vá pro repositorio
+	
 	public void remover(Individual individuo) throws Exception {
 		if(individuos.remove(individuo) == false) {
 			throw new Exception("Esse individuo nao esta no grupo!");
 		}
+		individuo.sairGrupo(this);
 	}
 	
 	public Individual localizar(String nome){

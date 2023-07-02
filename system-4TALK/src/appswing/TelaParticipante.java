@@ -11,6 +11,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.time.LocalDateTime;
@@ -38,6 +40,7 @@ import javax.swing.table.DefaultTableModel;
 import modelo.Grupo;
 import modelo.Individual;
 import regras_negocio.Fachada;
+import javax.swing.SwingConstants;
 
 public class TelaParticipante {
 	private JFrame frame;
@@ -55,11 +58,10 @@ public class TelaParticipante {
 	private JRadioButton radioButton_1;
 	private ButtonGroup grupobotoes;
 	private Timer timer; // temporizador
+	private JButton groups;
+	private JButton btnNewButton;
+	private JButton btnNewButton_1;
 
-	/**
-	 * Launch the application.
-	 */
-	
 	/**
 	 * Create the application.
 	 */
@@ -148,7 +150,7 @@ public class TelaParticipante {
 
 			}
 		});
-		button.setBounds(309, 225, 74, 23);
+		button.setBounds(305, 234, 74, 23);
 		frame.getContentPane().add(button);
 
 		panel = new JPanel();
@@ -167,6 +169,54 @@ public class TelaParticipante {
 		grupobotoes = new ButtonGroup(); // permite selecao unica dos botoes
 		grupobotoes.add(radioButton);
 		grupobotoes.add(radioButton_1);
+		
+		JLabel lblNewLabel = new JLabel("Grupos");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(437, 205, 54, 13);
+		frame.getContentPane().add(lblNewLabel);
+		
+		btnNewButton = new JButton("Inserir");
+		btnNewButton.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent e) {
+		        String nomeIndividuo = JOptionPane.showInputDialog(frame, "Digite o nome da pessoa:", "Inserir em grupo", JOptionPane.PLAIN_MESSAGE);
+		        if (nomeIndividuo.equals(null) || nomeIndividuo.isEmpty()) { return; }
+		        
+		        String nomeGrupo = JOptionPane.showInputDialog(frame, "Digite o nome do grupo:", "Inserir em grupo", JOptionPane.PLAIN_MESSAGE);
+		        if (nomeGrupo.equals(null) || nomeGrupo.isEmpty()) { return; }
+		        
+		        try {
+		            Fachada.inserirGrupo(nomeIndividuo, nomeGrupo);
+		            label.setText("Pessoa inserida com sucesso");
+		        } catch (Exception ex) {
+		            label.setText(ex.getMessage());
+		        }
+		    }
+		});
+
+		btnNewButton.setBounds(413, 228, 101, 21);
+		frame.getContentPane().add(btnNewButton);
+		
+		btnNewButton_1 = new JButton("Remover");
+		btnNewButton_1.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent e) {
+		        String nomePessoa = JOptionPane.showInputDialog(frame, "Digite o nome da pessoa:", "Remover de Grupo", JOptionPane.PLAIN_MESSAGE);
+		        if (nomePessoa == null || nomePessoa.isEmpty()) { return; }
+		        
+		        String nomeGrupo = JOptionPane.showInputDialog(frame, "Digite o nome do grupo:", "Remover de Grupo", JOptionPane.PLAIN_MESSAGE);
+		        if (nomeGrupo == null || nomeGrupo.isEmpty()) { return; }
+		        
+		        try {
+		            Fachada.removerGrupo(nomePessoa, nomeGrupo);
+		            label.setText("Pessoa removida do grupo com sucesso");
+		        } catch (Exception ex) {
+		            label.setText(ex.getMessage());
+		        }
+		    }
+		});
+
+		btnNewButton_1.setBounds(413, 252, 101, 21);
+		frame.getContentPane().add(btnNewButton_1);
 
 		// temporizador
 		timer = new Timer(0, new ActionListener() {

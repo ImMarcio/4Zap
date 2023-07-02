@@ -1,3 +1,8 @@
+/*
+ * @authors Allan Amancio and Marcio Jose
+ * 
+ * Repositorio class
+ */
 package repositorio;
 
 import java.io.File;
@@ -118,9 +123,9 @@ public class Repositorio {
 	
 	public void carregarObjetos(){
 		try {
-			File arquivoDeIndividuo = new File( new File(".\\individual.csv").getCanonicalPath() ) ; 
-			File arquivoDoGrupo = new File( new File(".\\grupo.csv").getCanonicalPath() ) ; 
-			File arquivoDeMensagem = new File( new File(".\\mensagem.csv").getCanonicalPath() ) ;
+			File arquivoDeIndividuo = new File( new File("./data/individual.csv").getCanonicalPath() ) ; 
+			File arquivoDoGrupo = new File( new File("./data/grupo.csv").getCanonicalPath() ) ; 
+			File arquivoDeMensagem = new File( new File("./data/mensagem.csv").getCanonicalPath() ) ;
 			if (!arquivoDeIndividuo.exists() || !arquivoDoGrupo.exists() || arquivoDeMensagem.exists()  ) {
 				FileWriter arquivo1 = new FileWriter(arquivoDeIndividuo); arquivo1.close();
 				FileWriter arquivo2 = new FileWriter(arquivoDoGrupo); arquivo2.close();
@@ -140,7 +145,7 @@ public class Repositorio {
 			String nomeindividuo,senha;
 			boolean admistrador;
 			Individual individuo;
-			File f = new File( new File(".\\individual.csv").getCanonicalPath() );
+			File f = new File( new File("./data/individual.csv").getCanonicalPath() );
 			scan = new Scanner(f); // pasta do objeto
 			while(scan.hasNextLine()) {
 				linha = scan.nextLine().trim();		
@@ -161,7 +166,7 @@ public class Repositorio {
 		try {
 			String nomegrupo;
 			Grupo grupo;
-			File f = new File( new File(".\\grupo.csv").getCanonicalPath() );
+			File f = new File( new File("./data/grupo.csv").getCanonicalPath() );
 			scan = new Scanner(f); // pasta do objeto
 			while(scan.hasNextLine()) {
 				linha = scan.nextLine().trim();		
@@ -191,7 +196,7 @@ public class Repositorio {
 			Individual emitente;
 			Participante destinatario;
 			Mensagem mensagem;
-			File f = new File( new File(".\\mensagem.csv").getCanonicalPath() );
+			File f = new File( new File("./data/mensagem.csv").getCanonicalPath() );
 			scan = new Scanner(f); // pasta do objeto
 			while(scan.hasNextLine()) {
 				linha = scan.nextLine();
@@ -213,7 +218,7 @@ public class Repositorio {
 	public void salvarObjetos(){
 		FileWriter arquivo = null;
 		try{
-			File f = new File( new File(".\\individual.csv").getCanonicalPath())  ;
+			File f = new File( new File("./data/individual.csv").getCanonicalPath())  ;
 			arquivo = new FileWriter(f);
 			for(Participante participante: participantes.values() ){
 				if (participante instanceof Individual) {
@@ -227,7 +232,7 @@ public class Repositorio {
 			throw new RuntimeException("problema na criacao do arquivo  individual "+ex.getMessage());
 		}
 		try{
-			File f = new File( new File(".\\grupo.csv").getCanonicalPath())  ;
+			File f = new File( new File("./data/grupo.csv").getCanonicalPath())  ;
 			arquivo = new FileWriter(f);
 				
 		
@@ -248,12 +253,12 @@ public class Repositorio {
 			throw new RuntimeException("problema na criacao do arquivo  grupo "+ex.getMessage());
 		}
 		try{
-			File f = new File( new File(".\\mensagem.csv").getCanonicalPath())  ;
+			File f = new File( new File("./data/mensagem.csv").getCanonicalPath())  ;
 			arquivo = new FileWriter(f);
 			for(Mensagem mensagem : mensagens){
 		    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 		        String datahora_formatada = mensagem.getDataHora().format(formatter);
-				arquivo.write( mensagem.getId() + ";"+ mensagem.getEmitente().getNome() + ";" + mensagem.getDestinatario().getNome() + ";" + datahora_formatada +  "\n");		
+				arquivo.write( mensagem.getId() +";"+ mensagem.getEmitente().getNome() + ";" + mensagem.getDestinatario().getNome() + ";" + datahora_formatada +  "\n");		
 				}	
 			arquivo.close();	
 		}

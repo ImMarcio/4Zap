@@ -29,17 +29,22 @@ public class Individual extends Participante {
 		return false;
 	}
 	public void setAdministrador(boolean administrador) {this.administrador = administrador;}
-	public void adicionarGrupo(Grupo grupo) {
-		grupos.add(grupo);
-	}
 	public ArrayList<Grupo> getGrupos() {return grupos;}
     public Grupo getGrupo(String nome_grupo) {
     	for (Grupo g : grupos) {
-    		if (g.getNome() == nome_grupo)
+    		if (g.getNome().equals(nome_grupo))
     			return g;
     	}
     	return null;
     }
+    
+	public void adicionarGrupo(Grupo grupo) {
+		grupos.add(grupo);
+	}
+	
+	public void sairGrupo(Grupo grupo) {
+		grupos.remove(grupo);
+	}
     
     @Override
     public String toString(){

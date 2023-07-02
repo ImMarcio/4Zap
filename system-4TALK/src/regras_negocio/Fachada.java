@@ -1,4 +1,9 @@
-	package regras_negocio;
+/*
+ * @authors Allan Amancio and Marcio Jose
+ * 
+ * Fachada class
+ */
+package regras_negocio;
 
 import java.util.ArrayList;
 import java.util.TreeMap;
@@ -17,7 +22,7 @@ public class Fachada {
 		nome_individuo = nome_individuo.trim();
 		senha = senha.trim();
 		if (nome_individuo.isEmpty() || senha.isEmpty()) {
-			throw new IllegalArgumentException("Nome ou senha nao podem estar vazios. Verifique se digitou algum campo vazio.");
+			throw new IllegalArgumentException("Nome ou senha nao podem estar vazios.");
 		}
 		Individual i = (Individual) repositorio.localizarParticipante(nome_individuo);
 		if (i != null ) {
@@ -32,7 +37,7 @@ public class Fachada {
 		nome_administrador = nome_administrador.trim();
 		senha = senha.trim();
 		if (nome_administrador.isEmpty() || senha.isEmpty()) {
-			throw new IllegalArgumentException("Nome ou senha nao podem estar vazios. Verifique se digitou algum campo vazio.");
+			throw new IllegalArgumentException("Nome ou senha nao podem estar vazios.");
 		}
 		Individual i = (Individual) repositorio.localizarParticipante(nome_administrador);
 		if (i != null && i.getNome().equals(nome_administrador)) {
@@ -48,7 +53,7 @@ public class Fachada {
 	public static void criarGrupo(String nome_grupo) throws Exception {
 		nome_grupo = nome_grupo.trim();
 		if (nome_grupo.isEmpty()) {
-			throw new IllegalArgumentException("Nome do grupo nao pode estar vazio. Verifique se deixou nome vazio.");
+			throw new IllegalArgumentException("Nome do grupo nao pode estar vazio.");
 		}
 		Individual i = (Individual) repositorio.localizarParticipante(nome_grupo);
 		if (i != null ) {
@@ -67,7 +72,7 @@ public class Fachada {
 		nome_remetente = nome_remetente.trim();
 		nome_destinatario = nome_destinatario.trim();
 		if (nome_remetente.isEmpty() || nome_destinatario.isEmpty() || texto.isEmpty() || texto.isBlank()) {
-			throw new IllegalArgumentException("Nomes ou texto nao podem ser vazios. Verifique se deixou algum campo vazio.");
+			throw new IllegalArgumentException("Nomes ou texto nao podem ser vazios.");
 		}
 		Participante remetente = repositorio.localizarParticipante(nome_remetente);
 		if (remetente == null) {
@@ -100,10 +105,10 @@ public class Fachada {
 	public static void inserirGrupo(String nome_individuo, String nome_grupo) throws  Exception {
 		nome_individuo = nome_individuo.trim();
 		nome_grupo = nome_grupo.trim();
-		Grupo grupo = (Grupo) repositorio.localizarParticipante(nome_grupo);
+		Grupo grupo = repositorio.localizarGrupo(nome_grupo);
 		if(grupo == null) 
 			throw new Exception("Nao inseriu individuo - grupo inexistente: " + nome_grupo);
-		Individual in = (Individual) repositorio.localizarParticipante(nome_individuo);
+		Individual in = repositorio.localizarIndividuo(nome_individuo);
 		if(in == null)
 			throw new Exception("Nao inseriu individuo - individuo inexistente: " + nome_individuo);
 		grupo.adicionar(in);
@@ -111,7 +116,9 @@ public class Fachada {
 	}
 
 	public static void removerGrupo(String nome_individuo, String nome_grupo) throws Exception {
-		Individual in = (Individual) repositorio.localizarParticipante(nome_individuo);
+		nome_individuo = nome_individuo.trim();
+		nome_grupo = nome_grupo.trim();
+		Individual in = repositorio.localizarIndividuo(nome_individuo);
 		if (in==null)
 			throw new Exception("Nao removeu o individuo - individuo inexistente: "+nome_individuo);
 		Grupo gru = in.getGrupo(nome_grupo);
@@ -201,7 +208,7 @@ public class Fachada {
 	
 	public static ArrayList<Mensagem> obterConversa(String nome_participante1, String nome_participante2) throws Exception {
 		if (nome_participante1.isEmpty() || nome_participante2.isEmpty()) {
-			throw new IllegalArgumentException("Nomes nao podem ser vazios. Verifique se deixou algum campo vazio.");
+			throw new IllegalArgumentException("Nomes nao podem estar vazios.");
 		}
 		Individual participante1 = (Individual) repositorio.localizarParticipante(nome_participante1);
 		if (participante1 == null) {
