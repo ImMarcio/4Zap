@@ -6,6 +6,7 @@
 package modelo;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Mensagem {
     private int id;
@@ -19,6 +20,7 @@ public class Mensagem {
         this.texto = texto;
         this.emitente = emitente;
         this.destinatario = destinatario;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS");
         this.datahora = datahora;
     }
 

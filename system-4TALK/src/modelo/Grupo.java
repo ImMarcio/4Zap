@@ -22,6 +22,7 @@ public class Grupo extends Participante {
 		if(individuo!= null) {
 			individuos.add(individuo);
 			individuo.adicionarGrupo(this);
+			
 		}
 		else {throw new Exception("Individuo nulo!");}
 	}

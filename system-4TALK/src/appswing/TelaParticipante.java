@@ -230,7 +230,7 @@ public class TelaParticipante {
 			}
 		});
 		timer.setRepeats(true);
-		timer.setDelay(1000); // 8 segundos
+		timer.setDelay(1000); // 1 segundo
 		timer.start();
 
 		frame.setVisible(true);

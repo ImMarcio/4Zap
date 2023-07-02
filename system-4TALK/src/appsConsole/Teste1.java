@@ -21,7 +21,7 @@ import regras_negocio.Fachada;
 public class Teste1 {
 
 	public Teste1() {
-
+	
 		/**
 		 * PARTICIPANTE INDIVIDUAL
 		 */
@@ -202,6 +202,13 @@ public class Teste1 {
 			System.out.println("\n");
 		
 		System.out.println("fim do programa");
+		
+		
+		Fachada.lerDados();
+		System.out.println("\nlistar individuos ");
+		for (Individual ind : Fachada.listarIndividuos())
+			System.out.println(ind);
+
 	}
 
 	// =================================================

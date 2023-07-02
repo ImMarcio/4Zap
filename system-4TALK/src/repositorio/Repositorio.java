@@ -86,38 +86,47 @@ public class Repositorio {
 
 	public void adicionarIndividuo(Individual i){
 		this.participantes.put(i.getNome(), i);
+		this.salvarObjetos();
 	}
 	
 	public void adicionarGrupo(Grupo g) {
 		this.participantes.put(g.getNome(), g);
+		this.salvarObjetos();
 	}
 	
 	public void adicionarMensagem(Mensagem msg) {
 		this.mensagens.add(msg);
+		this.salvarObjetos();
 	}
 	
 	public void adicionarMensagemEnviada(Participante remetente, Mensagem mensagem) {
 		if(mensagem.getEmitente() instanceof Grupo) {
 			this.adicionarMensagem(mensagem);
+			this.salvarObjetos();
 		}
 	    remetente.adicionarMensagemEnviada(mensagem);
+	    this.salvarObjetos();
 	}
 	
 	public void adicionarMensagemRecebida(Participante destinatario, Mensagem mensagem) {
 	    destinatario.adicionarMensagemRecebida(mensagem);
+	    this.salvarObjetos();
 	}
 	
 	public void removerMensagem(Mensagem mensagem) {
 		mensagens.removeIf(mensagemAtual -> (mensagemAtual.getId() == mensagem.getId()));
         mensagens.remove(mensagem);
+        this.salvarObjetos();
     }
 	
 	public void removerMensagemEnviada(Participante remetente, Mensagem mensagem) {
 	    remetente.removerMensagemEnviada(mensagem);
+	    this.salvarObjetos();
 	}
 
 	public void removerMensagemRecebida(Participante destinatario, Mensagem mensagem) {
 	    destinatario.removerMensagemRecebida(mensagem);
+	    this.salvarObjetos();
 	}
 	
 	public ArrayList<Mensagem> obterConversaSalva(Participante participante1, Participante participante2) {
@@ -141,183 +150,7 @@ public class Repositorio {
 		}
 	}
 	
-//	public void carregarObjetos2(){
-//		try {
-//			File arquivoDeIndividuo = new File( new File("./data/individual.csv").getCanonicalPath() ) ; 
-//			File arquivoDoGrupo = new File( new File("./data/grupo.csv").getCanonicalPath() ) ; 
-//			File arquivoDeMensagem = new File( new File("./data/mensagem.csv").getCanonicalPath() ) ;
-//			if (!arquivoDeIndividuo.exists() || !arquivoDoGrupo.exists() || arquivoDeMensagem.exists()  ) {
-//				FileWriter arquivo1 = new FileWriter(arquivoDeIndividuo); arquivo1.close();
-//				FileWriter arquivo2 = new FileWriter(arquivoDoGrupo); arquivo2.close();
-//				FileWriter arquivo3 = new FileWriter(arquivoDeMensagem); arquivo3.close();
-//				return;
-//			}
-//		}
-//		catch(Exception ex)		{
-//			throw new RuntimeException("criacao dos arquivos vazios:"+ex.getMessage());
-//		}
-//
-//		String linha;
-//		String[] partes;
-//		Scanner scan = null;
-//		
-//		try {
-//			String nomeindividuo,senha;
-//			boolean admistrador;
-//			Individual individuo;
-//			File f = new File( new File("./data/individual.csv").getCanonicalPath() );
-//			scan = new Scanner(f); // pasta do objeto
-//			while(scan.hasNextLine()) {
-//				linha = scan.nextLine().trim();		
-//				partes = linha.split(";");	
-//				nomeindividuo = partes[0];
-//				senha = partes[1];
-//				admistrador = Boolean.parseBoolean(partes[3]);
-//				individuo = new Individual(nomeindividuo, senha, admistrador);
-//				this.adicionarIndividuo(individuo);
-//				
-//			}
-//			scan.close();
-//			
-//		}
-//		catch(Exception ex) {
-//			throw new RuntimeException("leitura arquivo de individuos:"+ex.getMessage());
-//		}
-//		try {
-//			String nomegrupo;
-//			Grupo grupo;
-//			File f = new File( new File("./data/grupo.csv").getCanonicalPath() );
-//			scan = new Scanner(f); // pasta do objeto
-//			while(scan.hasNextLine()) {
-//				linha = scan.nextLine().trim();		
-//				partes = linha.split(";");
-//				nomegrupo = partes[0];
-//				grupo = new Grupo(nomegrupo);
-//				if(partes.length>1) {
-//					for(int i = 1; i < partes.length; i++) {
-//						Participante participanteAtual = this.localizarParticipante(partes[i]);
-//						if( participanteAtual instanceof Individual indi) {
-//							grupo.adicionar(indi);
-//						}
-//					}
-//				}
-//
-//				this.adicionarGrupo(grupo);	
-//			}	
-//			scan.close();
-//				
-//			}
-//		catch(Exception ex) {
-//			throw new RuntimeException("leitura arquivo de grupo:"+ex.getMessage());
-//		}
-//		try {
-//			int id;
-//			String texto;
-//			Individual emitente;
-//			Participante destinatario;
-//			Mensagem mensagem;
-//			File f = new File( new File("./data/mensagem.csv").getCanonicalPath() );
-//			scan = new Scanner(f); // pasta do objeto
-//			while(scan.hasNextLine()) {
-//				linha = scan.nextLine();
-//				partes = linha.split(";");
-//				id = Integer.parseInt(partes[0]);
-//				texto = partes[1];
-//				emitente = (Individual) this.localizarParticipante(partes[2]);
-//				destinatario = this.localizarParticipante(partes[3]);
-//				mensagem = new Mensagem(id,texto, emitente, destinatario);
-//				this.adicionarMensagem(mensagem);
-//			}
-//			scan.close();
-//		}
-//		catch(Exception ex) {
-//			throw new RuntimeException("leitura arquivo de mensagens:"+ex.getMessage());
-//		}
-//	}
-//	
-//	public void carregarObjetos() {
-//		String linha;
-//		String[] partes;
-//		try {
-//			File individual = new File( new File("./data/individual.csv").getCanonicalPath() ) ; 
-//			String nomeindividuo,senha;
-//			boolean admistrador;
-//			Individual individuo;
-//			
-//			if(individual.exists()) {
-//				Scanner sc = new Scanner("./data/individual.csv");
-//				
-//
-//				while(sc.hasNextLine()) {
-//					linha = sc.nextLine().trim();		
-//					partes = linha.split(";");	
-//					nomeindividuo = partes[0];
-//					senha = partes[1];
-//					admistrador = Boolean.parseBoolean(partes[3]);
-//					individuo = new Individual(nomeindividuo, senha, admistrador);
-//					this.adicionarIndividuo(individuo);
-//					
-//				}
-//
-//				sc.close();
-//			}
-//		}catch(Exception ex) {
-//			throw new RuntimeException("leitura arquivo de mensagens:"+ex.getMessage());
-//		}
-//	}
-//
-//	public void salvarObjetos(){
-//		FileWriter arquivo = null;
-//		try{
-//			File f = new File( new File("./data/individual.csv").getCanonicalPath())  ;
-//			arquivo = new FileWriter(f);
-//			for(Participante participante: participantes.values() ){
-//				if (participante instanceof Individual) {
-//					Individual individual = (Individual) participante;
-//					arquivo.write( individual.getNome()+";" + individual.getSenha() + ";" + individual.isAdministrador() + "\n");
-//				}
-//			}	
-//			arquivo.close();		
-//		}
-//		catch(Exception ex) {
-//			throw new RuntimeException("problema na criacao do arquivo  individual "+ex.getMessage());
-//		}
-//		try{
-//			File f = new File( new File("./data/grupo.csv").getCanonicalPath())  ;
-//			arquivo = new FileWriter(f);
-//				
-//		
-//			for(Participante participante: participantes.values() ){	
-//				String individuos = "";
-//				if (participante instanceof Grupo) {
-//					ArrayList<Individual> listaDeIndividuos = ((Grupo) participante).getIndividuos();
-//					for(int i = 0; i < listaDeIndividuos.size(); i++) {
-//						individuos += listaDeIndividuos.get(i).getNome() + ";";
-//					};	
-//					arquivo.write( participante.getNome() + ";" + individuos +  "\n");	
-//				}
-//					
-//			}	
-//			arquivo.close();	
-//		}
-//		catch(Exception ex) {
-//			throw new RuntimeException("problema na criacao do arquivo  grupo "+ex.getMessage());
-//		}
-//		try{
-//			File f = new File( new File("./data/mensagem.csv").getCanonicalPath())  ;
-//			arquivo = new FileWriter(f);
-//			for(Mensagem mensagem : mensagens){
-//		    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-//		        String datahora_formatada = mensagem.getDataHora().format(formatter);
-//				arquivo.write( mensagem.getId() +";"+ mensagem.getEmitente().getNome() + ";" + mensagem.getDestinatario().getNome() + ";" + datahora_formatada +  "\n");		
-//				}	
-//			arquivo.close();	
-//		}
-//		catch(Exception ex) {
-//			throw new RuntimeException("problema na criacao do arquivo  mensagem "+ex.getMessage());
-//		}	
-//	}
-	
+
 	
 	public void carregarObjetos()  	{
 		// carregar para o repositorio os objetos dos arquivos csv
@@ -354,6 +187,7 @@ public class Repositorio {
 				administrador = partes[2];
 				Individual ind = new Individual(nome,senha,Boolean.parseBoolean(administrador));
 				this.adicionarIndividuo(ind);
+				
 			}
 			arquivo1.close();
 		}
@@ -365,8 +199,9 @@ public class Repositorio {
 			String nome;
 			Grupo grupo;
 			Individual individuo;
-			File f = new File( new File("./data/grupo.csv").getCanonicalPath())  ;
+			File f = new File( new File("./data/grupos.csv").getCanonicalPath())  ;
 			Scanner arquivo2 = new Scanner(f);	 //  pasta do projeto
+			
 			while(arquivo2.hasNextLine()) 	{
 				linha = arquivo2.nextLine().trim();	
 				partes = linha.split(";");
@@ -380,6 +215,7 @@ public class Repositorio {
 						individuo.adicionarGrupo(grupo);
 					}
 				this.adicionarGrupo(grupo);
+				
 			}
 			arquivo2.close();
 		}
@@ -394,7 +230,7 @@ public class Repositorio {
 			LocalDateTime datahora;
 			Mensagem m;
 			Participante emitente,destinatario;
-			File f = new File( new File("./data/mensagem.csv").getCanonicalPath() )  ;
+			File f = new File( new File("./data/mensagens.csv").getCanonicalPath() )  ;
 			Scanner arquivo3 = new Scanner(f);	 //  pasta do projeto
 			while(arquivo3.hasNextLine()) 	{
 				linha = arquivo3.nextLine().trim();		
@@ -403,14 +239,16 @@ public class Repositorio {
 				id = Integer.parseInt(partes[0]);
 				texto = partes[1];
 				nomeemitente = partes[2];
-				nomedestinatario = partes[3];
-				datahora = LocalDateTime.parse(partes[4], DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss"));
+				nomedestinatario = partes[3];			
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS");
+				datahora = LocalDateTime.parse(partes[4], formatter );
 				emitente = this.localizarParticipante(nomeemitente);
 				destinatario = this.localizarParticipante(nomedestinatario);
 				m = new Mensagem(id,texto,emitente,destinatario, datahora);
 				this.adicionarMensagem(m);
 				emitente.adicionarMensagemEnviada(m);
 				destinatario.adicionarMensagemRecebida(m);
+				
 			} 
 			arquivo3.close();
 		}
@@ -423,14 +261,16 @@ public class Repositorio {
 	public void	salvarObjetos()  {
 		//gravar nos arquivos csv os objetos que estão no repositório
 		try	{
-			File f = new File( new File("./data/mensagem.csv").getCanonicalPath())  ;
+			File f = new File( new File("./data/mensagens.csv").getCanonicalPath())  ;
 			FileWriter arquivo1 = new FileWriter(f); 
 			for(Mensagem m : mensagens) 	{
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS");
+		        String dataString = formatter.format(m.getDataHora());
 				arquivo1.write(	m.getId()+";"+
 						m.getTexto()+";"+
 						m.getEmitente().getNome()+";"+
 						m.getDestinatario().getNome()+";"+
-						m.getDataHora()+"\n");	
+						dataString+"\n");	
 			} 
 			arquivo1.close();
 		}
@@ -451,7 +291,7 @@ public class Repositorio {
 		}
 
 		try	{
-			File f = new File( new File("./data/grupo.csv").getCanonicalPath())  ;
+			File f = new File( new File("./data/grupos.csv").getCanonicalPath())  ;
 			FileWriter arquivo3 = new FileWriter(f) ; 
 			for(Grupo g : this.getGrupos()) {
 				String texto="";

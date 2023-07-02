@@ -39,7 +39,11 @@ public class Individual extends Participante {
     }
     
 	public void adicionarGrupo(Grupo grupo) {
-		grupos.add(grupo);
+		Grupo grupoAtual = getGrupo(grupo.getNome());
+		if(grupoAtual == null) {
+			grupos.add(grupo);
+		}
+		
 	}
 	
 	public void sairGrupo(Grupo grupo) {
