@@ -1,5 +1,7 @@
 package appsConsole;
 
+import java.time.LocalDateTime;
+
 import modelo.Grupo;
 import modelo.Individual;
 import modelo.Mensagem;
@@ -12,7 +14,7 @@ public class TesteProprio {
 			Grupo grupo1 = new Grupo("Grupo1");
 			grupo1.adicionar(joao);
 			grupo1.adicionar(maria);
-			Mensagem msg = new Mensagem(1,"alallalal",joao,maria);
+			Mensagem msg = new Mensagem(1,"alallalal",joao,maria, LocalDateTime.now());
 			joao.adicionarMensagemEnviada(msg);
 			maria.adicionarMensagemRecebida(msg);
 			System.out.println(joao.toString());

@@ -5,6 +5,7 @@
  */
 package regras_negocio;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
@@ -83,7 +84,7 @@ public class Fachada {
 			throw new Exception("Mensagem nao enviada - destinatario desconhecido: " + nome_destinatario);
 		}
 		int id = repositorio.gerarId();
-		Mensagem msg = new Mensagem(id,texto,remetente,destinatario);
+		Mensagem msg = new Mensagem(id,texto,remetente,destinatario, LocalDateTime.now());
 		remetente.adicionarMensagemEnviada(msg);
 		
 		if (destinatario instanceof Grupo) {
@@ -92,7 +93,7 @@ public class Fachada {
     		texto = nome_remetente + "/" + texto;
             for (Individual membro : grupo.getIndividuos()) {
             	if (!(membro.equals(remetente))) {
-            		Mensagem copia = new Mensagem(id, texto, grupo, membro);
+            		Mensagem copia = new Mensagem(id, texto, grupo, membro,LocalDateTime.now());
             		repositorio.adicionarMensagemEnviada(grupo, copia);
             		repositorio.adicionarMensagemRecebida(membro, copia);
             	}

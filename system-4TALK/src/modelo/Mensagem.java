@@ -14,12 +14,12 @@ public class Mensagem {
     private Participante destinatario;
     private LocalDateTime datahora;
     
-	public Mensagem(int id,String texto, Participante emitente, Participante destinatario){
+	public Mensagem(int id,String texto, Participante emitente, Participante destinatario, LocalDateTime datahora){
 		this.id = id;
         this.texto = texto;
         this.emitente = emitente;
         this.destinatario = destinatario;
-        this.datahora = LocalDateTime.now();
+        this.datahora = datahora;
     }
 
     // Getters e setters
