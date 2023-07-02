@@ -204,10 +204,8 @@ public class Teste1 {
 		System.out.println("fim do programa");
 		
 		
-		Fachada.lerDados();
-		System.out.println("\nlistar individuos ");
-		for (Individual ind : Fachada.listarIndividuos())
-			System.out.println(ind);
+//		Fachada.lerDados();
+		
 
 	}
 

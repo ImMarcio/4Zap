@@ -17,7 +17,7 @@ import repositorio.Repositorio;
 
 public class Fachada {
 	private static Repositorio repositorio = new Repositorio();
-	private Fachada() {repositorio.carregarObjetos();}
+	private Fachada() {}
 	
 	public static void lerDados() {
 		 repositorio.carregarObjetos();

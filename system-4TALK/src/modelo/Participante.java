@@ -19,7 +19,7 @@ public class Participante {
         // Getters e Setters
         public String getNome(){ return this.nome; }
         public void setNome(String nome){this.nome = nome;}
-        public ArrayList<Mensagem> getRecebidas(){ return recebidas; }
+        public ArrayList<Mensagem> getRecebidas(){return recebidas; }
         public ArrayList<Mensagem> getEnviadas() {return enviadas;}
         
         public void adicionarMensagemEnviada(Mensagem mensagem) {enviadas.add(mensagem);}       

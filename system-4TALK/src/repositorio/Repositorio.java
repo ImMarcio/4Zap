@@ -26,8 +26,7 @@ public class Repositorio {
     private ArrayList<Mensagem> mensagens = new ArrayList<>();
 
     public Repositorio() {
-    	salvarObjetos();
-        carregarObjetos(); //ler dados dos arquivos       
+    	carregarObjetos(); //ler dados dos arquivos       
         participantes.put("admin", new Individual("admin", "admin", true));
     } 
 
@@ -181,7 +180,6 @@ public class Repositorio {
 			while(arquivo1.hasNextLine()) 	{
 				linha = arquivo1.nextLine().trim();	
 				partes = linha.split(";");
-				//System.out.println(Arrays.toString(partes));
 				nome = partes[0];
 				senha = partes[1];
 				administrador = partes[2];
@@ -210,7 +208,7 @@ public class Repositorio {
 				grupo = new Grupo(nome);
 				if(partes.length>1)
 					for(int i=1; i< partes.length; i++) {
-						individuo = this.localizarIndividuo(partes[i]);
+						individuo = this.localizarIndividuo(partes[i]);						
 						grupo.adicionar(individuo);
 						individuo.adicionarGrupo(grupo);
 					}
@@ -235,7 +233,6 @@ public class Repositorio {
 			while(arquivo3.hasNextLine()) 	{
 				linha = arquivo3.nextLine().trim();		
 				partes = linha.split(";");	
-				//System.out.println(Arrays.toString(partes));
 				id = Integer.parseInt(partes[0]);
 				texto = partes[1];
 				nomeemitente = partes[2];
@@ -243,7 +240,7 @@ public class Repositorio {
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS");
 				datahora = LocalDateTime.parse(partes[4], formatter );
 				emitente = this.localizarParticipante(nomeemitente);
-				destinatario = this.localizarParticipante(nomedestinatario);
+				destinatario = this.localizarParticipante(nomedestinatario);				
 				m = new Mensagem(id,texto,emitente,destinatario, datahora);
 				this.adicionarMensagem(m);
 				emitente.adicionarMensagemEnviada(m);
