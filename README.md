@@ -89,4 +89,4 @@ _Além de tudo isso, é possível encontrar vários arquivos .csv, que são aque
 
 ## Licença
 
-Este projeto está licenciado sob a [Licença MIT](https://opensource.org/licenses/MIT).
+Este projeto está licenciado sob a [Licença Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0).
