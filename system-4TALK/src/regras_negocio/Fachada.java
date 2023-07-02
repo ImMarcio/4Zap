@@ -115,6 +115,9 @@ public class Fachada {
 		Individual in = repositorio.localizarIndividuo(nome_individuo);
 		if(in == null)
 			throw new Exception("Nao inseriu individuo - individuo inexistente: " + nome_individuo);
+		Individual individuoDoGrupo = grupo.localizar(nome_individuo);
+		if(individuoDoGrupo != null)
+			throw new Exception("Nao inseriu individuo - individuo já está no grupo: " + nome_individuo);
 		grupo.adicionar(in);
 		repositorio.salvarObjetos();
 	}

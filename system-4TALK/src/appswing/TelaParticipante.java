@@ -238,7 +238,7 @@ public class TelaParticipante {
 
 	public void listagem() {
 		try {
-			Fachada.lerDados();
+			
 			List<Individual> lista1 = Fachada.listarIndividuos();
 			List<Grupo> lista2 = Fachada.listarGrupos();
 
