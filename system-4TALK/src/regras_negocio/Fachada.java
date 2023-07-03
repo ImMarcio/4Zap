@@ -19,9 +19,6 @@ public class Fachada {
 	private static Repositorio repositorio = new Repositorio();
 	private Fachada() {}
 	
-	public static void lerDados() {
-		 repositorio.carregarObjetos();
-	}
 	public static void criarIndividuo(String nome_individuo, String senha) throws Exception {
 		nome_individuo = nome_individuo.trim();
 		senha = senha.trim();

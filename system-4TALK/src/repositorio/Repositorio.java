@@ -85,47 +85,38 @@ public class Repositorio {
 
 	public void adicionarIndividuo(Individual i){
 		this.participantes.put(i.getNome(), i);
-		this.salvarObjetos();
 	}
 	
 	public void adicionarGrupo(Grupo g) {
 		this.participantes.put(g.getNome(), g);
-		this.salvarObjetos();
 	}
 	
 	public void adicionarMensagem(Mensagem msg) {
 		this.mensagens.add(msg);
-		this.salvarObjetos();
 	}
 	
 	public void adicionarMensagemEnviada(Participante remetente, Mensagem mensagem) {
 		if(mensagem.getEmitente() instanceof Grupo) {
 			this.adicionarMensagem(mensagem);
-			this.salvarObjetos();
 		}
 	    remetente.adicionarMensagemEnviada(mensagem);
-	    this.salvarObjetos();
 	}
 	
 	public void adicionarMensagemRecebida(Participante destinatario, Mensagem mensagem) {
 	    destinatario.adicionarMensagemRecebida(mensagem);
-	    this.salvarObjetos();
 	}
 	
 	public void removerMensagem(Mensagem mensagem) {
 		mensagens.removeIf(mensagemAtual -> (mensagemAtual.getId() == mensagem.getId()));
         mensagens.remove(mensagem);
-        this.salvarObjetos();
     }
 	
 	public void removerMensagemEnviada(Participante remetente, Mensagem mensagem) {
 	    remetente.removerMensagemEnviada(mensagem);
-	    this.salvarObjetos();
 	}
 
 	public void removerMensagemRecebida(Participante destinatario, Mensagem mensagem) {
 	    destinatario.removerMensagemRecebida(mensagem);
-	    this.salvarObjetos();
 	}
 	
 	public ArrayList<Mensagem> obterConversaSalva(Participante participante1, Participante participante2) {
@@ -276,7 +267,7 @@ public class Repositorio {
 		}
 
 		try	{
-			File f = new File( new File("./data/individual.csv").getCanonicalPath())  ;
+			File f = new File( new File(".\\individual.csv").getCanonicalPath())  ;
 			FileWriter arquivo2 = new FileWriter(f) ; 
 			for(Individual ind : this.getIndividuos()) {
 				arquivo2.write(ind.getNome() +";"+ ind.getSenha() +";"+ ind.getAdministrador() +"\n");	
