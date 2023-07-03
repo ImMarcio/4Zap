@@ -176,7 +176,6 @@ public class Repositorio {
 				administrador = partes[2];
 				Individual ind = new Individual(nome,senha,Boolean.parseBoolean(administrador));
 				this.adicionarIndividuo(ind);
-				
 			}
 			arquivo1.close();
 		}
@@ -292,14 +291,5 @@ public class Repositorio {
 		catch (Exception e) {
 			throw new RuntimeException("problema na criação do arquivo  grupos "+e.getMessage());
 		}
-	}
-
-	
-	
-	
-	
-	
-	
-	
-	
+	}	
 }

@@ -57,8 +57,7 @@ public class TelaParticipante {
 	private JRadioButton radioButton;
 	private JRadioButton radioButton_1;
 	private ButtonGroup grupobotoes;
-	private Timer timer; // temporizador
-	private JButton groups;
+	private Timer timer;
 	private JButton btnNewButton;
 	private JButton btnNewButton_1;
 

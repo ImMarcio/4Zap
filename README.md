@@ -23,7 +23,35 @@ O projeto 4TALK possui a seguinte estrutura de diretórios e arquivos:
 - ┃ ┃ ┣ 📜Teste1.class
 - ┃ ┃ ┗ 📜TesteProprio.class
 - ┃ ┣ 📂appsSwing
-- ┃ ┃ ┗ 📜Tela1Swing.class
+- ┃ ┃ ┣ 📜desktop.ini
+- ┃ ┃ ┣ 📜TelaConversa$1.class
+- ┃ ┃ ┣ 📜TelaConversa$2.class
+- ┃ ┃ ┣ 📜TelaConversa$3.class
+- ┃ ┃ ┣ 📜TelaConversa$4.class
+- ┃ ┃ ┣ 📜TelaConversa.class
+- ┃ ┃ ┣ 📜TelaEspionagem$1.class
+- ┃ ┃ ┣ 📜TelaEspionagem$2.class
+- ┃ ┃ ┣ 📜TelaEspionagem$3.class
+- ┃ ┃ ┣ 📜TelaEspionagem.class
+- ┃ ┃ ┣ 📜TelaLogin$1.class
+- ┃ ┃ ┣ 📜TelaLogin.class
+- ┃ ┃ ┣ 📜TelaMensagem$1.class
+- ┃ ┃ ┣ 📜TelaMensagem$2.class
+- ┃ ┃ ┣ 📜TelaMensagem.class
+- ┃ ┃ ┣ 📜TelaParticipante$1.class
+- ┃ ┃ ┣ 📜TelaParticipante$2.class
+- ┃ ┃ ┣ 📜TelaParticipante$3.class
+- ┃ ┃ ┣ 📜TelaParticipante$4.class
+- ┃ ┃ ┣ 📜TelaParticipante$5.class
+- ┃ ┃ ┣ 📜TelaParticipante.class
+- ┃ ┃ ┣ 📜TelaPrincipal$1.class
+- ┃ ┃ ┣ 📜TelaPrincipal$2.class
+- ┃ ┃ ┣ 📜TelaPrincipal$3.class
+- ┃ ┃ ┣ 📜TelaPrincipal$4.class
+- ┃ ┃ ┣ 📜TelaPrincipal$5.class
+- ┃ ┃ ┣ 📜TelaPrincipal$6.class
+- ┃ ┃ ┣ 📜TelaPrincipal$7.class
+- ┃ ┃ ┗ 📜TelaPrincipal.class
 - ┃ ┣ 📂modelo
 - ┃ ┃ ┣ 📜Grupo.class
 - ┃ ┃ ┣ 📜Individual.class
@@ -39,7 +67,13 @@ O projeto 4TALK possui a seguinte estrutura de diretórios e arquivos:
 - ┃ ┃ ┣ 📜Teste1.java
 - ┃ ┃ ┗ 📜TesteProprio.java
 - ┃ ┣ 📂appsSwing
-- ┃ ┃ ┗ 📜Tela1Swing.java
+- ┃ ┃ ┣ 📜desktop.ini
+- ┃ ┃ ┣ 📜TelaConversa.java
+- ┃ ┃ ┣ 📜TelaEspionagem.java
+- ┃ ┃ ┣ 📜TelaLogin.java
+- ┃ ┃ ┣ 📜TelaMensagem.java
+- ┃ ┃ ┣ 📜TelaParticipante.java
+- ┃ ┃ ┗ 📜TelaPrincipal.java
 - ┃ ┣ 📂modelo
 - ┃ ┃ ┣ 📜Grupo.java
 - ┃ ┃ ┣ 📜Individual.java
