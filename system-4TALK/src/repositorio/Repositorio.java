@@ -146,9 +146,9 @@ public class Repositorio {
 		// carregar para o repositorio os objetos dos arquivos csv
 		try {
 			//caso os arquivos nao existam, serao criados vazios
-			File f1 = new File( new File("./data/mensagens.csv").getCanonicalPath() ) ; 
-			File f2 = new File( new File("./data/individual.csv").getCanonicalPath() ) ; 
-			File f3 = new File( new File("./data/grupos.csv").getCanonicalPath() ) ; 
+			File f1 = new File( new File(".\\mensagens.csv").getCanonicalPath() ) ; 
+			File f2 = new File( new File(".\\individual.csv").getCanonicalPath() ) ; 
+			File f3 = new File( new File(".\\grupos.csv").getCanonicalPath() ) ; 
 			if (!f1.exists() || !f2.exists() || !f3.exists() ) {
 				//System.out.println("criando arquivo .csv vazio");
 				FileWriter arquivo1 = new FileWriter(f1); arquivo1.close();
@@ -166,7 +166,7 @@ public class Repositorio {
 
 		try	{
 			String nome,senha,administrador;
-			File f = new File( new File("./data/individual.csv").getCanonicalPath())  ;
+			File f = new File( new File(".\\individual.csv").getCanonicalPath())  ;
 			Scanner arquivo1 = new Scanner(f);	 //  pasta do projeto
 			while(arquivo1.hasNextLine()) 	{
 				linha = arquivo1.nextLine().trim();	
@@ -188,7 +188,7 @@ public class Repositorio {
 			String nome;
 			Grupo grupo;
 			Individual individuo;
-			File f = new File( new File("./data/grupos.csv").getCanonicalPath())  ;
+			File f = new File( new File(".\\grupos.csv").getCanonicalPath())  ;
 			Scanner arquivo2 = new Scanner(f);	 //  pasta do projeto
 			
 			while(arquivo2.hasNextLine()) 	{
@@ -219,7 +219,7 @@ public class Repositorio {
 			LocalDateTime datahora;
 			Mensagem m;
 			Participante emitente,destinatario;
-			File f = new File( new File("./data/mensagens.csv").getCanonicalPath() )  ;
+			File f = new File( new File(".\\mensagens.csv").getCanonicalPath() )  ;
 			Scanner arquivo3 = new Scanner(f);	 //  pasta do projeto
 			while(arquivo3.hasNextLine()) 	{
 				linha = arquivo3.nextLine().trim();		
@@ -249,7 +249,7 @@ public class Repositorio {
 	public void	salvarObjetos()  {
 		//gravar nos arquivos csv os objetos que estão no repositório
 		try	{
-			File f = new File( new File("./data/mensagens.csv").getCanonicalPath())  ;
+			File f = new File( new File(".\\mensagens.csv").getCanonicalPath())  ;
 			FileWriter arquivo1 = new FileWriter(f); 
 			for(Mensagem m : mensagens) 	{
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS");
@@ -279,7 +279,7 @@ public class Repositorio {
 		}
 
 		try	{
-			File f = new File( new File("./data/grupos.csv").getCanonicalPath())  ;
+			File f = new File( new File(".\\grupos.csv").getCanonicalPath())  ;
 			FileWriter arquivo3 = new FileWriter(f) ; 
 			for(Grupo g : this.getGrupos()) {
 				String texto="";
