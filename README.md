@@ -52,6 +52,9 @@ O projeto 4TALK possui a seguinte estrutura de diretórios e arquivos:
 - ┃ ┃ ┣ 📜TelaPrincipal$6.class
 - ┃ ┃ ┣ 📜TelaPrincipal$7.class
 - ┃ ┃ ┗ 📜TelaPrincipal.class
+- ┃ ┣ 📂imagens
+- ┃ ┃ ┣ 📜imagem.png
+- ┃ ┃ ┗ 📜tela_inicial.jpeg
 - ┃ ┣ 📂modelo
 - ┃ ┃ ┣ 📜Grupo.class
 - ┃ ┃ ┣ 📜Individual.class
@@ -74,6 +77,9 @@ O projeto 4TALK possui a seguinte estrutura de diretórios e arquivos:
 - ┃ ┃ ┣ 📜TelaMensagem.java
 - ┃ ┃ ┣ 📜TelaParticipante.java
 - ┃ ┃ ┗ 📜TelaPrincipal.java
+- ┃ ┣ 📂imagens
+- ┃ ┃ ┣ 📜imagem.png
+- ┃ ┃ ┗ 📜tela_inicial.jpeg
 - ┃ ┣ 📂modelo
 - ┃ ┃ ┣ 📜Grupo.java
 - ┃ ┃ ┣ 📜Individual.java
@@ -92,11 +98,11 @@ O projeto 4TALK possui a seguinte estrutura de diretórios e arquivos:
 
 _O diretório `repositorio/` contém o arquivo `Repositorio.java`, responsável pelo gerenciamento e armazenamento de participantes, mensagens e grupos._ <br>
 _O diretório `regras_negocio/` contém o arquivo `Fachada.java`, que implementa as regras de negócio do sistema, como criação de mensagens, adição de participantes, etc._ <br>
-_O diretório `modelo/` contém as classes de modelo que representam os participantes, grupos e mensagens do sistema._ <br>
-_O diretório `appsConsole` contém os testes do sistema via Console._ <br>
-_O diretório `appsSwing` contém as classes gráficas  do sistema, onde é possível encontrar a interface._ <br>
-_O diretório `arquivos` contém arquivos para a interface._ <br>
-_O diretório `backup` serve para deixar as mensagens salvas na memória._ <br>
+_O diretório `modelo/` contém as classes de modelo de negócio que representam os participantes (sendo Grupos ou Individuos) e mensagens do sistema._ <br>
+_O diretório `appsConsole/` contém os testes do sistema via Console._ <br>
+_O diretório `appsSwing/` contém as classes gráficas  do sistema, onde é possível encontrar a interface._ <br>
+_O diretório `imagens/` contém imagens para a interface._ <br>
+_O diretório `backup/` serve para deixar as mensagens salvas na memória._ <br>
 _Além de tudo isso, é possível encontrar vários arquivos .csv, que são aqueles que vão ser salvos apenas em tempo de execução, e outros mais._ <br>
 
 ## Como Executar o Projeto
@@ -107,7 +113,7 @@ _Além de tudo isso, é possível encontrar vários arquivos .csv, que são aque
 
 2. Navegue até o diretório do projeto:
 
-```cd System-4TALK```
+```cd System-4TALK``` depois ```cd system-4TALK```
 
 3. Compile e execute o projeto:
 
