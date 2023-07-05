@@ -132,44 +132,6 @@ public class Fachada {
 		repositorio.salvarObjetos();
 	}
 	
-//	public static void apagarMensagem2(String nome_individuo, int id) throws Exception {
-//		nome_individuo = nome_individuo.trim();
-//		if(nome_individuo.isEmpty()) {
-//			throw new IllegalArgumentException("Nome nao pode estar vazio.");
-//		}
-//		if (id <= 0) {
-//			throw new Exception("ID nao pode ser menor ou igual a 0.");
-//		}
-//		Individual indiv = (Individual) repositorio.localizarParticipante(nome_individuo);
-//		if (indiv == null) {
-//			throw new Exception("Participante desconhecido: "+ nome_individuo);
-//		}
-//		Mensagem msg = indiv.localizarMensagemEnviada(id);
-//		if (msg == null) {
-//	        throw new Exception("Mensagem não encontrada. ID: "+id);
-//	    }
-//		indiv.removerMensagemEnviada(msg);
-//		Participante destinatario = msg.getDestinatario();
-//		destinatario.removerMensagemRecebida(msg);
-//		repositorio.removerMensagem(msg);
-//		
-//	    if (destinatario instanceof Grupo) {
-//	    	Grupo grupo = (Grupo) destinatario;
-//	    	ArrayList<Mensagem> lista = grupo.getEnviadas();
-//	    	lista.removeIf(new Predicate<Mensagem>() {
-//				@Override
-//				public boolean test(Mensagem msgTester) {
-//					if(msgTester.getId() == msg.getId()) {
-//						msgTester.getDestinatario().removerMensagemRecebida(msg);
-//						return true;
-//					} else 
-//						return false;
-//				}
-//			});
-//	     }
-//	    repositorio.salvarObjetos();
-//	}
-	
 	public static void apagarMensagem(String nomeindividuo, int id) throws  Exception{
 		nomeindividuo = nomeindividuo.trim();
 		Individual emitente = repositorio.localizarIndividuo(nomeindividuo);	
