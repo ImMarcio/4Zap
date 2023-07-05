@@ -75,7 +75,7 @@ public class Fachada {
 		if (nome_remetente.isEmpty() || nome_destinatario.isEmpty() || texto.isEmpty() || texto.isBlank()) {
 			throw new IllegalArgumentException("Nomes ou texto nao podem ser vazios.");
 		}
-		Participante remetente = repositorio.localizarParticipante(nome_remetente);
+		Individual remetente = (Individual) repositorio.localizarParticipante(nome_remetente);
 		if (remetente == null) {
 			throw new Exception("Mensagem nao enviada - remetente desconhecido: "+nome_remetente);
 		}
@@ -88,16 +88,22 @@ public class Fachada {
 		remetente.adicionarMensagemEnviada(msg);
 		
 		if (destinatario instanceof Grupo) {
-			destinatario.adicionarMensagemRecebida(msg);
-            Grupo grupo = (Grupo) destinatario;
-    		texto = nome_remetente + "/" + texto;
-            for (Individual membro : grupo.getIndividuos()) {
-            	if (!(membro.equals(remetente))) {
-            		Mensagem copia = new Mensagem(id, texto, grupo, membro,LocalDateTime.now());
-            		repositorio.adicionarMensagemEnviada(grupo, copia);
-            		repositorio.adicionarMensagemRecebida(membro, copia);
-            	}
-            }
+			Grupo grupo = (Grupo) destinatario;
+			if (grupo.localizar(remetente.getNome())!=null) {
+				destinatario.adicionarMensagemRecebida(msg);
+	    		texto = nome_remetente + "/" + texto;
+	            for (Individual membro : grupo.getIndividuos()) {
+	            	if (!(membro.equals(remetente))) {
+	            		Mensagem copia = new Mensagem(id, texto, grupo, membro,LocalDateTime.now());
+	            		if(copia.getEmitente() instanceof Grupo) {
+	            			repositorio.adicionarMensagem(copia);
+	            		}
+	            	    remetente.adicionarMensagemEnviada(copia);
+	            	    destinatario.adicionarMensagemRecebida(copia);
+	            	}
+	            }
+			}
+			throw new Exception("Individuo nao esta no grupo: "+remetente.getNome());
 		} else { destinatario.adicionarMensagemRecebida(msg); }
 		repositorio.adicionarMensagem(msg);
 		repositorio.salvarObjetos();
@@ -106,10 +112,10 @@ public class Fachada {
 	public static void inserirGrupo(String nome_individuo, String nome_grupo) throws  Exception {
 		nome_individuo = nome_individuo.trim();
 		nome_grupo = nome_grupo.trim();
-		Grupo grupo = repositorio.localizarGrupo(nome_grupo);
+		Grupo grupo = (Grupo) repositorio.localizarParticipante(nome_grupo);
 		if(grupo == null) 
 			throw new Exception("Nao inseriu individuo - grupo inexistente: " + nome_grupo);
-		Individual in = repositorio.localizarIndividuo(nome_individuo);
+		Individual in = (Individual) repositorio.localizarParticipante(nome_individuo);
 		if(in == null)
 			throw new Exception("Nao inseriu individuo - individuo inexistente: " + nome_individuo);
 		Individual individuoDoGrupo = grupo.localizar(nome_individuo);
@@ -122,7 +128,7 @@ public class Fachada {
 	public static void removerGrupo(String nome_individuo, String nome_grupo) throws Exception {
 		nome_individuo = nome_individuo.trim();
 		nome_grupo = nome_grupo.trim();
-		Individual in = repositorio.localizarIndividuo(nome_individuo);
+		Individual in = (Individual) repositorio.localizarParticipante(nome_individuo);
 		if (in==null)
 			throw new Exception("Nao removeu o individuo - individuo inexistente: "+nome_individuo);
 		Grupo gru = in.getGrupo(nome_grupo);
@@ -134,7 +140,7 @@ public class Fachada {
 	
 	public static void apagarMensagem(String nomeindividuo, int id) throws  Exception{
 		nomeindividuo = nomeindividuo.trim();
-		Individual emitente = repositorio.localizarIndividuo(nomeindividuo);	
+		Individual emitente = (Individual) repositorio.localizarParticipante(nomeindividuo);	
 		if(emitente == null) 
 			throw new Exception("apagar mensagem - nome nao existe:" + nomeindividuo);
 		
@@ -152,8 +158,8 @@ public class Fachada {
             Grupo grupo = (Grupo) destinatario;
             for (Individual membro : grupo.getIndividuos()) {
             	if (!(membro.equals(emitente))) {
-            		repositorio.removerMensagemEnviada(grupo,m);
-            		repositorio.removerMensagemRecebida(membro,m);
+            		emitente.removerMensagemEnviada(m);
+            	    destinatario.removerMensagemRecebida(m);
             	}
             }
 		}		

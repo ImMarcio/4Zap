@@ -27,7 +27,6 @@ public class Repositorio {
 
     public Repositorio() {
     	carregarObjetos(); //ler dados dos arquivos       
-        participantes.put("admin", new Individual("admin", "admin", true));
     } 
 
     // Getters e Setters
@@ -55,23 +54,8 @@ public class Repositorio {
 	public int getTotalMensagens(){return mensagens.size();}
 	
 	public Participante localizarParticipante(String nome){
-		return participantes.get(nome);
-	}
-	public Individual localizarIndividuo(String nome) {
-		for(Participante participante : participantes.values()) {
-			if(participante instanceof Individual ind && ind.getNome().equals(nome)) {
-				return ind;
-			}
-		}
-		return null;
-	}
-	
-	public Grupo localizarGrupo(String nome) {
-		for(Participante participante : participantes.values()) {
-			if(participante instanceof Grupo grup && grup.getNome().equals(nome)) {
-				return grup;
-			}
-		}
+		if(participantes.get(nome) instanceof Individual) { return (Individual) participantes.get(nome); }
+		if(participantes.get(nome) instanceof Grupo) { return (Grupo) participantes.get(nome); }
 		return null;
 	}
 	
@@ -95,29 +79,10 @@ public class Repositorio {
 		this.mensagens.add(msg);
 	}
 	
-	public void adicionarMensagemEnviada(Participante remetente, Mensagem mensagem) {
-		if(mensagem.getEmitente() instanceof Grupo) {
-			this.adicionarMensagem(mensagem);
-		}
-	    remetente.adicionarMensagemEnviada(mensagem);
-	}
-	
-	public void adicionarMensagemRecebida(Participante destinatario, Mensagem mensagem) {
-	    destinatario.adicionarMensagemRecebida(mensagem);
-	}
-	
 	public void removerMensagem(Mensagem mensagem) {
 		mensagens.removeIf(mensagemAtual -> (mensagemAtual.getId() == mensagem.getId()));
         mensagens.remove(mensagem);
     }
-	
-	public void removerMensagemEnviada(Participante remetente, Mensagem mensagem) {
-	    remetente.removerMensagemEnviada(mensagem);
-	}
-
-	public void removerMensagemRecebida(Participante destinatario, Mensagem mensagem) {
-	    destinatario.removerMensagemRecebida(mensagem);
-	}
 	
 	public ArrayList<Mensagem> obterConversaSalva(Participante participante1, Participante participante2) {
 		ArrayList<Mensagem> conversa = new ArrayList<>();
@@ -139,8 +104,6 @@ public class Repositorio {
 			return ultima_mensagem.getId() + 1;
 		}
 	}
-	
-
 	
 	public void carregarObjetos()  	{
 		// carregar para o repositorio os objetos dos arquivos csv
@@ -198,7 +161,7 @@ public class Repositorio {
 				grupo = new Grupo(nome);
 				if(partes.length>1)
 					for(int i=1; i< partes.length; i++) {
-						individuo = this.localizarIndividuo(partes[i]);						
+						individuo = (Individual) this.localizarParticipante(partes[i]);						
 						grupo.adicionar(individuo);
 						individuo.adicionarGrupo(grupo);
 					}
@@ -235,7 +198,6 @@ public class Repositorio {
 				this.adicionarMensagem(m);
 				emitente.adicionarMensagemEnviada(m);
 				destinatario.adicionarMensagemRecebida(m);
-				
 			} 
 			arquivo3.close();
 		}

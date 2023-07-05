@@ -1,7 +1,7 @@
 /*
  * @authors Allan Amancio and Marcio Jose
  * 
- * Participante class
+ * Grupo class
  */
 package modelo;
 
@@ -31,7 +31,7 @@ public class Grupo extends Participante {
 		if(individuos.remove(individuo) == false) {
 			throw new Exception("Esse individuo nao esta no grupo!");
 		}
-		individuo.sairGrupo(this);
+		individuo.removerGrupo(this);
 	}
 	
 	public Individual localizar(String nome){

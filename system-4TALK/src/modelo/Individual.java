@@ -1,7 +1,7 @@
 /*
  * @authors Allan Amancio and Marcio Jose
  * 
- * Participante class
+ * Individual class
  */
 package modelo;
 
@@ -46,7 +46,7 @@ public class Individual extends Participante {
 		
 	}
 	
-	public void sairGrupo(Grupo grupo) {
+	public void removerGrupo(Grupo grupo) {
 		grupos.remove(grupo);
 	}
     

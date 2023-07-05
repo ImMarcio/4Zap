@@ -19,6 +19,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 
 import modelo.Individual;
+import regras_negocio.Fachada;
 
 public class TelaPrincipal {
 	private JFrame frame;
@@ -57,6 +58,11 @@ public class TelaPrincipal {
 	public TelaPrincipal() {
 		initialize();
 		frame.setVisible(true);
+		try {
+			Fachada.criarAdministrador("admin", "admin");
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 	}
 
 	/**

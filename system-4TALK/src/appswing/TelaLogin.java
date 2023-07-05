@@ -112,9 +112,7 @@ public class TelaLogin {
 			}
 		});
 		btnEntrar.setBounds(206, 35, 72, 23);
-		frame.getContentPane().add(btnEntrar);
-
-		
+		frame.getContentPane().add(btnEntrar);		
 		frame.setVisible(true);
 	}
 
