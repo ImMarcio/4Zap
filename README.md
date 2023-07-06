@@ -111,6 +111,8 @@ _Além de tudo isso, é possível encontrar vários arquivos .csv, que são aque
 
 ```git clone https://github.com/ImMarcio/System-4TALK.git```
 
+- Ou baixe o APP 4TALK: 4TALK.jar
+
 2. Navegue até o diretório do projeto:
 
 ```cd System-4TALK``` depois ```cd system-4TALK```
