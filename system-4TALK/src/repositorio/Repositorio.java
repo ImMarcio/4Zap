@@ -67,16 +67,16 @@ public class Repositorio {
 		return null;
 	}
 
-	public void adicionarIndividuo(Individual i){
-		this.participantes.put(i.getNome(), i);
+	public void adicionarParticipante(Participante p){
+		this.participantes.put(p.getNome(), p);
 	}
-	
-	public void adicionarGrupo(Grupo g) {
-		this.participantes.put(g.getNome(), g);
-	}
-	
+
 	public void adicionarMensagem(Mensagem msg) {
 		this.mensagens.add(msg);
+	}
+	
+	public void removerParticipante(Participante p){
+		this.participantes.remove(p.getNome());
 	}
 	
 	public void removerMensagem(Mensagem mensagem) {
@@ -138,7 +138,7 @@ public class Repositorio {
 				senha = partes[1];
 				administrador = partes[2];
 				Individual ind = new Individual(nome,senha,Boolean.parseBoolean(administrador));
-				this.adicionarIndividuo(ind);
+				this.adicionarParticipante(ind);
 			}
 			arquivo1.close();
 		}
@@ -165,7 +165,7 @@ public class Repositorio {
 						grupo.adicionar(individuo);
 						individuo.adicionarGrupo(grupo);
 					}
-				this.adicionarGrupo(grupo);
+				this.adicionarParticipante(grupo);
 				
 			}
 			arquivo2.close();

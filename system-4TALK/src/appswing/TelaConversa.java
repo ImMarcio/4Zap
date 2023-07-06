@@ -122,9 +122,9 @@ public class TelaConversa {
 						if (escolha == 0) {
 							Fachada.apagarMensagem(TelaPrincipal.logado.getNome(), id);
 							listagem();
-							label.setText("exclus�o realizada");
+							label.setText("exclusao realizada");
 						} else
-							label.setText("exclus�o cancelada");
+							label.setText("exclusao cancelada");
 					}
 				} catch (Exception ex) {
 					label.setText(ex.getMessage());

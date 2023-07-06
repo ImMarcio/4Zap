@@ -30,7 +30,7 @@ public class Fachada {
 			throw new Exception("Nao criou participante - individuo ja cadastrado: " + nome_individuo);
 		}	
 		i = new Individual(nome_individuo, senha, false);
-		repositorio.adicionarIndividuo(i);
+		repositorio.adicionarParticipante(i);
 		repositorio.salvarObjetos();
 	}
 
@@ -47,7 +47,7 @@ public class Fachada {
 		else {
 			i = new Individual(nome_administrador, senha, true);
 		}
-		repositorio.adicionarIndividuo(i);
+		repositorio.adicionarParticipante(i);
 		repositorio.salvarObjetos();
 	}
 	
@@ -65,7 +65,7 @@ public class Fachada {
 			throw new Exception("Nao criou participante - grupo ja cadastrado: " + nome_grupo);
 		}
 		g = new Grupo(nome_grupo);
-		repositorio.adicionarGrupo(g);
+		repositorio.adicionarParticipante(g);
 		repositorio.salvarObjetos();
 	}
 
@@ -137,6 +137,30 @@ public class Fachada {
 		gru.remover(in);
 		repositorio.salvarObjetos();
 	}
+	
+	public static void removerParticipante(String nome_participante) throws Exception {
+	    nome_participante = nome_participante.trim();
+	    Participante participante = repositorio.localizarParticipante(nome_participante);
+	    if (participante == null) {
+	        throw new Exception("Participante nao encontrado: " + nome_participante);
+	    }
+	    if (participante instanceof Individual) {
+	        Individual individuo = (Individual) participante;
+	        for (Grupo grupo : repositorio.getGrupos()) {
+	            if (grupo.localizar(individuo.getNome()) != null) {
+	                grupo.remover(individuo);
+	            }
+	        }
+	    } else if (participante instanceof Grupo) {
+	        Grupo grupo = (Grupo) participante;
+	        for (Individual individuo : grupo.getIndividuos()) {
+	            individuo.removerGrupo(grupo);
+	        }
+	    }
+	    repositorio.removerParticipante(participante);
+	    repositorio.salvarObjetos();
+	}
+
 	
 	public static void apagarMensagem(String nomeindividuo, int id) throws  Exception{
 		nomeindividuo = nomeindividuo.trim();

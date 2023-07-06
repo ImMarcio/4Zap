@@ -131,27 +131,6 @@ public class TelaParticipante {
 		lblSenha.setBounds(54, 239, 46, 14);
 		frame.getContentPane().add(lblSenha);
 
-		button = new JButton("Criar");
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					String nome = textField.getText();
-					String senha = new String(passwordField.getPassword());
-					if (radioButton.isSelected())
-						Fachada.criarGrupo(nome);
-					if (radioButton_1.isSelected())
-						Fachada.criarIndividuo(nome, senha);
-
-					label.setText("participante criado");
-				} catch (Exception ex) {
-					label.setText(ex.getMessage());
-				}
-
-			}
-		});
-		button.setBounds(305, 234, 74, 23);
-		frame.getContentPane().add(button);
-
 		panel = new JPanel();
 		panel.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Tipo",
@@ -169,10 +148,59 @@ public class TelaParticipante {
 		grupobotoes.add(radioButton);
 		grupobotoes.add(radioButton_1);
 		
+		JLabel lblNewLabel_1 = new JLabel("Participante");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNewLabel_1.setBounds(313, 205, 83, 13);
+		frame.getContentPane().add(lblNewLabel_1);
+
+		button = new JButton("Criar");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					String nome = textField.getText();
+					String senha = new String(passwordField.getPassword());
+					if (radioButton.isSelected())
+						Fachada.criarGrupo(nome);
+					if (radioButton_1.isSelected())
+						Fachada.criarIndividuo(nome, senha);
+
+					label.setText("participante criado");
+				} catch (Exception ex) {
+					label.setText(ex.getMessage());
+				}
+			}
+		});
+		button.setBounds(300, 228, 101, 21);
+		frame.getContentPane().add(button);
+		
+		JButton btnNewButton_2 = new JButton("Remover");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					if (table.getSelectedRow() < 0)
+						JOptionPane.showMessageDialog(null, "selecione uma linha");
+					String nome = (String) table.getValueAt(table.getSelectedRow(), 0); // 0=nome
+					Object[] options = { "Confirmar", "Cancelar" };
+					int escolha = JOptionPane.showOptionDialog(null, "Esta operacao removera o participante do sistema", "Alerta",
+							JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+					if (escolha == 0) {
+						Fachada.removerParticipante(nome);
+						listagem();
+						label.setText("exclusao realizada");
+					} else
+						label.setText("exclusao cancelada");
+				} catch (Exception ex) {
+					label.setText(ex.getMessage());
+				}
+			}
+		});
+		btnNewButton_2.setBounds(300, 252, 101, 21);
+		frame.getContentPane().add(btnNewButton_2);
+		
 		JLabel lblNewLabel = new JLabel("Grupos");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(437, 205, 54, 13);
+		lblNewLabel.setBounds(434, 205, 54, 13);
 		frame.getContentPane().add(lblNewLabel);
 		
 		btnNewButton = new JButton("Inserir");
@@ -192,7 +220,6 @@ public class TelaParticipante {
 		        }
 		    }
 		});
-
 		btnNewButton.setBounds(413, 228, 101, 21);
 		frame.getContentPane().add(btnNewButton);
 		
