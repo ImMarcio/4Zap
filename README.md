@@ -1,6 +1,6 @@
-# 4TALK - Sistema de Bate-Papo
+# 4Zap - Sistema de Bate-Papo
 
-4TALK é um sistema de bate-papo entre pessoas e grupos, permitindo uma comunicação fácil e eficiente. Com o 4TALK, você pode trocar mensagens individuais, participar de grupos de bate-papo e gerenciar suas mensagens enviadas e recebidas.
+4Zap é um sistema de bate-papo entre pessoas e grupos, permitindo uma comunicação fácil e eficiente. Com o 4Zap, você pode trocar mensagens individuais, participar de grupos de bate-papo e gerenciar suas mensagens enviadas e recebidas.
 
 ## Funcionalidades Principais
 
@@ -11,9 +11,9 @@
 
 ## Estrutura do Projeto
 
-O projeto 4TALK possui a seguinte estrutura de diretórios e arquivos:
+O projeto 4Zap possui a seguinte estrutura de diretórios e arquivos:
 
--📦system-4TALK
+-📦4Zap
 - ┣ 📂backup
 - ┃ ┣ 📜grupo.csv
 - ┃ ┣ 📜individual.csv
@@ -109,13 +109,13 @@ _Além de tudo isso, é possível encontrar vários arquivos .csv, que são aque
 
 1. Clone este repositório em sua máquina local:
 
-```git clone https://github.com/ImMarcio/System-4TALK.git```
+```git clone https://github.com/ImMarcio/4Zap.git```
 
-- Ou baixe o APP 4TALK: 4TALK.jar
+- Ou baixe o APP 4Zap: 4Zap.jar
 
 2. Navegue até o diretório do projeto:
 
-```cd System-4TALK``` depois ```cd system-4TALK```
+```cd 4Zap``` depois ```cd 4Zap```
 
 3. Compile e execute o projeto:
 

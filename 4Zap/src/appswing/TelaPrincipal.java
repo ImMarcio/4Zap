@@ -70,7 +70,7 @@ public class TelaPrincipal {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setTitle("4TALK - Sem Participante logado");
+		frame.setTitle("4Zap - Sem Participante logado");
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -105,7 +105,7 @@ public class TelaPrincipal {
 				}
 				TelaLogin telalogin = new TelaLogin();
 				if (TelaPrincipal.logado != null) {
-					frame.setTitle("4TALK - logado=" + TelaPrincipal.logado.getNome());
+					frame.setTitle("4Zap - logado=" + TelaPrincipal.logado.getNome());
 
 					if (TelaPrincipal.logado.getAdministrador())
 						mnEspionagem.setVisible(true);
@@ -118,7 +118,7 @@ public class TelaPrincipal {
 		mnLogoff.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				TelaPrincipal.logado = null;
-				frame.setTitle("4TALK - sem individuo logado");
+				frame.setTitle("4Zap - sem individuo logado");
 				mnEspionagem.setVisible(false);
 				if (telaconversa != null)
 					telaconversa.fechar();
