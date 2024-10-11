@@ -4,7 +4,7 @@ package appsConsole;
  * IFPB - TSI - POO 
  * Prof. Fausto Ayres
  *
- * Teste do sistema 4TALK
+ * Teste do sistema 4Zap
  *********************************/
 
 import java.util.ArrayList;
