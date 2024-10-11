@@ -2,6 +2,8 @@
 
 4Zap é um sistema de bate-papo entre pessoas e grupos, permitindo uma comunicação fácil e eficiente. Com o 4Zap, você pode trocar mensagens individuais, participar de grupos de bate-papo e gerenciar suas mensagens enviadas e recebidas.
 
+![Página inicial](assets/preview.png)
+
 ## Funcionalidades Principais
 
 - Envio de mensagens individuais
